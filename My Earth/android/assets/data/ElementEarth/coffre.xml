@@ -1,0 +1,34 @@
+<ElementEarth>
+	<!-- LIT -->
+	<elementEarths>
+		<type>meuble_constructible</type>
+		<placementType>unique</placementType>
+		<nom>coffre_bois_constructible</nom>
+		<evolution>coffre_bois</evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>20</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<logoImage>logo/coffre_bois.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+	</elementEarths>
+	<!-- -->
+	<elementEarths>
+		<type>meuble</type>
+		<placementType>unique</placementType>
+		<nom>coffre_bois</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>26</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<layerCible>OBJET_0</layerCible>
+		<capaciteInventaire>50</capaciteInventaire>
+		<poids>10</poids>
+	</elementEarths>
+
+</ElementEarth>

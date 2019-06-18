@@ -1,0 +1,45 @@
+<ElementEarth>
+	<!-- LIT -->
+	<elementEarths>
+		<type>meuble_constructible</type>
+		<placementType>unique</placementType>
+		<nom>lit_constructible</nom>
+		<evolution>lit</evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>42</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<imageElement>
+			<x>0</x>
+			<y>1</y>
+			<idTuile>32</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<logoImage>logo/lit.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+	</elementEarths>
+	<!-- -->
+	<elementEarths>
+		<type>meuble</type>
+		<placementType>unique</placementType>
+		<nom>lit</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>41</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<imageElement>
+			<x>0</x>
+			<y>1</y>
+			<idTuile>31</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<layerCible>OBJET_0</layerCible>
+		<poids>50</poids>
+	</elementEarths>
+
+</ElementEarth>

@@ -1,0 +1,33 @@
+<ElementEarth>
+	<!-- LIT -->
+	<elementEarths>
+		<type>sol_constructible</type>
+		<placementType>rectangle</placementType>
+		<nom>sol_bois_constructible</nom>
+		<evolution>sol_bois</evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>19</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<logoImage>logo/sol_bois.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+	</elementEarths>
+	<!-- -->
+	<elementEarths>
+		<type>sol</type>
+		<placementType>rectangle</placementType>
+		<nom>sol_bois</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>18</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<layerCible>SOL_0</layerCible>
+		<poids>0.500</poids>
+	</elementEarths>
+
+</ElementEarth>
