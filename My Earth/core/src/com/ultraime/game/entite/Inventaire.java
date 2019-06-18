@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ultraime.database.ElementEarth;
+import com.ultraime.game.utile.Calcul;
 
 /**
  * @author Ultraime Inventaire composé d'une liste de ElementEarth. Le poids est
@@ -35,8 +36,8 @@ public class Inventaire implements Serializable {
 	public List<ElementEarth> ajouterElement(List<ElementEarth> elementAajouter) {
 		List<ElementEarth> elementNonAjouter = new ArrayList<>();
 		for (ElementEarth earth : elementAajouter) {
-			if (capaciteActuel + earth.poids <= capaciteMax) {
-				capaciteActuel += earth.poids;
+			if (Calcul.arrondirFloat(capaciteActuel + earth.poids) <= capaciteMax) {
+				capaciteActuel = Calcul.arrondirFloat(capaciteActuel+ earth.poids);
 				elementEarths.add(earth);
 				placeDisponible = true;
 			} else {
@@ -44,7 +45,6 @@ public class Inventaire implements Serializable {
 				placeDisponible = false;
 			}
 		}
-		System.out.println("ABO -> " + elementNonAjouter.size());
 		return elementNonAjouter;
 	}
 
@@ -54,11 +54,8 @@ public class Inventaire implements Serializable {
 	 */
 	public ElementEarth ajouterElement(ElementEarth elementAajouter) {
 		ElementEarth elementNonAjouter = null;
-		if (capaciteActuel + elementAajouter.poids <= capaciteMax) {
-			//TODO bug a corriger.
-			capaciteActuel += elementAajouter.poids;
-
-			System.out.println("ABO -> " + capaciteActuel);
+		if (Calcul.arrondirFloat(capaciteActuel + elementAajouter.poids)<= capaciteMax) {
+			capaciteActuel = Calcul.arrondirFloat(Float.sum(capaciteActuel,  elementAajouter.poids));
 			elementEarths.add(elementAajouter);
 			placeDisponible = true;
 		} else {
@@ -75,7 +72,7 @@ public class Inventaire implements Serializable {
 	 */
 	public boolean placeSuffisante(final float poidsTotal) {
 		boolean placeSuffisante = false;
-		if (capaciteActuel + poidsTotal <= capaciteMax) {
+		if (Calcul.arrondirFloat(capaciteActuel + poidsTotal) <= capaciteMax) {
 			placeSuffisante = true;
 		}
 		return placeSuffisante;

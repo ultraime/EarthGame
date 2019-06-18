@@ -37,7 +37,6 @@ public class AERecolte extends ActionEntite {
 			// ajout dans l'inventaire du perso l'element.
 			EntiteVivante ev = (EntiteVivante) body.getUserData();
 			for (int i = 0; i < elem.nombreRecolte; i++) {
-				//TODO : peut être a separer, on add plusieur fois le même objet....
 				ev.inventaire.ajouterElement(new ElementEarth(elem));
 			}
 

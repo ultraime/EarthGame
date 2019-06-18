@@ -6,6 +6,7 @@ import java.util.ArrayDeque;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
 import com.ultraime.game.utile.Parametre;
@@ -13,7 +14,7 @@ import com.ultraime.game.utile.Parametre;
 /**
  * @author Ultraime implements Comparable<ActionEntite>
  */
-public abstract class ActionEntite implements Comparable<ActionEntite>,Serializable {
+public abstract class ActionEntite implements Comparable<ActionEntite>, Serializable {
 
 	/**
 	 * 
@@ -96,23 +97,29 @@ public abstract class ActionEntite implements Comparable<ActionEntite>,Serializa
 				}
 			}
 		}
-
-		Array<Body> bodiesAffichage = new Array<Body>();
-		worldAffichage.getBodies(bodiesAffichage);
-		final EntiteVivante ev = (EntiteVivante) body.getUserData();
-		for (final Body bodyAfficher : bodiesAffichage) {
-			if (bodyAfficher.getUserData() instanceof EntiteVivante) {
-				final EntiteVivante evAfficher = (EntiteVivante) bodyAfficher.getUserData();
-				if (evAfficher.id == ev.id) {
-					bodyAfficher.setTransform(body.getPosition().x * 64 + 32, body.getPosition().y * 64 + 32, 0);
-					evAfficher.x = body.getPosition().x;
-					evAfficher.y = body.getPosition().y;
-					if (direction != -1) {
-						evAfficher.setDirection(direction);
+		try {
+			Array<Body> bodiesAffichage = new Array<Body>();
+			worldAffichage.getBodies(bodiesAffichage);
+			final EntiteVivante ev = (EntiteVivante) body.getUserData();
+			for (final Body bodyAfficher : bodiesAffichage) {
+				if (bodyAfficher.getUserData() instanceof EntiteVivante) {
+					final EntiteVivante evAfficher = (EntiteVivante) bodyAfficher.getUserData();
+					if (evAfficher.id == ev.id) {
+						bodyAfficher.setTransform(body.getPosition().x * 64 + 32, body.getPosition().y * 64 + 32, 0);
+						evAfficher.x = body.getPosition().x;
+						evAfficher.y = body.getPosition().y;
+						if (direction != -1) {
+							evAfficher.setDirection(direction);
+						}
+						break;
 					}
-					break;
 				}
 			}
+		} catch (GdxRuntimeException e) {
+			if (Parametre.MODE_DEBUG) {
+				e.printStackTrace();
+			}
+			doDeplacement(body, worldAffichage);
 		}
 		return isDeplacementEnd;
 	}

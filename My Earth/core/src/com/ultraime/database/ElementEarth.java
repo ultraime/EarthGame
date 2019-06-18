@@ -127,7 +127,7 @@ public class ElementEarth implements Serializable {
 		this.logoImage = elementEarth.logoImage;
 		this.poids = elementEarth.poids;
 		if (elementEarth.inventaire != null) {
-			this.inventaire = new Inventaire(this.inventaire.capaciteMax);
+			this.inventaire = new Inventaire(elementEarth.inventaire.capaciteMax);
 		}
 		this.nombreRecolte = elementEarth.nombreRecolte;
 	}

@@ -7,7 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.I18NBundle;
 
 public class Parametre {
-
+	
 	public static final int MONDE_Y = 200;
 	public static final int MONDE_X = 200;
 	public static final String FONT = "fonts/OpenSans-Bold.fnt";
@@ -17,6 +17,7 @@ public class Parametre {
 
 	public static boolean MODE_DEBUG = true;
 	public static boolean MODE_DEBUG_CLICK_CASE = false;
+	public static boolean SHOW_FPS = true;
 	public static boolean ACTIVER_LUMIERE = false;
 	public static int VITESSE_DE_JEU = 1;
 

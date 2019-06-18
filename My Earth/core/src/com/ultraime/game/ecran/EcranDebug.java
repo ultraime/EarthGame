@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.ultraime.database.Action;
+import com.ultraime.game.utile.Parametre;
 
 /**
  * @author Ultraime
@@ -44,21 +46,38 @@ public class EcranDebug extends Ecran implements Disposable {
 	}
 
 	public void update() {
-		long delta = TimeUtils.timeSinceMillis(lastTimeCounted);
-		lastTimeCounted = TimeUtils.millis();
-
-		sinceChange += delta;
-		if (sinceChange >= 1000) {
-			sinceChange = 0;
-			frameRate = Gdx.graphics.getFramesPerSecond();
+		if (Parametre.SHOW_FPS) {
+			long delta = TimeUtils.timeSinceMillis(lastTimeCounted);
+			lastTimeCounted = TimeUtils.millis();
+			sinceChange += delta;
+			if (sinceChange >= 1000) {
+				sinceChange = 0;
+				frameRate = Gdx.graphics.getFramesPerSecond();
+			}
 		}
+
+	}
+
+	/**
+	 * 
+	 */
+	public void updateFps() {
+
 	}
 
 	public void render() {
 		update();
 		batch.begin();
-		font.draw(batch, (int) frameRate + " fps", 3, Gdx.graphics.getHeight() - 0);
+		if (Parametre.SHOW_FPS) {
+			font.draw(batch, (int) frameRate + " fps", 3, Gdx.graphics.getHeight() - 0);
+		}
 
+		if (Action.elementEarthSelect != null) {
+			if (Action.elementEarthSelect.inventaire != null) {
+				font.draw(batch, "Inventaire : " + Action.elementEarthSelect.inventaire.capaciteActuel + "/"
+						+ Action.elementEarthSelect.inventaire.capaciteMax, 3, Gdx.graphics.getHeight() - 13);
+			}
+		}
 		batch.end();
 	}
 

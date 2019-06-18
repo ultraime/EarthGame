@@ -11,7 +11,6 @@ public class MetierAgriculteur extends Metier {
 
 	public MetierAgriculteur(EntiteVivante entiteVivante) {
 		super(entiteVivante);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -19,7 +18,6 @@ public class MetierAgriculteur extends Metier {
 		boolean isAction = isActionEncours();
 		if (!isAction) {
 			if (!this.entiteVivante.inventaire.placeDisponible || this.entiteVivante.inventaire.espaceDisponnible() <= 1f) {
-				System.err.println("ABO -> "+this.entiteVivante.inventaire.capaciteActuel+"/"+this.entiteVivante.inventaire.capaciteMax);
 				isAction = tryFindCoffre();
 			}
 			if (!isAction) {

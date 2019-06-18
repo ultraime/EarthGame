@@ -161,8 +161,6 @@ public class HudComposant extends Composant {
 			this.menuAction.stopToShow();
 			resetSelecteur = true;
 			showConstructionList = false;
-			// TODO : quand on clique sur le 2éme gros bouton.
-			// this.menuAction.show(true, ElementEarth.structure_constructible);
 		} else if (this.boutonInformation.isClique(x, y)) {
 			resetSelecteur = true;
 		} else if (this.boutonVitesse_1.isClique(x, y)) {

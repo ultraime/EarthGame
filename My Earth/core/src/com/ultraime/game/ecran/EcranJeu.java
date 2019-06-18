@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.ultraime.composant.ActionEntiteVivantComposant;
 import com.ultraime.composant.ComposantManager;
 import com.ultraime.composant.HudComposant;
@@ -105,7 +106,7 @@ public class EcranJeu extends Ecran {
 	public void render() {
 		updateCamera();
 		stage.act();
-	
+
 		this.batch.begin();
 
 		this.tileMapService.render();
@@ -113,14 +114,19 @@ public class EcranJeu extends Ecran {
 		this.worldService.render();
 
 		if (Parametre.MODE_DEBUG) {
-			this.worldService.renderDebug(this.cameraGame.camera);
+			try {
+				this.worldService.renderDebug(this.cameraGame.camera);
+			} catch (GdxRuntimeException e) {
+				if (Parametre.MODE_DEBUG) {
+					e.printStackTrace();
+				}
+			}
 		}
 		if (Parametre.ACTIVER_LUMIERE) {
 			this.lumiere.renderLumiere(this.cameraGame.camera);
 		}
 		this.actionEntiteVivantComposant.render();
 
-	
 		this.hudComposant.render();
 		this.batch.end();
 
@@ -266,24 +272,7 @@ public class EcranJeu extends Ecran {
 
 		this.actionEntiteVivantComposant.isOver(screenX, screenY);
 		this.hudComposant.isOver(screenX, screenY);
-		// TODO A voir
-		// if (Action.ORDRE == Action.PLACER_MUR_AUTO
-		// || (Action.ORDRE == Action.PLACER_MUR_CONSTRUCTION_AUTO &&
-		// Action.body != null)) {
-		// Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),
-		// 0);
-		// this.cameraGame.camera.unproject(touchPos);
-		// int posX = (int) touchPos.x;
-		// int posY = (int) touchPos.y;
-		// Actor ac = stage.hit(posX, posY, true);
-		// Array<EventListener> listeners = ac.getListeners();
-		// for (int i = 0; i < listeners.size; i++) {
-		// if (listeners.get(i) instanceof ClickListener) {
-		// ((ClickListener) listeners.get(i)).clicked(null, posX, posY);
-		// }
-		// }
-		//
-		// }
+
 		return false;
 	}
 

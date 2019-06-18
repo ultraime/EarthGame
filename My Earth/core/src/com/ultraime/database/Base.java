@@ -62,6 +62,10 @@ public class Base implements java.io.Serializable {
 		referenceElementEarth.add(elementEarth);
 	}
 
+	/**
+	 * @param typeElement
+	 * @return elementEarthsRetour
+	 */
 	public List<ElementEarth> recupererElementEarth(final String typeElement) {
 		List<ElementEarth> elementEarthsRetour = new ArrayList<>();
 		for (ElementEarth elementEarth : referenceElementEarth) {
@@ -72,6 +76,11 @@ public class Base implements java.io.Serializable {
 		return elementEarthsRetour;
 	}
 
+	/**
+	 * @param elementEarthEvolution
+	 *            elementEarthEvolution
+	 * @return
+	 */
 	public ElementEarth recupererElementEarthByNom(String elementEarthEvolution) {
 		ElementEarth elemRetour = null;
 		for (ElementEarth elementEarth : referenceElementEarth) {
@@ -303,7 +312,7 @@ public class Base implements java.io.Serializable {
 	/**
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return element
 	 */
 	public ElementEarth recupererElementEarth(final int x, final int y, final String type) {
 		ElementEarth element = null;
@@ -317,6 +326,32 @@ public class Base implements java.io.Serializable {
 				if (posX == x && posY == y) {
 					element = earth;
 					break;
+				}
+			}
+		}
+		return element;
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 * @return element
+	 */
+	public ElementEarth recupererElementEarth(final int x, final int y) {
+		ElementEarth element = null;
+		for (int a = 0; a < ElementEarth.types.size(); a++) {
+			final String type = ElementEarth.types.get(a);
+			List<ElementEarth> earths = getListEarth(type);
+			for (int i = 0; i < earths.size(); i++) {
+				ElementEarth earth = earths.get(i);
+				for (int j = 0; j < earth.elementEarthImages.size(); j++) {
+					final ElementEarthImage earthImage = earth.elementEarthImages.get(j);
+					final int posX = earthImage.x + earth.x;
+					final int posY = earthImage.y + earth.y;
+					if (posX == x && posY == y) {
+						element = earth;
+						break;
+					}
 				}
 			}
 		}

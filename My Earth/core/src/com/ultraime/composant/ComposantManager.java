@@ -27,7 +27,6 @@ public class ComposantManager {
 			if (Action.body.getUserData() instanceof EntiteJoueur) {
 				ActionEntiteVivantComposant actionEntiteVivantComposant = (ActionEntiteVivantComposant) this.composant;
 				isClique = actionEntiteVivantComposant.isClique(x, y);
-				gererAction(actionEntiteVivantComposant);
 			}
 		}
 		if (this.composant instanceof HudComposant) {
@@ -36,17 +35,6 @@ public class ComposantManager {
 		return isClique;
 	}
 
-	public void gererAction(ActionEntiteVivantComposant actionEntiteVivantComposant) {
-		//TODO : A voir.
-//		if (actionEntiteVivantComposant.action_en_cours == ActionEntiteVivantComposant.ACTION_DEPLACEMENT) {
-//			Action.ORDRE = Action.DEPLACEMENT;
-//		} else if (actionEntiteVivantComposant.action_en_cours == ActionEntiteVivantComposant.ACTION_CONSTRUCTION) {
-//			Action.ORDRE = Action.PLACER_MUR_CONSTRUCTION;
-//		} else {
-//			Action.ordreReset();
-//			Action.ajouterAction();
-//		}
-	}
 
 	public boolean isOver(final float x, float y) {
 		boolean isOver = false;

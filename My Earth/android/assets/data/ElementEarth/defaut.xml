@@ -109,7 +109,7 @@
 		<placementType>unique</placementType>
 		<nom>mais_1</nom>
 		<evolution>mais_2</evolution>
-		<tpsEvolution>60</tpsEvolution>
+		<tpsEvolution>10</tpsEvolution>
 		<imageElement>
 			<x>0</x>
 			<y>0</y>
@@ -129,7 +129,7 @@
 		<placementType>unique</placementType>
 		<nom>mais_2</nom>
 		<evolution>mais_3</evolution>
-		<tpsEvolution>60</tpsEvolution>
+		<tpsEvolution>10</tpsEvolution>
 		<imageElement>
 			<x>0</x>
 			<y>0</y>

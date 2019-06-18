@@ -58,6 +58,8 @@ public class Action {
 	public static ActionEntite actionEntite = null;
 
 	public static Vector2 caseDepart = new Vector2(0, 0);
+	
+	public static ElementEarth elementEarthSelect;
 
 	public static void removeBody() {
 		ajouterAction();
@@ -349,7 +351,7 @@ public class Action {
 		if (vectorsConstruction.size() == 0) {
 			vectorsConstruction.add(vectorDepart);
 		}
-		// alimenterVectorConstructionLayer(TileMapService.CONSTRUCTION);
+
 		for (int i = 0; i < vectorsConstruction.size(); i++) {
 			Vector2 vector2 = vectorsConstruction.get(i);
 			final int posX = (int) vector2.x;
@@ -371,8 +373,6 @@ public class Action {
 					final Rectangle rectangle = new Rectangle(posX, posY, 0.5f, 0.5f);
 					Base.getInstance().ajouterRectangleConstructible(rectangle);
 				}
-			} else {
-				// TODO delete construction TEMP
 			}
 
 		}
