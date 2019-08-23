@@ -9,6 +9,10 @@ import java.io.Serializable;
 public class ElementEarthImage implements Serializable {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * position de l'image.
 	 */
 	public int x, y;
@@ -18,6 +22,24 @@ public class ElementEarthImage implements Serializable {
 	 */
 	public int idTuile;
 
+	/**
+	 * false = pas de collision
+	 * true = collision
+	 */
 	public boolean isCollision = false;
+	
+	
+	public ElementEarthImage() {
+
+	}
+
+	public ElementEarthImage(final ElementEarthImage elementEarthImagesOld) {
+		this.x = new Integer(elementEarthImagesOld.x);
+		this.y = new Integer(elementEarthImagesOld.y);
+		this.idTuile = elementEarthImagesOld.idTuile;
+		this.isCollision = elementEarthImagesOld.isCollision;
+	}
+
+
 
 }

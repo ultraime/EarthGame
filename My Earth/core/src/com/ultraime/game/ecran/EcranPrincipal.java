@@ -77,6 +77,7 @@ public class EcranPrincipal extends Ecran {
 		isClique = this.boutonStartPartie.isClique(screenX, screenY);
 		if (isClique) {
 			this.ecranManager.initialiserEcran(this.ecranManager.ecranCarte);
+			this.ecranManager.ecranCarte.initialiserPersonnage();
 		}
 		isClique = this.boutonLoadPartie.isClique(screenX, screenY);
 		if (isClique) {

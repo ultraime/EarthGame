@@ -251,10 +251,6 @@ public class Aetoile implements Serializable {
 			}
 
 			if (iSecurity >= SECURITY || listDeNoeudRetour.size() == 0) {
-				if (Parametre.MODE_DEBUG) {
-					System.err.println("SECURITY : " + SECURITY + " listDeNoeudOpen.size()=" + listDeNoeudOpen.size()
-							+ "  listDeNoeudRetour.size()=" + listDeNoeudRetour.size());
-				}
 				throw new AetoileException();
 			}
 		} else {

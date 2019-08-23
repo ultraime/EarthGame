@@ -51,10 +51,10 @@ public class AEDeplacement extends ActionEntite {
 		try {
 			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,true));
 		} catch (AetoileException e) {
-			if (Parametre.MODE_DEBUG)
+			if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
 				e.printStackTrace();
 		} catch (AetoileDestinationBlockException e) {
-			if (Parametre.MODE_DEBUG)
+			if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
 				e.printStackTrace();
 		}
 

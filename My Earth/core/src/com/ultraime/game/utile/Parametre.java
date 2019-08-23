@@ -16,6 +16,7 @@ public class Parametre {
 	public static int DECALAGE_Y = 0;
 
 	public static boolean MODE_DEBUG = true;
+	public static boolean MODE_DEBUG_ERR_DEPLACEMENT = false;
 	public static boolean MODE_DEBUG_CLICK_CASE = false;
 	public static boolean SHOW_FPS = true;
 	public static boolean ACTIVER_LUMIERE = false;

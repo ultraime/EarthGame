@@ -29,6 +29,7 @@ import com.ultraime.game.metier.TiledMapStage;
 import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.travail.MetierAgriculteur;
 import com.ultraime.game.metier.travail.MetierConstructeur;
+import com.ultraime.game.metier.travail.MetierParesse;
 import com.ultraime.game.utile.Parametre;
 
 public class EcranJeu extends Ecran {
@@ -81,14 +82,7 @@ public class EcranJeu extends Ecran {
 		// Pour le monde
 		this.worldService = WorldService.getInstance();
 
-		final int posx = (int) (this.cameraGame.camera.position.x / WorldService.MULTIPLICATEUR);
-		final int posy = (int) (this.cameraGame.camera.position.y / WorldService.MULTIPLICATEUR);
-		//TODO INIT DES PERSO
-		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierConstructeur(entiteJoueur), entiteJoueur);
 
-		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierAgriculteur(entiteJoueur), entiteJoueur);
 
 		this.worldService.initialiserCollision(this.tileMapService.getLayers("OBJET_0"));
 
@@ -107,6 +101,17 @@ public class EcranJeu extends Ecran {
 		Base.getInstance().setTemps(temps);
 		Base.getInstance().startTempsThread();
 
+	}
+	public void initialiserPersonnage() {
+		final int posx = (int) (this.cameraGame.camera.position.x / WorldService.MULTIPLICATEUR);
+		final int posy = (int) (this.cameraGame.camera.position.y / WorldService.MULTIPLICATEUR);
+		//TODO INIT DES PERSO
+		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierConstructeur(entiteJoueur), entiteJoueur);
+
+		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierAgriculteur(entiteJoueur), entiteJoueur);
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierParesse(entiteJoueur), entiteJoueur);
 	}
 
 	// création de l'IHM
@@ -174,6 +179,7 @@ public class EcranJeu extends Ecran {
 		case Input.Keys.NUM_1:
 			// TODO sava data
 			SaveService.save();
+			break;
 		case Input.Keys.W:
 			//TODO rotation de l'objet.
 			Action.rotateObjet();
@@ -305,5 +311,7 @@ public class EcranJeu extends Ecran {
 
 		return false;
 	}
+
+	
 
 }

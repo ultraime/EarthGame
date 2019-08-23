@@ -12,8 +12,8 @@ import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.TiledMapActor;
-import com.ultraime.game.metier.travail.action.ActionEntite;
 import com.ultraime.game.metier.travail.action.AEConstruction;
+import com.ultraime.game.metier.travail.action.ActionEntite;
 
 /**
  * @author Ultraime
@@ -59,7 +59,7 @@ public class Action {
 	public static ActionEntite actionEntite = null;
 
 	public static Vector2 caseDepart = new Vector2(0, 0);
-	
+
 	public static ElementEarth elementEarthSelect;
 
 	public static void removeBody() {
@@ -116,6 +116,7 @@ public class Action {
 
 	/**
 	 * construit un élément sur une case (élément temporaire).
+	 * 
 	 * @param actor
 	 * @param x
 	 * @param y
@@ -162,7 +163,8 @@ public class Action {
 			alimenterVectorConstructionLayer(TileMapService.CONSTRUCTION_TEMP);
 		} else if (ORDRE != null && ORDRE.id == Ordre.construire
 				&& ORDRE.elementEarth.placementType.equals(ElementEarth.unique)) {
-			//si on construit un objet d'un bloc (pas de ligne, pas de rectangle etc..)
+			// si on construit un objet d'un bloc (pas de ligne, pas de
+			// rectangle etc..)
 			viderVectorConstruction();
 			Vector2 positionSouris = new Vector2(x / 64, y / 64);
 			vectorDepart = new Vector2(positionSouris.x, positionSouris.y);
@@ -388,13 +390,32 @@ public class Action {
 
 	}
 
+	/**
+	 * si l'on a bien un objet de selectionné on le rotate.
+	 */
 	public static void rotateObjet() {
-		ORDRE.elementEarth.rotation = ElementEarth.rot_droite;
-//		for(int i = 0; i < ORDRE.elementEarth.elementEarthImages.size();i++){
-//			ElementEarthImage elementEarthImage = ORDRE.elementEarth.elementEarthImages.get(i);
-//			elementEarthImage.
-//		}
+		if (ORDRE != null && ORDRE.elementEarth != null && vectorDepart != null) {
+			final float x = vectorDepart.x * 64;
+			final float y = vectorDepart.y * 64;
+			viderVectorConstruction();
+			ORDRE.elementEarth = RotationManager.rotateNext(ORDRE.elementEarth);
 		
+			ordreConstructionElementNEW(null, x, y);
+		}
+	}
+
+	public static ElementEarth doRotate(ElementEarth elementEvolue) {
+		switch (elementEvolue.rotation) {
+		case ElementEarth.rot_bas:
+			break;
+		case ElementEarth.rot_droite:
+			break;
+		case ElementEarth.rot_gauche:
+			break;
+		default:
+			break;
+		}
+		return null;
 	}
 
 }

@@ -130,7 +130,7 @@ public class ElementEarth implements Serializable {
 		this.layerCible = elementEarth.layerCible;
 		this.x = new Integer(elementEarth.x);
 		this.y = new Integer(elementEarth.y);
-		this.elementEarthImages = elementEarth.elementEarthImages;
+		this.elementEarthImages = newElementEarthImages(elementEarth.elementEarthImages);
 		this.tempEvolution = new Integer(elementEarth.tempEvolution);
 		if (elementEarth.animationManager != null) {
 			this.animationManager = new AnimationManager(elementEarth.animationManager);
@@ -141,7 +141,16 @@ public class ElementEarth implements Serializable {
 			this.inventaire = new Inventaire(elementEarth.inventaire.capaciteMax);
 		}
 		this.nombreRecolte = elementEarth.nombreRecolte;
-		this.rotation = elementEarth.rotation;
+		this.rotation = new String(elementEarth.rotation);
+	}
+
+	private List<ElementEarthImage> newElementEarthImages(List<ElementEarthImage> elementEarthImagesOld) {
+		List<ElementEarthImage> newList = new ArrayList<>();
+		for (ElementEarthImage oldElem : elementEarthImagesOld) {
+			ElementEarthImage newElem = new ElementEarthImage(oldElem);
+			newList.add(newElem);
+		}
+		return newList;
 	}
 
 	public ElementEarth() {

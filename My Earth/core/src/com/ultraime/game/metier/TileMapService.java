@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.ElementEarthImage;
+import com.ultraime.database.RotationManager;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.ElementAconstruire;
 
@@ -163,6 +164,9 @@ public class TileMapService {
 		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(elementEvolue.layerCible);
 		TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAconstruire, tiledLayerConstruction, posX, posY, true);
+		// on passe la rotation à l'objet évolué
+		elementEvolue = RotationManager.getElementRotate(elementEvolue,elementAconstruire.rotation);
+
 		alimenterImageFromMultiTile(elementEvolue, tiledLayer, posX, posY, false);
 
 		if (elementEvolue.nom.equals("mur_en_bois")) {
@@ -215,6 +219,7 @@ public class TileMapService {
 
 	/**
 	 * affiche l'objet en jeu. L'objet peut être composé de plusieurs tiles.
+	 * 
 	 * @param elementEarth
 	 * @param tiledLayer
 	 * @param posX
@@ -232,9 +237,8 @@ public class TileMapService {
 				cell.setTile(null);
 			} else {
 				cell.setTile(tileSet.getTile(earthImage.idTuile));
-				if(elementEarth.rotation.equals(ElementEarth.rot_droite)){
-					cell.setRotation(Cell.ROTATE_90);
-				}
+				RotationManager.rotateCell(cell,elementEarth.rotation);
+				
 			}
 			tiledLayer.setCell(posX + earthImage.x, posY + earthImage.y, cell);
 		}
@@ -438,7 +442,7 @@ public class TileMapService {
 	 * @param ElementEarth
 	 *            AJoute un élément à construire. Attention si on place un
 	 *            élément à l'endroit d'un objet en construction présent on le
-	 *            suprimmer.
+	 *            suprimme.
 	 */
 	public static void ajouterElementAconstruireNEW(ElementEarth elementAconstruire) {
 		retirerElementAconstruire(elementAconstruire.x, elementAconstruire.y);

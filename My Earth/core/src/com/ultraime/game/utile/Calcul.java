@@ -8,4 +8,8 @@ public class Calcul {
 		return f / 1000;
 	}
 
+	public static int random(final int min, final int max) {
+		return min + (int) (Math.random() * ((max - min) + 1));
+	}
+
 }

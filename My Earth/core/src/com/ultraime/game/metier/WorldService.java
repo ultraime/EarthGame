@@ -67,14 +67,31 @@ public class WorldService {
 		tempsAnimation += Gdx.graphics.getDeltaTime();
 		this.batch.begin();
 		gestionBodies();
-	//	List<ElementEarth> elementEarths = Base.getInstance().getElementEarthPlantes();
+		// List<ElementEarth> elementEarths =
+		// Base.getInstance().getElementEarthPlantes();
 		List<ElementEarth> elementEarths = Base.getInstance().getListEarth(ElementEarth.culture);
 		for (int i = 0; i < elementEarths.size(); i++) {
-			elementEarths.get(i).render(batch,tempsAnimation);
+			elementEarths.get(i).render(batch, tempsAnimation);
 		}
 
 		this.batch.end();
 		// deplacementBodies();
+	}
+
+	public Body recupererBodyFromEntite(final EntiteVivante entiteVivante) {
+		Body retourBody = null;
+		Array<Body> bodies = new Array<Body>();
+		WorldService.getInstance().world.getBodies(bodies);
+		for (final Body body : bodies) {
+			if (body.getUserData() instanceof EntiteVivante) {
+				final EntiteVivante ev = (EntiteVivante) body.getUserData();
+				if (ev == entiteVivante) {
+					retourBody = body;
+					break;
+				}
+			}
+		}
+		return retourBody;
 	}
 
 	private void gestionBodies() {
@@ -131,7 +148,8 @@ public class WorldService {
 						EntiteStatic entiteStatic = new EntiteStatic(x, y, 1, 1);
 						Base.getInstance().creerRectangleStatic(this.world, this.worldAffichage, x, y, 1, 1,
 								entiteStatic);
-						ElementEarth elementEarth = new ElementEarth(Base.getInstance().recupererElementEarthByNom("mur_en_bois"));
+						ElementEarth elementEarth = new ElementEarth(
+								Base.getInstance().recupererElementEarthByNom("mur_en_bois"));
 						elementEarth.x = x;
 						elementEarth.y = y;
 						Base.getInstance().ajouterElementEarth(elementEarth);
