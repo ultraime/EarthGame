@@ -1,7 +1,7 @@
 package com.ultraime.game.metier.thread;
 
-import com.ultraime.database.Base;
 import com.ultraime.database.ElementEarth;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.metier.Lumiere;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
@@ -40,8 +40,8 @@ public class TempsThread implements Runnable {
 	}
 
 	private void updateElement() {
-		for (int i = 0; i < Base.getInstance().getElementEarthPlantes().size(); i++) {
-			final ElementEarth elementEarth = Base.getInstance().getElementEarthPlantes().get(i);
+		for (int i = 0; i < Base.getInstance().baseCulture.getElementEarthPlantes().size(); i++) {
+			final ElementEarth elementEarth = Base.getInstance().baseCulture.getElementEarthPlantes().get(i);
 			final Boolean doitEvoluer = elementEarth.gererEvolution();
 			if (doitEvoluer) {
 				TileMapService.getInstance().evoluerElement(elementEarth);

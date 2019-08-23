@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.ultraime.database.Base;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.entite.EntiteVivante.TypeShape;
 import com.ultraime.game.utile.Parametre;

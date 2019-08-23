@@ -1,10 +1,12 @@
 package com.ultraime.database;
 
+import java.io.Serializable;
+
 /**
  * @author Ultraime
  *
  */
-public class ElementEarthImage {
+public class ElementEarthImage implements Serializable {
 
 	/**
 	 * position de l'image.

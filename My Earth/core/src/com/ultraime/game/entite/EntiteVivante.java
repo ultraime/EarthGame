@@ -1,5 +1,6 @@
 package com.ultraime.game.entite;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
 import com.ultraime.game.metier.travail.Metier;
 import com.ultraime.game.metier.travail.action.ActionEntite;
 
-public abstract class EntiteVivante extends Entite {
+public abstract class EntiteVivante extends Entite implements Serializable {
 	/**
 	 * 
 	 */

@@ -1,12 +1,17 @@
 package com.ultraime.game.metier.travail;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.travail.action.ActionEntite;
 
-public abstract class Metier {
+public abstract class Metier implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected EntiteVivante entiteVivante;
 
 	public Metier(final EntiteVivante entiteVivante) {
@@ -25,11 +30,6 @@ public abstract class Metier {
 		if (!actionEntites.isEmpty()) {
 			isAction = true;
 		}
-		// for (ActionEntite ac : actionEntites) {
-		// if (ac instanceof ActionEntiteConstruction) {
-		// isAction = true;
-		// break;
-		// }
 		return isAction;
 	}
 }

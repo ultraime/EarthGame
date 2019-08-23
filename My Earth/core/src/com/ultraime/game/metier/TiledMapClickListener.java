@@ -3,7 +3,7 @@ package com.ultraime.game.metier;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ultraime.database.Action;
-import com.ultraime.database.Base;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.utile.Parametre;
 
 public class TiledMapClickListener extends ClickListener {

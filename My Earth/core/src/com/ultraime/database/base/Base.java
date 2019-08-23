@@ -1,4 +1,4 @@
-package com.ultraime.database;
+package com.ultraime.database.base;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.ultraime.database.ElementEarth;
+import com.ultraime.database.ElementEarthImage;
 import com.ultraime.game.entite.EntiteStatic;
-import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.WorldBodyService;
@@ -26,6 +27,12 @@ public class Base implements java.io.Serializable {
 
 	private static Base instance;
 
+	public BaseCulture baseCulture;
+	public BaseMeuble baseMeuble;
+	public BaseStructure baseStructure;
+	public BaseSol baseSol;
+	public BasePersonnage basePersonnage;
+
 	/**
 	 * pour les collisions
 	 */
@@ -33,24 +40,23 @@ public class Base implements java.io.Serializable {
 
 	private List<Rectangle> rectangleBodiesAConstruire;
 
-	private List<ElementEarth> elementEarthplantes;
-	private List<ElementEarth> elementEarthMeubles;
-	private List<ElementEarth> elementEarthStructure;
-	private List<ElementEarth> elementEarthSol;
 	private Temps temps;
 	transient private TempsThread tempsThread;
 	transient private Boolean isStartTempsThread = false;
 
-	transient private List<ElementEarth> referenceElementEarth = new ArrayList<>();
+	transient private List<ElementEarth> referenceElementEarth;
 
 	private Base() {
 		this.rectangleBodies = new ArrayList<>();
 		this.rectangleBodiesAConstruire = new ArrayList<>();
-		this.elementEarthplantes = new ArrayList<>();
-		this.elementEarthMeubles = new ArrayList<>();
-		this.elementEarthStructure = new ArrayList<>();
-		this.elementEarthSol = new ArrayList<>();
 		this.tempsThread = new TempsThread();
+		this.referenceElementEarth = new ArrayList<>();
+
+		baseCulture = new BaseCulture();
+		baseMeuble = new BaseMeuble();
+		baseStructure = new BaseStructure();
+		baseSol = new BaseSol();
+		basePersonnage = new BasePersonnage();
 	}
 
 	/**
@@ -59,6 +65,9 @@ public class Base implements java.io.Serializable {
 	 * @param elementEarth
 	 */
 	public void addReferenceElementEarth(ElementEarth elementEarth) {
+		if (referenceElementEarth == null) {
+			this.referenceElementEarth = new ArrayList<>();
+		}
 		referenceElementEarth.add(elementEarth);
 	}
 
@@ -74,6 +83,10 @@ public class Base implements java.io.Serializable {
 			}
 		}
 		return elementEarthsRetour;
+	}
+
+	public static void chargeData(final Base baseData) {
+		instance = baseData;
 	}
 
 	/**
@@ -159,13 +172,17 @@ public class Base implements java.io.Serializable {
 		}
 	}
 
-	public void creerCercleVivant(final World world, final World worldAffichage, final float radius, final float posx,
-			final float posy, EntiteVivante entiteVivante) {
-		WorldBodyService.creerCercleVivant(world, radius, posx, posy, entiteVivante);
-		WorldBodyService.creerCercleVivant(worldAffichage, WorldService.MULTIPLICATEUR * radius,
-				posx * WorldService.MULTIPLICATEUR + 32, posy * WorldService.MULTIPLICATEUR + 32, entiteVivante);
-
-	}
+	// public void creerCercleVivant(final World world, final World
+	// worldAffichage, final float radius, final float posx,
+	// final float posy, EntiteVivante entiteVivante) {
+	// WorldBodyService.creerCercleVivant(world, radius, posx, posy,
+	// entiteVivante);
+	// WorldBodyService.creerCercleVivant(worldAffichage,
+	// WorldService.MULTIPLICATEUR * radius,
+	// posx * WorldService.MULTIPLICATEUR + 32, posy *
+	// WorldService.MULTIPLICATEUR + 32, entiteVivante);
+	//
+	// }
 
 	public List<Rectangle> getRectangleBodies() {
 		return rectangleBodies;
@@ -239,6 +256,8 @@ public class Base implements java.io.Serializable {
 	}
 
 	/**
+	 * retore l'élement qui se trouve à la position x et y
+	 * 
 	 * @param x
 	 * @param y
 	 * @param type
@@ -266,6 +285,8 @@ public class Base implements java.io.Serializable {
 	}
 
 	/**
+	 * Retire un élément de la carte
+	 * 
 	 * @param elementAretirer
 	 */
 	public void retirerElementEarth(ElementEarth elementAretirer) {
@@ -286,22 +307,22 @@ public class Base implements java.io.Serializable {
 		List<ElementEarth> earths = null;
 		switch (type) {
 		case ElementEarth.culture:
-			earths = elementEarthplantes;
+			earths = baseCulture.getElementEarthPlantes();
 			break;
 		case ElementEarth.culture_sol:
-			earths = elementEarthplantes;
+			earths = baseCulture.getElementEarthPlantes();
 			break;
 		case ElementEarth.culture_final:
-			earths = elementEarthplantes;
+			earths = baseCulture.getElementEarthPlantes();
 			break;
 		case ElementEarth.meuble:
-			earths = elementEarthMeubles;
+			earths = baseMeuble.getElementEarthMeubles();
 			break;
 		case ElementEarth.structure:
-			earths = elementEarthStructure;
+			earths = baseStructure.getElementEarthStructure();
 			break;
 		case ElementEarth.sol:
-			earths = elementEarthSol;
+			earths = baseSol.getElementEarthSol();
 			break;
 		default:
 			break;
@@ -361,42 +382,6 @@ public class Base implements java.io.Serializable {
 	/**
 	 * @param x
 	 * @param y
-	 * @return
-	 */
-	public ElementEarth recupererElementEarthPlante(final int x, final int y) {
-		ElementEarth element = null;
-		for (int i = 0; i < elementEarthplantes.size(); i++) {
-			ElementEarth plante = elementEarthplantes.get(i);
-			if (plante.x == x && plante.y == y) {
-				element = elementEarthplantes.get(i);
-				break;
-			}
-		}
-		return element;
-	}
-
-	/**
-	 * recherche un élément disponible pour être cultivé.
-	 * 
-	 * @return ElementEarth à cultiver
-	 */
-	public ElementEarth rechercherElementAcultiver() {
-		ElementEarth elementEarthCulture = null;
-		for (int i = 0; i < getElementEarthPlantes().size(); i++) {
-			final ElementEarth elementEarth = getElementEarthPlantes().get(i);
-			if (elementEarth.type.equals(ElementEarth.culture_sol)) {
-				if (!isObjetPresentLayer(elementEarth.x, elementEarth.y, TileMapService.OBJET_0)) {
-					elementEarthCulture = elementEarth;
-					break;
-				}
-			}
-		}
-		return elementEarthCulture;
-	}
-
-	/**
-	 * @param x
-	 * @param y
 	 * @param layer
 	 * @return isObjetPresent
 	 */
@@ -412,20 +397,6 @@ public class Base implements java.io.Serializable {
 			}
 		}
 		return isObjetPresent;
-	}
-
-	/**
-	 * @return elementEarthCulture
-	 */
-	public ElementEarth rechercherElementARecolter() {
-		ElementEarth elementEarthCulture = null;
-		for (int i = 0; i < getListEarth(ElementEarth.culture).size(); i++) {
-			final ElementEarth elementEarth = getListEarth(ElementEarth.culture).get(i);
-			if (elementEarth.type.equals(ElementEarth.culture_final)) {
-				elementEarthCulture = elementEarth;
-			}
-		}
-		return elementEarthCulture;
 	}
 
 	/**
@@ -453,14 +424,6 @@ public class Base implements java.io.Serializable {
 
 	public void setTemps(Temps temps) {
 		this.temps = temps;
-	}
-
-	public List<ElementEarth> getElementEarthPlantes() {
-		return elementEarthplantes;
-	}
-
-	public void setPlantes(List<ElementEarth> plantes) {
-		this.elementEarthplantes = plantes;
 	}
 
 }

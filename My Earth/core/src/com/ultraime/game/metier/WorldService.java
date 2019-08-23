@@ -15,15 +15,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.ultraime.database.Base;
 import com.ultraime.database.ElementEarth;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.entite.EntiteStatic;
 import com.ultraime.game.entite.EntiteVivante;
-import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
-import com.ultraime.game.metier.travail.Metier;
-import com.ultraime.game.metier.travail.MetierAgriculteur;
-import com.ultraime.game.metier.travail.MetierConstructeur;
 import com.ultraime.game.utile.Parametre;
 
 public class WorldService {
@@ -143,39 +139,6 @@ public class WorldService {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @param posx
-	 * @param posy
-	 */
-	public void initialiserEntite(final float posx, final float posy) {
-		final float radius = 0.4f;
-		final EntiteJoueur entiteVivante = new EntiteJoueur(posx, posy, radius, TypeEntiteVivante.PERSONNAGE);
-		Base.getInstance().creerCercleVivant(this.world, worldAffichage, radius, posx, posy, entiteVivante);
-	}
-
-	/**
-	 * @param posx
-	 * @param posy
-	 * @param metier
-	 */
-	public void initialiserEntiteTestConstructeur(final float posx, final float posy, Metier metier) {
-		final float radius = 0.4f;
-		final EntiteJoueur entiteVivante = new EntiteJoueur(posx, posy, radius, TypeEntiteVivante.PERSONNAGE);
-		entiteVivante.ajouterMetier(new MetierConstructeur(entiteVivante));
-		Base.getInstance().creerCercleVivant(this.world, worldAffichage, radius, posx, posy, entiteVivante);
-	}
-	/**
-	 * @param posx
-	 * @param posy
-	 * @param metier
-	 */
-	public void initialiserEntiteTestAgriculteur(final float posx, final float posy, Metier metier) {
-		final float radius = 0.4f;
-		final EntiteJoueur entiteVivante = new EntiteJoueur(posx, posy, radius, TypeEntiteVivante.PERSONNAGE);
-		entiteVivante.ajouterMetier(new MetierAgriculteur(entiteVivante));
-		Base.getInstance().creerCercleVivant(this.world, worldAffichage, radius, posx, posy, entiteVivante);
 	}
 
 	/**

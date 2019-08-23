@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.ultraime.animation.AnimationManager;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.Inventaire;
 import com.ultraime.game.utile.Parametre;
 
@@ -81,6 +82,9 @@ public class LecteurXML extends ApplicationAdapter {
 			elementEarth.placementType = child.getChildByName("placementType").getText();
 			elementEarth.nom = child.getChildByName("nom").getText();
 			elementEarth.elementEarthEvolution = child.getChildByName("evolution").getText();
+			if (child.getChildByName("rotation") != null) {
+				elementEarth.rotation = child.getChildByName("rotation").getText();
+			}
 			if (child.getChildByName("capaciteInventaire") != null) {
 				final float capaciteInventaire = Float.parseFloat(child.getChildByName("capaciteInventaire").getText());
 				final Inventaire inventaire = new Inventaire(capaciteInventaire);

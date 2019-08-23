@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.TiledMapActor;
@@ -113,6 +114,12 @@ public class Action {
 		return isDoAction;
 	}
 
+	/**
+	 * construit un élément sur une case (élément temporaire).
+	 * @param actor
+	 * @param x
+	 * @param y
+	 */
 	public static void ordreConstructionElementNEW(final TiledMapActor actor, final float x, final float y) {
 		if (actor != null) {
 			// initialisation de l'ordre.
@@ -152,10 +159,10 @@ public class Action {
 			} else if (ORDRE.elementEarth.placementType.equals(ElementEarth.rectangle)) {
 				dessinerRectangleAConstuire(positionSouris);
 			}
-
 			alimenterVectorConstructionLayer(TileMapService.CONSTRUCTION_TEMP);
 		} else if (ORDRE != null && ORDRE.id == Ordre.construire
 				&& ORDRE.elementEarth.placementType.equals(ElementEarth.unique)) {
+			//si on construit un objet d'un bloc (pas de ligne, pas de rectangle etc..)
 			viderVectorConstruction();
 			Vector2 positionSouris = new Vector2(x / 64, y / 64);
 			vectorDepart = new Vector2(positionSouris.x, positionSouris.y);
@@ -378,8 +385,16 @@ public class Action {
 		}
 		vectorDepart = null;
 		viderVectorConstruction();
-		// TiledMapClickListener.IGNORE_CLICK = true;
 
+	}
+
+	public static void rotateObjet() {
+		ORDRE.elementEarth.rotation = ElementEarth.rot_droite;
+//		for(int i = 0; i < ORDRE.elementEarth.elementEarthImages.size();i++){
+//			ElementEarthImage elementEarthImage = ORDRE.elementEarth.elementEarthImages.get(i);
+//			elementEarthImage.
+//		}
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.ultraime.animation;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,16 +10,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
 import com.ultraime.game.utile.Image;
 
-public class AnimationManager {
+public class AnimationManager implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Animation spécifique
 	protected transient Animation animation[];
 	protected transient TextureRegion regionCourante;
-	protected transient float largeur;
-	protected transient float hauteur;
-	protected transient float vitesseAnimation;
+	protected  float largeur;
+	protected  float hauteur;
+	protected  float vitesseAnimation;
 	protected transient Texture texture;
 	// pour que les plantes ne bouge pas en même temps
 	private float tempsAnimation = 0;
+	private String lienImage;
 
 	/**
 	 * @param texture
@@ -47,18 +54,42 @@ public class AnimationManager {
 		creerAnimation(txt, largeur, hauteur, vitesseAnimation);
 	}
 
-	public AnimationManager(final float largeur, final float hauteur, final float vitesseAnimation, String lienImage) {
-		Texture txt = new Texture(Gdx.files.internal(lienImage));
-		this.texture = txt;
-		creerAnimation(txt, largeur, hauteur, vitesseAnimation);
+	private AnimationManager(final float largeur, final float hauteur, final float vitesseAnimation) {
+		this.largeur = largeur;
+		this.hauteur = hauteur;
+		this.vitesseAnimation = vitesseAnimation;
+	}
+
+	/**
+	 * @param largeur
+	 * @param hauteur
+	 * @param vitesseAnimation
+	 * @param lienImage
+	 */
+	public AnimationManager(final float largeur, final float hauteur, final float vitesseAnimation,
+			final String lienImage) {
+		this(largeur, hauteur, vitesseAnimation);
+		this.lienImage = lienImage;
+		creerAnimationByLienImage();
 	}
 
 	public AnimationManager(AnimationManager animationManager) {
-		this.largeur = animationManager.largeur;
-		this.hauteur = animationManager.hauteur;
-		this.vitesseAnimation = animationManager.vitesseAnimation;
+		this(animationManager.largeur, animationManager.hauteur, animationManager.vitesseAnimation);
 		this.texture = animationManager.texture;
+		this.lienImage = animationManager.lienImage;
 		creerAnimation(animationManager.texture, largeur, hauteur, vitesseAnimation);
+	}
+
+	/**
+	 * @param largeur
+	 * @param hauteur
+	 * @param vitesseAnimation
+	 * @param lienImage
+	 */
+	public void creerAnimationByLienImage() {
+		Texture txt = new Texture(Gdx.files.internal(lienImage));
+		this.texture = txt;
+		creerAnimation(txt, largeur, hauteur, vitesseAnimation);
 	}
 
 	/**
@@ -91,6 +122,9 @@ public class AnimationManager {
 	 * @param nbLigne
 	 */
 	public void render(final SpriteBatch batch, final float x, final float y, final int nbLigne) {
+		if(this.animation == null){
+			creerAnimationByLienImage();
+		}
 		this.tempsAnimation += Gdx.graphics.getDeltaTime();
 		// if (this.tempsAnimation > 1000) {
 		// this.tempsAnimation = 1;

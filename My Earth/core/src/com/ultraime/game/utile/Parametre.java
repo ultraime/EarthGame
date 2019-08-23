@@ -7,7 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.I18NBundle;
 
 public class Parametre {
-	
+
 	public static final int MONDE_Y = 200;
 	public static final int MONDE_X = 200;
 	public static final String FONT = "fonts/OpenSans-Bold.fnt";

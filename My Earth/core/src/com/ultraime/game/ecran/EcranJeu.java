@@ -15,16 +15,20 @@ import com.ultraime.composant.ActionEntiteVivantComposant;
 import com.ultraime.composant.ComposantManager;
 import com.ultraime.composant.HudComposant;
 import com.ultraime.database.Action;
-import com.ultraime.database.Base;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.LecteurXML;
 import com.ultraime.database.Ordre;
+import com.ultraime.database.SaveService;
+import com.ultraime.database.base.Base;
+import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.metier.Lumiere;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.TiledMapClickListener;
 import com.ultraime.game.metier.TiledMapStage;
 import com.ultraime.game.metier.WorldService;
+import com.ultraime.game.metier.travail.MetierAgriculteur;
+import com.ultraime.game.metier.travail.MetierConstructeur;
 import com.ultraime.game.utile.Parametre;
 
 public class EcranJeu extends Ecran {
@@ -77,12 +81,17 @@ public class EcranJeu extends Ecran {
 		// Pour le monde
 		this.worldService = WorldService.getInstance();
 
-		final float posx = this.cameraGame.camera.position.x / WorldService.MULTIPLICATEUR;
-		final float posy = this.cameraGame.camera.position.y / WorldService.MULTIPLICATEUR;
+		final int posx = (int) (this.cameraGame.camera.position.x / WorldService.MULTIPLICATEUR);
+		final int posy = (int) (this.cameraGame.camera.position.y / WorldService.MULTIPLICATEUR);
+		//TODO INIT DES PERSO
+		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierConstructeur(entiteJoueur), entiteJoueur);
+
+		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierAgriculteur(entiteJoueur), entiteJoueur);
 
 		this.worldService.initialiserCollision(this.tileMapService.getLayers("OBJET_0"));
-		this.worldService.initialiserEntiteTestConstructeur(posx, posy, null);
-		this.worldService.initialiserEntiteTestAgriculteur(posx + 1, posy, null);
+
 		// this.worldService.initialiserEntite(posx + 1, posy);
 		this.stage = new TiledMapStage(tileMapService.tiledMap);
 
@@ -162,6 +171,12 @@ public class EcranJeu extends Ecran {
 		case Input.Keys.Q:
 			this.cameraGame.isGauche = true;
 			break;
+		case Input.Keys.NUM_1:
+			// TODO sava data
+			SaveService.save();
+		case Input.Keys.W:
+			//TODO rotation de l'objet.
+			Action.rotateObjet();
 		default:
 			break;
 		}

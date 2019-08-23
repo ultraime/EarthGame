@@ -30,6 +30,12 @@ public class ElementEarth implements Serializable {
 	transient public final static String ligne = "ligne";
 	transient public final static String rectangle = "rectangle";
 
+	// variable de rotation
+	transient public final static String rot_haut = "haut";
+	transient public final static String rot_bas = "bas";
+	transient public final static String rot_gauche = "gauche";
+	transient public final static String rot_droite = "droite";
+
 	transient public static List<String> types = new ArrayList<String>() {
 		/**
 		 * 
@@ -108,6 +114,11 @@ public class ElementEarth implements Serializable {
 	public float nombreRecolte;
 
 	/**
+	 * rotation de l'image.(haut,droite,bas,gauche)
+	 */
+	public String rotation = rot_haut;
+
+	/**
 	 * @param elementEarth
 	 */
 	public ElementEarth(final ElementEarth elementEarth) {
@@ -130,6 +141,7 @@ public class ElementEarth implements Serializable {
 			this.inventaire = new Inventaire(elementEarth.inventaire.capaciteMax);
 		}
 		this.nombreRecolte = elementEarth.nombreRecolte;
+		this.rotation = elementEarth.rotation;
 	}
 
 	public ElementEarth() {

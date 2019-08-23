@@ -31,7 +31,7 @@ public class EntiteJoueur extends EntiteVivante {
 	}
 
 	@Override
-	protected void creerAnimation() {
+	public void creerAnimation() {
 		if (typeEntiteEnum == TypeEntiteVivante.PERSONNAGE) {
 			this.typeUnite = VariableCommune.PERSO1;
 		}

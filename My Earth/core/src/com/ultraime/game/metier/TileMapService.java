@@ -12,9 +12,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.ultraime.database.Base;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.ElementEarthImage;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.ElementAconstruire;
 
 public class TileMapService {
@@ -131,6 +131,12 @@ public class TileMapService {
 
 	}
 
+	/**
+	 * Ajout un item sur la carte (méthode appelée quand un personnage construit
+	 * un élément)
+	 * 
+	 * @param elementAconstruire
+	 */
 	public void construireItem(final ElementEarth elementAconstruire) {
 		final int posX = elementAconstruire.x;
 		final int posY = elementAconstruire.y;
@@ -142,7 +148,7 @@ public class TileMapService {
 		for (int i = 0; i < elementAconstruire.elementEarthImages.size(); i++) {
 			int posXImage = posX + elementAconstruire.elementEarthImages.get(i).x;
 			int posYImage = posY + elementAconstruire.elementEarthImages.get(i).y;
-			
+
 			if (!elementEvolue.layerCible.equals(SOL_0)) {
 				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 				if (elementEvolue.elementEarthImages.get(i).isCollision) {
@@ -150,8 +156,8 @@ public class TileMapService {
 				} else {
 					WorldService.getInstance().retirerCollision(posXImage, posYImage);
 				}
-			}else{
-				Base.getInstance().retirerElementEarth(posXImage, posYImage,ElementEarth.culture);
+			} else {
+				Base.getInstance().retirerElementEarth(posXImage, posYImage, ElementEarth.culture);
 			}
 		}
 		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(elementEvolue.layerCible);
@@ -170,6 +176,45 @@ public class TileMapService {
 	}
 
 	/**
+	 * place l'élément sur la carte (méthode appelée au chargement.)
+	 * 
+	 * @param elementAconstruire
+	 */
+	public void placerElementEarth(final ElementEarth elementAconstruire) {
+		final int posX = elementAconstruire.x;
+		final int posY = elementAconstruire.y;
+
+		for (int i = 0; i < elementAconstruire.elementEarthImages.size(); i++) {
+			int posXImage = posX + elementAconstruire.elementEarthImages.get(i).x;
+			int posYImage = posY + elementAconstruire.elementEarthImages.get(i).y;
+
+			if (!elementAconstruire.layerCible.equals(SOL_0)) {
+				if (elementAconstruire.elementEarthImages.get(i).isCollision) {
+					WorldService.getInstance().creerCollision(posXImage, posYImage);
+				} else {
+					WorldService.getInstance().retirerCollision(posXImage, posYImage);
+				}
+			}
+		}
+		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(elementAconstruire.layerCible);
+		TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
+		alimenterImageFromMultiTile(elementAconstruire, tiledLayerConstruction, posX, posY, true);
+		alimenterImageFromMultiTile(elementAconstruire, tiledLayer, posX, posY, false);
+
+		if (elementAconstruire.nom.equals("mur_en_bois")) {
+			creerMurEnBois();
+		}
+		// si c'est une culture, on place la terre en dessous d'elle
+		if (elementAconstruire.type.equals(ElementEarth.culture)
+				|| elementAconstruire.type.equals(ElementEarth.culture_final)) {
+			ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom("sol_carotte");
+			TiledMapTileLayer tiled = (TiledMapTileLayer) tiledMap.getLayers().get(elementEarth.layerCible);
+			alimenterImageFromMultiTile(elementEarth, tiled, posX, posY, false);
+		}
+	}
+
+	/**
+	 * affiche l'objet en jeu. L'objet peut être composé de plusieurs tiles.
 	 * @param elementEarth
 	 * @param tiledLayer
 	 * @param posX
@@ -187,6 +232,9 @@ public class TileMapService {
 				cell.setTile(null);
 			} else {
 				cell.setTile(tileSet.getTile(earthImage.idTuile));
+				if(elementEarth.rotation.equals(ElementEarth.rot_droite)){
+					cell.setRotation(Cell.ROTATE_90);
+				}
 			}
 			tiledLayer.setCell(posX + earthImage.x, posY + earthImage.y, cell);
 		}
@@ -287,7 +335,7 @@ public class TileMapService {
 			isObjetPresent = true;
 		}
 		if (!isObjetPresent) {
-			List<ElementEarth> earths = Base.getInstance().getElementEarthPlantes();
+			List<ElementEarth> earths = Base.getInstance().baseCulture.getElementEarthPlantes();
 			for (int i = 0; i < earths.size(); i++) {
 				if (earths.get(i).x == x && earths.get(i).y == y) {
 					if (earths.get(i).elementEarthImages != null

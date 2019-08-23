@@ -1,13 +1,18 @@
 package com.ultraime.game.metier.travail;
 
-import com.ultraime.database.Base;
 import com.ultraime.database.ElementEarth;
+import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.travail.action.AEConstruction;
 import com.ultraime.game.metier.travail.action.AEDeposerElementDansCoffre;
 import com.ultraime.game.metier.travail.action.AERecolte;
 
 public class MetierAgriculteur extends Metier {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public MetierAgriculteur(EntiteVivante entiteVivante) {
 		super(entiteVivante);
@@ -17,7 +22,8 @@ public class MetierAgriculteur extends Metier {
 	public boolean doMetier() {
 		boolean isAction = isActionEncours();
 		if (!isAction) {
-			if (!this.entiteVivante.inventaire.placeDisponible || this.entiteVivante.inventaire.espaceDisponnible() <= 1f) {
+			if (!this.entiteVivante.inventaire.placeDisponible
+					|| this.entiteVivante.inventaire.espaceDisponnible() <= 1f) {
 				isAction = tryFindCoffre();
 			}
 			if (!isAction) {
@@ -49,7 +55,7 @@ public class MetierAgriculteur extends Metier {
 	private boolean tryFindRecolte() {
 		boolean isDoAction = false;
 		final AERecolte actionEntiteRecolte = new AERecolte(0);
-		final ElementEarth elementEarth = Base.getInstance().rechercherElementARecolter();
+		final ElementEarth elementEarth = Base.getInstance().baseCulture.rechercherElementARecolter();
 		if (elementEarth != null) {
 			if (this.entiteVivante.inventaire.placeDisponible) {
 				final float poidsTotal = elementEarth.nombreRecolte * elementEarth.poids;
@@ -77,7 +83,7 @@ public class MetierAgriculteur extends Metier {
 		boolean isDoAction = false;
 
 		AEConstruction actionEntite = new AEConstruction(0);
-		ElementEarth elementEarth = Base.getInstance().rechercherElementAcultiver();
+		ElementEarth elementEarth = Base.getInstance().baseCulture.rechercherElementAcultiver();
 
 		if (elementEarth != null) {
 			actionEntite.ajouterElementAconstruire(elementEarth);

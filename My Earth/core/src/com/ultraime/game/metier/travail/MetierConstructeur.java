@@ -7,6 +7,11 @@ import com.ultraime.game.metier.travail.action.AEConstruction;
 
 public class MetierConstructeur extends Metier {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MetierConstructeur(EntiteVivante entiteVivante) {
 		super(entiteVivante);
 	}
@@ -29,11 +34,10 @@ public class MetierConstructeur extends Metier {
 		if (elementAconstruire != null) {
 			actionEntite.ajouterElementAconstruire(elementAconstruire);
 			this.entiteVivante.ajouterAction(actionEntite);
-			
+
 			isDoAction = true;
 		}
 		return isDoAction;
 	}
-
 
 }
