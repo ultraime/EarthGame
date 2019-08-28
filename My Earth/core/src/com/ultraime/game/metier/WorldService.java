@@ -1,5 +1,6 @@
 package com.ultraime.game.metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -14,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteJoueur;
@@ -26,9 +26,11 @@ public class WorldService {
 
 	// Le vrai monde, avec les stats normal (petit nombre)
 	public World world;
+	public ArrayList<Body> bodiesEntiteVivant = new ArrayList<Body>();
 
 	// World utilisé surtout pour le debug
 	public World worldAffichage;
+	public ArrayList<Body> bodiesAffichageEntiteVivant = new ArrayList<Body>();
 
 	public Box2DDebugRenderer debugRenderer;
 
@@ -80,9 +82,9 @@ public class WorldService {
 
 	public Body recupererBodyFromEntite(final EntiteVivante entiteVivante) {
 		Body retourBody = null;
-		Array<Body> bodies = new Array<Body>();
-		WorldService.getInstance().world.getBodies(bodies);
-		for (final Body body : bodies) {
+		ArrayList<Body> bodies = WorldService.getInstance().bodiesEntiteVivant;
+		for (int i = 0; i < bodies.size(); i++) {
+			final Body body = bodies.get(i);
 			if (body.getUserData() instanceof EntiteVivante) {
 				final EntiteVivante ev = (EntiteVivante) body.getUserData();
 				if (ev == entiteVivante) {
@@ -95,17 +97,21 @@ public class WorldService {
 	}
 
 	private void gestionBodies() {
-		Array<Body> bodies = new Array<Body>();
-		this.world.getBodies(bodies);
-		for (final Body body : bodies) {
-			if (!Parametre.PAUSE) {
-				if (body.getUserData() instanceof EntiteVivante) {
-					final EntiteVivante ev = (EntiteVivante) body.getUserData();
-					ev.doAction(body, world, worldAffichage);
-				}
-			}
+
+		ArrayList<Body> bodies = WorldService.getInstance().bodiesEntiteVivant;
+
+		for (int i = 0; i < bodies.size(); i++) {
+			final Body body = bodies.get(i);
+			// if (!Parametre.PAUSE) {
+			// if (body.getUserData() instanceof EntiteVivante) {
+			// final EntiteVivante ev = (EntiteVivante) body.getUserData();
+			// ev.doAction(body, world, worldAffichage);
+			// }
+			// }
 			if (body.getUserData() instanceof EntiteJoueur) {
 				final EntiteJoueur entiteJoueur = (EntiteJoueur) body.getUserData();
+				// entiteJoueur.doMetier();
+				entiteJoueur.doAction(body, world, worldAffichage);
 				entiteJoueur.render(batch);
 			}
 
@@ -119,15 +125,18 @@ public class WorldService {
 	 */
 	public void renderDebug(final OrthographicCamera camera) {
 		if (Parametre.MODE_DEBUG) {
-			this.debugRenderer.render(world, camera.combined);
-			this.debugRenderer.render(worldAffichage, camera.combined);
+			try {
+				this.debugRenderer.render(world, camera.combined);
+				this.debugRenderer.render(worldAffichage, camera.combined);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void creerCollision(final int x, final int y) {
 		EntiteStatic entiteStatic = new EntiteStatic(x, y, 1, 1);
 		Base.getInstance().creerRectangleStatic(this.world, this.worldAffichage, x, y, 1, 1, entiteStatic);
-
 	}
 
 	public void retirerCollision(int posX, int posY) {

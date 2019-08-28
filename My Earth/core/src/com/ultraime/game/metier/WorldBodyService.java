@@ -38,7 +38,7 @@ public class WorldBodyService {
 	}
 	
 
-	public static void creerCercleVivant(World world, float diametre, float posX, float posY, final Object objet) {
+	public static Body creerCercleVivant(World world, float diametre, float posX, float posY, final Object objet) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(posX, posY);
@@ -55,6 +55,7 @@ public class WorldBodyService {
 		fixtureDef.filter.groupIndex = -2;//pour entite a ne pas etre en colli
 		body.createFixture(fixtureDef);
 		body.setUserData(objet);
+		return body;
 	}
 
 

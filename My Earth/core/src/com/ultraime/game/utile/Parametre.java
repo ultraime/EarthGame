@@ -27,7 +27,9 @@ public class Parametre {
 	public static int VITESSE_TRES_RAPIDE = 3;
 
 	public static boolean PAUSE = false;
-
+	
+	public static int AETOILE_BASE = 250;
+	public static int AETOILE_BASE_2 = 1000;
 	// langue
 	public static I18NBundle bundle;
 

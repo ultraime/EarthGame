@@ -7,9 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.pathfinding.Aetoile;
-import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
+import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.utile.Parametre;
 
 public class AEDeposerElementDansCoffre extends ActionEntite {
@@ -70,7 +70,7 @@ public class AEDeposerElementDansCoffre extends ActionEntite {
 				}
 				final Noeud noeudDestination = new Noeud((elemenCible.x + decalageX), (elemenCible.y + decalageY), 0);
 				aetoile.setCollisionEntiteConstructible(true);
-				ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart, true);
+				ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE);
 				ev.setListeDeNoeudDeplacement(cheminPlusCourt);
 				// si c'est ok on sort de la boucle
 				break;

@@ -20,6 +20,10 @@ public class HudComposant extends Composant {
 	public static final int CONSTRUCTION_CULTURE = 1;
 	private static final int CONSTRUCTION_MEUBLE = 2;
 	private static final int CONSTRUCTION_SOL = 3;
+	/**
+	 * détruire, couper, miner etc..
+	 */
+	private static final int ACTION = 4;
 	private Sprite sprite;
 	// private Sprite spriteTest;
 
@@ -124,10 +128,14 @@ public class HudComposant extends Composant {
 		final BoutonTroisPars boutonTroisPars_meuble = creerBtnMenu(textureFond, largeurBtn, "txt.construction.meuble",
 				posX, 42 * 2 + posY);
 		this.boutonTroisParsConstruction.add(boutonTroisPars_meuble);
-		
-		final BoutonTroisPars boutonTroisPars_sol = creerBtnMenu(textureFond, largeurBtn, "txt.construction.sol",
-				posX, 42 * 3 + posY);
+
+		final BoutonTroisPars boutonTroisPars_sol = creerBtnMenu(textureFond, largeurBtn, "txt.construction.sol", posX,
+				42 * 3 + posY);
 		this.boutonTroisParsConstruction.add(boutonTroisPars_sol);
+		
+		final BoutonTroisPars boutonTroisPars_action = creerBtnMenu(textureFond, largeurBtn, "txt.action", posX,
+				42 * 4 + posY);
+		this.boutonTroisParsConstruction.add(boutonTroisPars_action);
 	}
 
 	/**
@@ -197,10 +205,12 @@ public class HudComposant extends Composant {
 						this.menuAction.show(true, ElementEarth.structure_constructible);
 					} else if (i == CONSTRUCTION_CULTURE) {
 						this.menuAction.show(true, ElementEarth.culture_sol_constructible);
-					}else if (i == CONSTRUCTION_MEUBLE) {
+					} else if (i == CONSTRUCTION_MEUBLE) {
 						this.menuAction.show(true, ElementEarth.meuble_constructible);
-					}else if (i == CONSTRUCTION_SOL) {
+					} else if (i == CONSTRUCTION_SOL) {
 						this.menuAction.show(true, ElementEarth.sol_constructible);
+					}else if(i == ACTION){
+						this.menuAction.show(true, ElementEarth.action);
 					}
 				}
 			}

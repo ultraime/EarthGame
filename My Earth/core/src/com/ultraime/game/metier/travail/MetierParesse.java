@@ -28,7 +28,7 @@ public class MetierParesse extends Metier {
 
 	private boolean findAction() {
 		boolean isDoAction = true;
-		if (Calcul.random(0, 1) == 0) {
+		if (Calcul.random(0, 6) < 5) {
 			ajouterActionAttente();
 		} else {
 			ajouterActionDeplacement();
@@ -41,8 +41,8 @@ public class MetierParesse extends Metier {
 	private void ajouterActionDeplacement() {
 		int x = (int) this.entiteVivante.x;
 		int y = (int) this.entiteVivante.y;
-		final int addX = Calcul.random(-2, 2);
-		final int addY = Calcul.random(-2, 2);
+		final int addX = Calcul.random(-2, 3);
+		final int addY = Calcul.random(-2, 3);
 		x += addX;
 		y += addY;
 		AEDeplacement actionEntite = new AEDeplacement(x, y, 0);

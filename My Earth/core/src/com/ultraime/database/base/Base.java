@@ -32,6 +32,8 @@ public class Base implements java.io.Serializable {
 	public BaseStructure baseStructure;
 	public BaseSol baseSol;
 	public BasePersonnage basePersonnage;
+	
+
 
 	/**
 	 * pour les collisions
@@ -147,6 +149,7 @@ public class Base implements java.io.Serializable {
 			for (Body body : bodies) {
 				if (posX == body.getPosition().x && posY == body.getPosition().y) {
 					world.destroyBody(body);
+					WorldService.getInstance().bodiesEntiteVivant.remove(body);
 					break;
 				}
 			}
@@ -155,6 +158,7 @@ public class Base implements java.io.Serializable {
 				if (posX * WorldService.MULTIPLICATEUR + 32 == body.getPosition().x
 						&& posY * WorldService.MULTIPLICATEUR + 32 == body.getPosition().y) {
 					worldAffichage.destroyBody(body);
+					WorldService.getInstance().bodiesAffichageEntiteVivant.remove(body);
 					break;
 				}
 			}

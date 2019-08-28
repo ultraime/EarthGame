@@ -1,11 +1,21 @@
 package com.ultraime.game.metier.travail;
 
+import java.util.ArrayDeque;
+
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
+import com.ultraime.game.metier.WorldService;
+import com.ultraime.game.metier.pathfinding.Aetoile;
+import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
+import com.ultraime.game.metier.pathfinding.AetoileException;
+import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.AEConstruction;
 import com.ultraime.game.metier.travail.action.AEDeposerElementDansCoffre;
 import com.ultraime.game.metier.travail.action.AERecolte;
+import com.ultraime.game.utile.Parametre;
 
 public class MetierAgriculteur extends Metier {
 
@@ -13,6 +23,7 @@ public class MetierAgriculteur extends Metier {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private ElementEarth elementEarthOld;
 
 	public MetierAgriculteur(EntiteVivante entiteVivante) {
 		super(entiteVivante);
@@ -41,8 +52,11 @@ public class MetierAgriculteur extends Metier {
 		final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
 		final ElementEarth elementEarth = Base.getInstance().rechercherCoffreDisponible();
 		if (elementEarth != null) {
-			aeDeposerElementDansCoffre.ajouterCible(elementEarth);
-			this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
+			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante);
+			if (isDoAction) {
+				aeDeposerElementDansCoffre.ajouterCible(elementEarth);
+				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
+			}
 		}
 		return isDoAction;
 	}
@@ -55,18 +69,24 @@ public class MetierAgriculteur extends Metier {
 	private boolean tryFindRecolte() {
 		boolean isDoAction = false;
 		final AERecolte actionEntiteRecolte = new AERecolte(0);
-		final ElementEarth elementEarth = Base.getInstance().baseCulture.rechercherElementARecolter();
+		final ElementEarth elementEarth = rechercherUneCulturePrete();
 		if (elementEarth != null) {
 			if (this.entiteVivante.inventaire.placeDisponible) {
-				final float poidsTotal = elementEarth.nombreRecolte * elementEarth.poids;
-				if (this.entiteVivante.inventaire.placeSuffisante(poidsTotal)) {
-					actionEntiteRecolte.ajouterElementArecolter(elementEarth);
-					this.entiteVivante.ajouterAction(actionEntiteRecolte);
-					ElementEarth elementEarthNew = new ElementEarth(
-							Base.getInstance().recupererElementEarthByNom(elementEarth.elementEarthEvolution),
-							elementEarth.x, elementEarth.y);
-					Base.getInstance().ajouterElementEarth(elementEarthNew);
-					isDoAction = true;
+				isDoAction = verifierAccessibilite(true, elementEarth, this.entiteVivante);
+				if (isDoAction) {
+					final float poidsTotal = elementEarth.nombreRecolte * elementEarth.poids;
+					if (this.entiteVivante.inventaire.placeSuffisante(poidsTotal)) {
+						actionEntiteRecolte.ajouterElementArecolter(elementEarth);
+						this.entiteVivante.ajouterAction(actionEntiteRecolte);
+						ElementEarth elementEarthNew = new ElementEarth(
+								Base.getInstance().recupererElementEarthByNom(elementEarth.elementEarthEvolution),
+								elementEarth.x, elementEarth.y);
+						Base.getInstance().ajouterElementEarth(elementEarthNew);
+						isDoAction = true;
+						this.elementEarthOld = null;
+					}
+				} else {
+					this.elementEarthOld = elementEarth;
 				}
 			}
 
@@ -75,7 +95,25 @@ public class MetierAgriculteur extends Metier {
 	}
 
 	/**
-	 * echerche le sol prêt à accueillir une graine
+	 * Permet de récupérer une culture. Un système de "old" est mis en place
+	 * pour récupérer la prochaine plante si la premiere n'est pas dispo
+	 * 
+	 * @return elementEarth
+	 */
+	public ElementEarth rechercherUneCulturePrete() {
+		ElementEarth elementEarth = null;
+		if (this.elementEarthOld != null) {
+			elementEarth = Base.getInstance().baseCulture.rechercherElementARecolterNext(elementEarthOld);
+		}
+		if (elementEarth == null) {
+			elementEarth = Base.getInstance().baseCulture.rechercherElementARecolter();
+			this.elementEarthOld = null;
+		}
+		return elementEarth;
+	}
+
+	/**
+	 * recherche le sol prêt à accueillir une graine
 	 * 
 	 * @return isDoAction
 	 */
@@ -86,11 +124,35 @@ public class MetierAgriculteur extends Metier {
 		ElementEarth elementEarth = Base.getInstance().baseCulture.rechercherElementAcultiver();
 
 		if (elementEarth != null) {
-			actionEntite.ajouterElementAconstruire(elementEarth);
-			this.entiteVivante.ajouterAction(actionEntite);
 			isDoAction = true;
+			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante);
+			if (isDoAction) {
+				actionEntite.ajouterElementAconstruire(elementEarth);
+				this.entiteVivante.ajouterAction(actionEntite);
+			}
 		}
 
+		return isDoAction;
+	}
+
+	public static boolean verifierAccessibilite(boolean isDoAction, final ElementEarth element,
+			final EntiteVivante ev) {
+		final Body body = WorldService.getInstance().recupererBodyFromEntite(ev);
+		final World world = WorldService.getInstance().world;
+		final int xDepart = Math.round(body.getPosition().x);
+		final int yDepart = Math.round(body.getPosition().y);
+		Noeud noeudDepart = new Noeud(xDepart, yDepart, 0);
+		final Noeud noeudDestination = new Noeud(element.x, element.y, 0);
+
+		Aetoile aetoile = new Aetoile(world, body);
+		try {
+			ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE_2);
+			ev.setListeDeNoeudDeplacement(cheminPlusCourt);
+		} catch (AetoileException e) {
+			isDoAction = false;
+		} catch (AetoileDestinationBlockException e) {
+			isDoAction = false;
+		}
 		return isDoAction;
 	}
 

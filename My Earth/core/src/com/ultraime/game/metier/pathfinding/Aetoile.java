@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
@@ -30,7 +29,7 @@ public class Aetoile implements Serializable {
 	private static final int TAILLE_X = 10000;
 	private static final int TAILLE_Y = 10000;
 
-	private World world;
+//	private World world;
 	// private Body body;
 
 	public Boolean isCollision;
@@ -45,7 +44,7 @@ public class Aetoile implements Serializable {
 	private boolean isCollisionEntiteConstructible = false;
 
 	public Aetoile(final World world, final Body body) {
-		this.world = world;
+//		this.world = world;
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.KinematicBody;
@@ -60,64 +59,64 @@ public class Aetoile implements Serializable {
 
 	}
 
-	public static Noeud creerNoeud(final int x, final int y, final double cout) {
+	public Noeud creerNoeud(final int x, final int y, final double cout) {
 		return new Noeud(x, y, cout);
 	}
 
-	public static class Noeud implements Serializable, Comparable<Noeud> {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public Noeud(final int x, final int y, final double cout) {
-			this.x = x;
-			this.y = y;
-			this.cout = cout;
-			this.isVisit = false;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + x;
-			result = prime * result + y;
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Noeud other = (Noeud) obj;
-			if (x != other.x)
-				return false;
-			if (y != other.y)
-				return false;
-			return true;
-		}
-
-		public int x, y;
-		public double cout, heuristique;
-		public boolean isVisit;
-		public Noeud noeudParent;
-
-		@Override
-		public int compareTo(Noeud noeud) {
-			if (this.heuristique < noeud.heuristique) {
-				return -1;
-			} else if (this.heuristique == noeud.heuristique) {
-				return 0;
-			}
-			return 1;
-		}
-
-	}
+//	public static class Noeud implements Serializable, Comparable<Noeud> {
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//
+//		public Noeud(final int x, final int y, final double cout) {
+//			this.x = x;
+//			this.y = y;
+//			this.cout = cout;
+//			this.isVisit = false;
+//		}
+//
+//		@Override
+//		public int hashCode() {
+//			final int prime = 31;
+//			int result = 1;
+//			result = prime * result + x;
+//			result = prime * result + y;
+//			return result;
+//		}
+//
+//		@Override
+//		public boolean equals(Object obj) {
+//			if (this == obj)
+//				return true;
+//			if (obj == null)
+//				return false;
+//			if (getClass() != obj.getClass())
+//				return false;
+//			Noeud other = (Noeud) obj;
+//			if (x != other.x)
+//				return false;
+//			if (y != other.y)
+//				return false;
+//			return true;
+//		}
+//
+//		public int x, y;
+//		public double cout, heuristique;
+//		public boolean isVisit;
+//		public Noeud noeudParent;
+//
+//		@Override
+//		public int compareTo(Noeud noeud) {
+//			if (this.heuristique < noeud.heuristique) {
+//				return -1;
+//			} else if (this.heuristique == noeud.heuristique) {
+//				return 0;
+//			}
+//			return 1;
+//		}
+//
+//	}
 
 	public List<Noeud> recupererNoeudVoisin(int x, int y) {
 		List<Noeud> listDeNoeud = new ArrayList<Noeud>();
@@ -163,18 +162,19 @@ public class Aetoile implements Serializable {
 	 * @param objectif
 	 * @param depart
 	 * @param isControlDestination
+	 * @param security
 	 * @return
 	 * @throws AetoileException
 	 * @throws AetoileDestinationBlockException
 	 */
-	public ArrayDeque<Noeud> cheminPlusCourt(final Noeud objectif, final Noeud depart, boolean isControlDestination)
+	public ArrayDeque<Noeud> cheminPlusCourt(final Noeud objectif, final Noeud depart,final int security )
 			throws AetoileException, AetoileDestinationBlockException {
 		// avant de commencer on regarde si la destination est vraiment
 		// accesible
 		ArrayDeque<Noeud> listDeNoeudRetour = new ArrayDeque<Noeud>();
-		if (!isCollision(objectif) || !isControlDestination) {
+		if (!isCollision(objectif) ) {
 			int iSecurity = 0;
-			final int SECURITY = 1000;
+			final int SECURITY = security;
 			final int POSITIONARRIVE = 1;
 			List<Noeud> listDeNoeudOpen = new ArrayList<Noeud>();
 			List<Noeud> listDeNoeudClose = new ArrayList<Noeud>();
@@ -262,8 +262,8 @@ public class Aetoile implements Serializable {
 	private boolean isCollision(final Noeud noeud) {
 		isCollision = false;
 		try {
-			Array<Body> bodies = new Array<Body>();
-			this.world.getBodies(bodies);
+//			Array<Body> bodies = new Array<Body>();
+//			this.world.getBodies(bodies);
 			circleBody.setX(noeud.x);
 			circleBody.setY(noeud.y);
 
@@ -337,7 +337,7 @@ public class Aetoile implements Serializable {
 		return isCollision;
 	}
 
-	private static double calculHeuristic(final Noeud objectif, final Noeud noeud) {
+	private  double calculHeuristic(final Noeud objectif, final Noeud noeud) {
 		int dx = Math.abs(noeud.x - objectif.x);
 		int dy = Math.abs(noeud.y - objectif.y);
 		return (dx + dy) + noeud.cout;

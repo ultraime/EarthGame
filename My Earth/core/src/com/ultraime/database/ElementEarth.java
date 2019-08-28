@@ -19,6 +19,7 @@ public class ElementEarth implements Serializable {
 	transient public final static String culture_sol_constructible = "culture_sol_constructible";
 	transient public final static String meuble_constructible = "meuble_constructible";
 	transient public final static String sol_constructible = "sol_constructible";
+	transient public final static String action = "action";
 	transient public final static String culture_sol = "culture_sol";
 	transient public final static String culture = "culture";
 	transient public final static String culture_final = "culture_final";
@@ -48,6 +49,7 @@ public class ElementEarth implements Serializable {
 			add(structure);
 		}
 	};
+
 
 	/**
 	 * structure,plante,securité,fourniture,energie…

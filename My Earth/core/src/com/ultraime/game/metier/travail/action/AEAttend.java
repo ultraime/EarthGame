@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.metier.Temps;
+import com.ultraime.game.utile.Calcul;
 
 public class AEAttend extends ActionEntite {
 	/**
@@ -14,13 +15,11 @@ public class AEAttend extends ActionEntite {
 
 	public AEAttend(int priorite) {
 		super(priorite);
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void initAction(World world, Body body) {
+	public void initAction(final World world, final Body body, final int tempAttente) {
 		tempsFinAttente = new Temps(Base.getInstance().getTemps());
-		tempsFinAttente.addMinute(10);
+		tempsFinAttente.addMinute(tempAttente);
 
 	}
 
@@ -31,6 +30,12 @@ public class AEAttend extends ActionEntite {
 			isActionEnd = true;
 		}
 		return isActionEnd;
+	}
+
+	@Override
+	public void initAction(final World world, final Body body) {
+		initAction(world, body, Calcul.random(15, 30));
+
 	}
 
 }

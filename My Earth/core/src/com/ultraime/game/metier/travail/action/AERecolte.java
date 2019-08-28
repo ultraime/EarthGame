@@ -9,9 +9,9 @@ import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.pathfinding.Aetoile;
-import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
+import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.utile.Parametre;
 
 public class AERecolte extends ActionEntite {
@@ -66,7 +66,7 @@ public class AERecolte extends ActionEntite {
 		EntiteVivante ev = (EntiteVivante) body.getUserData();
 		Aetoile aetoile = new Aetoile(world, body);
 		try {
-			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart, true));
+			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE_2));
 		} catch (AetoileException e) {
 			if (Parametre.MODE_DEBUG)
 				e.printStackTrace();

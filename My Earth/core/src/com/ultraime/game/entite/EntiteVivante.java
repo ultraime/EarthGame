@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.animation.AnimationManager;
-import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
+import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.Metier;
 import com.ultraime.game.metier.travail.action.ActionEntite;
 
@@ -44,7 +44,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	private ActionEntite actionEntite = null;
 
 	// élément propre au entité
-	private float vitesse = 4f;//3f
+	private float vitesse = 4f;// 3f
 	protected List<Metier> metiers;
 	public Inventaire inventaire;
 
@@ -63,6 +63,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.cercleShape = new Circle(x, y, radius);
 		this.metiers = new ArrayList<>();
 		this.inventaire = new Inventaire(50);
+
 	}
 
 	/**
@@ -72,6 +73,9 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.metiers.add(metier);
 	}
 
+	/**
+	 * réalise le métier. (fait le calcul du déplacement, la recherche des éléments etc..).
+	 */
 	public void doMetier() {
 		boolean isDoingMetier = false;
 		if (this.metiers.size() > 0) {
@@ -85,25 +89,40 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	}
 
 	/**
-	 * @param entiteVivante
+	 * fait le déplacement, l'ajout de l'objet sur la carte etc...
+	 * il y a quand même un aetoile de réaliser. A voir pour la perf.
+	 * @param body
 	 * @param world
 	 * @param worldAffichage
+	 * @return
 	 */
 	public boolean doAction(final Body body, final World world, final World worldAffichage) {
-		doMetier();
 		boolean isActionEnd = false;
-		if (actionEntite == null) {
-			if (listeAction.size() > 0) {
-				actionEntite = listeAction.get(0);
-				actionEntite.initAction(world, body);
-			}
-		}
 		if (actionEntite != null) {
 			boolean isEnd = actionEntite.doAction(body, world, worldAffichage);
 			if (isEnd) {
 				listeAction.remove(0);
 				actionEntite = null;
 				isActionEnd = true;
+			}
+		}
+		return isActionEnd;
+	}
+
+	/**
+	 * @param body
+	 * @param world
+	 * @param worldAffichage
+	 * @return
+	 */
+	public boolean rechercheAction(final Body body, final World world, final World worldAffichage) {
+		// doMetier();
+		boolean isActionEnd = false;
+		doMetier();
+		if (actionEntite == null) {
+			if (listeAction.size() > 0) {
+				actionEntite = listeAction.get(0);
+				actionEntite.initAction(world, body);
 			}
 		}
 		return isActionEnd;

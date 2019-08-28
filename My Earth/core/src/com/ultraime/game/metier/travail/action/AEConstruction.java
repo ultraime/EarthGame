@@ -9,7 +9,6 @@ import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.TileMapService;
-import com.ultraime.game.metier.travail.MetierConstructeur;
 
 public class AEConstruction extends ActionEntite {
 	/**
@@ -49,7 +48,8 @@ public class AEConstruction extends ActionEntite {
 
 	@Override
 	public void initAction(World world, Body body) {
-		MetierConstructeur.verifierAccessibilite(false, elementAconstruires.get(0), (EntiteVivante) body.getUserData());
+		//TODO a décommenter ?
+//		MetierConstructeur.verifierAccessibilite(false, elementAconstruires.get(0), (EntiteVivante) body.getUserData());
 	}
 
 	public void ajouterElementAconstruire(final ElementEarth elementAconstruire) {

@@ -2,13 +2,14 @@ package com.ultraime.game.metier.travail.action;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.ultraime.game.entite.EntiteVivante;
-import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
+import com.ultraime.game.metier.WorldService;
+import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.utile.Parametre;
 
 /**
@@ -98,10 +99,10 @@ public abstract class ActionEntite implements Comparable<ActionEntite>, Serializ
 			}
 		}
 		try {
-			Array<Body> bodiesAffichage = new Array<Body>();
-			worldAffichage.getBodies(bodiesAffichage);
+			ArrayList<Body> bodiesAffichage = WorldService.getInstance().bodiesAffichageEntiteVivant;
 			final EntiteVivante ev = (EntiteVivante) body.getUserData();
-			for (final Body bodyAfficher : bodiesAffichage) {
+			for (int i = 0; i < bodiesAffichage.size(); i++) {
+				final Body bodyAfficher = bodiesAffichage.get(i);
 				if (bodyAfficher.getUserData() instanceof EntiteVivante) {
 					final EntiteVivante evAfficher = (EntiteVivante) bodyAfficher.getUserData();
 					if (evAfficher.id == ev.id) {

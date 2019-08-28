@@ -4,10 +4,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.pathfinding.Aetoile;
-import com.ultraime.game.metier.pathfinding.Aetoile.Noeud;
-import com.ultraime.game.utile.Parametre;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
+import com.ultraime.game.metier.pathfinding.Noeud;
+import com.ultraime.game.utile.Parametre;
 
 public class AEDeplacement extends ActionEntite {
 	/**
@@ -49,7 +49,7 @@ public class AEDeplacement extends ActionEntite {
 		EntiteVivante ev = (EntiteVivante) body.getUserData();
 		Aetoile aetoile = new Aetoile(world, body);
 		try {
-			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,true));
+			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE));
 		} catch (AetoileException e) {
 			if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
 				e.printStackTrace();

@@ -100,6 +100,8 @@ public class EcranJeu extends Ecran {
 		Temps temps = new Temps(3000, 0, 1, 1, 12, 00);
 		Base.getInstance().setTemps(temps);
 		Base.getInstance().startTempsThread();
+		
+		Base.getInstance().basePersonnage.startEntiteThread();
 
 	}
 	public void initialiserPersonnage() {
@@ -108,6 +110,7 @@ public class EcranJeu extends Ecran {
 		//TODO INIT DES PERSO
 		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
 		Base.getInstance().basePersonnage.ajouterMetier(new MetierConstructeur(entiteJoueur), entiteJoueur);
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierParesse(entiteJoueur), entiteJoueur);
 
 		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
 		Base.getInstance().basePersonnage.ajouterMetier(new MetierAgriculteur(entiteJoueur), entiteJoueur);
