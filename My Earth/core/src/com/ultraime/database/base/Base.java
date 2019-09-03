@@ -32,9 +32,8 @@ public class Base implements java.io.Serializable {
 	public BaseStructure baseStructure;
 	public BaseSol baseSol;
 	public BasePersonnage basePersonnage;
-	
-
-
+	public BaseAction baseAction;
+	public BaseNature baseNature;
 	/**
 	 * pour les collisions
 	 */
@@ -59,6 +58,8 @@ public class Base implements java.io.Serializable {
 		baseStructure = new BaseStructure();
 		baseSol = new BaseSol();
 		basePersonnage = new BasePersonnage();
+		baseAction = new BaseAction();
+		baseNature = new BaseNature();
 	}
 
 	/**
@@ -176,18 +177,6 @@ public class Base implements java.io.Serializable {
 		}
 	}
 
-	// public void creerCercleVivant(final World world, final World
-	// worldAffichage, final float radius, final float posx,
-	// final float posy, EntiteVivante entiteVivante) {
-	// WorldBodyService.creerCercleVivant(world, radius, posx, posy,
-	// entiteVivante);
-	// WorldBodyService.creerCercleVivant(worldAffichage,
-	// WorldService.MULTIPLICATEUR * radius,
-	// posx * WorldService.MULTIPLICATEUR + 32, posy *
-	// WorldService.MULTIPLICATEUR + 32, entiteVivante);
-	//
-	// }
-
 	public List<Rectangle> getRectangleBodies() {
 		return rectangleBodies;
 	}
@@ -276,8 +265,16 @@ public class Base implements java.io.Serializable {
 				final int posX = earthImage.x + element.x;
 				final int posY = earthImage.y + element.y;
 				if (!type.equals(ElementEarth.culture)) {
+					String layer = null;
+					if (element.layerCible != null) {
+						layer = element.layerCible;
+					} else {
+						layer = earthImage.layerCible;
+					}
 					TileMapService.getInstance().viderCellMap(posX, posY,
-							TileMapService.getInstance().getLayers(element.layerCible));
+							TileMapService.getInstance().getLayers(layer));
+					WorldService.getInstance().retirerCollision(posX, posY);
+
 				}
 			}
 			getListEarth(type).remove(element);
@@ -327,6 +324,12 @@ public class Base implements java.io.Serializable {
 			break;
 		case ElementEarth.sol:
 			earths = baseSol.getElementEarthSol();
+			break;
+		case ElementEarth.action:
+			earths = baseAction.getElementEarthAction();
+			break;
+		case ElementEarth.nature:
+			earths = baseNature.getElementEarthNature();
 			break;
 		default:
 			break;

@@ -81,7 +81,9 @@ public class LecteurXML extends ApplicationAdapter {
 			elementEarth.type = child.getChildByName("type").getText();
 			elementEarth.placementType = child.getChildByName("placementType").getText();
 			elementEarth.nom = child.getChildByName("nom").getText();
+
 			elementEarth.elementEarthEvolution = child.getChildByName("evolution").getText();
+
 			if (child.getChildByName("rotation") != null) {
 				elementEarth.rotation = child.getChildByName("rotation").getText();
 			}
@@ -102,33 +104,74 @@ public class LecteurXML extends ApplicationAdapter {
 			if (child.getChildByName("logoImage") != null) {
 				elementEarth.logoImage = child.getChildByName("logoImage").getText();
 			}
-			Array<Element> itemsImageElement = child.getChildrenByName("imageElement");
-			for (Element childImageElement : itemsImageElement) {
-				ElementEarthImage elementEarthImage = new ElementEarthImage();
-				elementEarthImage.x = Integer.parseInt(childImageElement.getChildByName("x").getText());
-				elementEarthImage.y = Integer.parseInt(childImageElement.getChildByName("y").getText());
-				elementEarthImage.idTuile = Integer.parseInt(childImageElement.getChildByName("idTuile").getText());
-				String strCollision = childImageElement.getChildByName("collision").getText();
-				if ("true".equals(strCollision)) {
-					elementEarthImage.isCollision = true;
-				}
-				elementEarth.addElementEarthImage(elementEarthImage);
+			if (child.getChildByName("idTuileNone") != null) {
+				elementEarth.idTuileNone = Integer.parseInt(child.getChildByName("idTuileNone").getText());
 			}
-			elementEarth.layerCible = child.getChildByName("layerCible").getText();
+			if (child.getChildByName("layerCible") != null) {
+				elementEarth.layerCible = child.getChildByName("layerCible").getText();
+			}
+			alimenterEarthImage(child, elementEarth);
 
-			Array<Element> elementAnimation = child.getChildrenByName("animation");
-			for (Element childAnimation : elementAnimation) {
-				final int largeur = Integer.parseInt(childAnimation.getChildByName("largeur").getText());
-				final int hauteur = Integer.parseInt(childAnimation.getChildByName("hauteur").getText());
-				final float vitesseAnimation = Float
-						.parseFloat((childAnimation.getChildByName("vitesseAnimation").getText()));
-				final String lienImage = childAnimation.getChildByName("lienImage").getText();
-				AnimationManager animationManager = new AnimationManager(largeur, hauteur, vitesseAnimation, lienImage);
-				elementEarth.animationManager = animationManager;
-			}
+			alimenterAnimation(child, elementEarth);
+
+			alimenterElementCible(child, elementEarth);
+
 			Base.getInstance().addReferenceElementEarth(elementEarth);
 		}
 
+	}
+
+	/**
+	 * @param child
+	 * @param elementEarth
+	 */
+	public void alimenterAnimation(Element child, ElementEarth elementEarth) {
+		Array<Element> elementAnimation = child.getChildrenByName("animation");
+		for (Element childAnimation : elementAnimation) {
+			final int largeur = Integer.parseInt(childAnimation.getChildByName("largeur").getText());
+			final int hauteur = Integer.parseInt(childAnimation.getChildByName("hauteur").getText());
+			final float vitesseAnimation = Float
+					.parseFloat((childAnimation.getChildByName("vitesseAnimation").getText()));
+			final String lienImage = childAnimation.getChildByName("lienImage").getText();
+			AnimationManager animationManager = new AnimationManager(largeur, hauteur, vitesseAnimation, lienImage);
+			elementEarth.animationManager = animationManager;
+		}
+	}
+
+	/**
+	 * @param child
+	 * @param elementEarth
+	 */
+	public void alimenterElementCible(final Element child, final ElementEarth elementEarth) {
+		Array<Element> elementsCible = child.getChildrenByName("elementsCible");
+		for (Element elementCibleXML : elementsCible) {
+			ElementCible elementCible = new ElementCible();
+			elementCible.type = elementCibleXML.getChildByName("type").getText();
+
+			elementEarth.addElementCible(elementCible);
+		}
+	}
+
+	/**
+	 * @param child
+	 * @param elementEarth
+	 */
+	public void alimenterEarthImage(final Element child, final ElementEarth elementEarth) {
+		Array<Element> itemsImageElement = child.getChildrenByName("imageElement");
+		for (Element childImageElement : itemsImageElement) {
+			ElementEarthImage elementEarthImage = new ElementEarthImage();
+			elementEarthImage.x = Integer.parseInt(childImageElement.getChildByName("x").getText());
+			elementEarthImage.y = Integer.parseInt(childImageElement.getChildByName("y").getText());
+			elementEarthImage.idTuile = Integer.parseInt(childImageElement.getChildByName("idTuile").getText());
+			String strCollision = childImageElement.getChildByName("collision").getText();
+			if ("true".equals(strCollision)) {
+				elementEarthImage.isCollision = true;
+			}
+			if (childImageElement.getChildByName("layerCible") != null) {
+				elementEarthImage.layerCible = childImageElement.getChildByName("layerCible").getText();
+			}
+			elementEarth.addElementEarthImage(elementEarthImage);
+		}
 	}
 
 	public String[] getFichierDansRepertoire(final FileHandle handle) {

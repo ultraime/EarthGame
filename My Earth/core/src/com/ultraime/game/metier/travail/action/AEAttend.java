@@ -34,7 +34,7 @@ public class AEAttend extends ActionEntite {
 
 	@Override
 	public void initAction(final World world, final Body body) {
-		initAction(world, body, Calcul.random(15, 30));
+		initAction(world, body, Calcul.random(10, 20));
 
 	}
 

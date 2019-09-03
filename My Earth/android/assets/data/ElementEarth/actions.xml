@@ -1,0 +1,42 @@
+<ElementEarth>
+	<elementEarths>
+		<type>action</type>
+		<placementType>unique</placementType>
+		<nom>detruire</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>40</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<idTuileNone>39</idTuileNone>
+		<logoImage>logo/detruire.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+		<elementsCible>
+			<type>meuble</type>
+		</elementsCible>
+		<elementsCible>
+			<type>structure</type>
+		</elementsCible>
+	</elementEarths>
+	
+	<elementEarths>
+		<type>action</type>
+		<placementType>unique</placementType>
+		<nom>couper</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>30</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<idTuileNone>29</idTuileNone>
+		<logoImage>logo/couper.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+		<elementsCible>
+			<type>nature</type>
+		</elementsCible>
+	</elementEarths>
+</ElementEarth>

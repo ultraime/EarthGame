@@ -61,35 +61,12 @@ public class SaveService {
 			Base.chargeData(baseData);
 			LecteurXML.getInstance().traiterToutLesFichiers();
 
-			// TODO ici save
-			List<ElementEarth> elementEarthStructure = baseData.baseStructure.getElementEarthStructure();
-			for (int i = 0; i < elementEarthStructure.size(); i++) {
-				final ElementEarth elem = elementEarthStructure.get(i);
-				TileMapService.getInstance().placerElementEarth(elem);
-			}
-			List<ElementEarth> elementEarthplantes = baseData.baseCulture.getElementEarthPlantes();
-			for (int i = 0; i < elementEarthplantes.size(); i++) {
-				final ElementEarth elem = elementEarthplantes.get(i);
-				TileMapService.getInstance().placerElementEarth(elem);
-			}
-			List<ElementEarth> elementEarthMeubles = baseData.baseMeuble.getElementEarthMeubles();
-			for (int i = 0; i < elementEarthMeubles.size(); i++) {
-				final ElementEarth elem = elementEarthMeubles.get(i);
-				TileMapService.getInstance().placerElementEarth(elem);
-			}
-			List<ElementEarth> elementEarthSol = baseData.baseSol.getElementEarthSol();
-			for (int i = 0; i < elementEarthSol.size(); i++) {
-				final ElementEarth elem = elementEarthSol.get(i);
-				TileMapService.getInstance().placerElementEarth(elem);
-			}
-
-			List<EntiteJoueur> entiteJoueurs = baseData.basePersonnage.getEntiteJoueurs();
-			for (int i = 0; i < entiteJoueurs.size(); i++) {
-				final EntiteJoueur elem = entiteJoueurs.get(i);
-				elem.creerAnimation();
-				Base.getInstance().basePersonnage.creerHitboxPersonnage(WorldService.getInstance().world,
-						WorldService.getInstance().worldAffichage, elem.getCercleShape().radius, elem.x, elem.y, elem);
-			}
+			// ici chargement et ajout des différents objets sur la carte
+			chargerStructure(baseData);
+			chargerCulture(baseData);
+			chargerMeuble(baseData);
+			chargerSol(baseData);
+			chargerPersonnage(baseData);
 
 			ois.close();
 		} catch (ClassNotFoundException | IOException e) {
@@ -100,17 +77,75 @@ public class SaveService {
 		}
 
 	}
-	// private void suspendThread() {
-	// tempsThread.suspend();
-	// entitePnjDeplacementThread.suspend();
-	// entitePnjThread.suspend();
-	// }
-	//
-	// private void resumedThread() {
-	// tempsThread.resume();
-	// entitePnjDeplacementThread.resume();
-	// entitePnjThread.resume();
-	//
-	// }
+
+	/**
+	 * @param baseData
+	 */
+	public static void chargerPersonnage(Base baseData) {
+		List<EntiteJoueur> entiteJoueurs = baseData.basePersonnage.getEntiteJoueurs();
+		for (int i = 0; i < entiteJoueurs.size(); i++) {
+			final EntiteJoueur elem = entiteJoueurs.get(i);
+			elem.creerAnimation();
+			Base.getInstance().basePersonnage.creerHitboxPersonnage(WorldService.getInstance().world,
+					WorldService.getInstance().worldAffichage, elem.getCercleShape().radius, elem.x, elem.y, elem);
+		}
+		Base.getInstance().basePersonnage.initThreadEntiteJoueurs(entiteJoueurs);
+
+	}
+
+	/**
+	 * @param baseData
+	 */
+	public static void chargerSol(Base baseData) {
+		List<ElementEarth> elementEarthSol = baseData.baseSol.getElementEarthSol();
+		for (int i = 0; i < elementEarthSol.size(); i++) {
+			final ElementEarth elem = elementEarthSol.get(i);
+			TileMapService.getInstance().placerElementEarth(elem);
+		}
+	}
+
+	/**
+	 * @param baseData
+	 */
+	public static void chargerMeuble(Base baseData) {
+		List<ElementEarth> elementEarthMeubles = baseData.baseMeuble.getElementEarthMeubles();
+		for (int i = 0; i < elementEarthMeubles.size(); i++) {
+			final ElementEarth elem = elementEarthMeubles.get(i);
+			TileMapService.getInstance().placerElementEarth(elem);
+		}
+	}
+
+	/**
+	 * @param baseData
+	 */
+	public static void chargerCulture(Base baseData) {
+		List<ElementEarth> elementEarthplantes = baseData.baseCulture.getElementEarthPlantes();
+		for (int i = 0; i < elementEarthplantes.size(); i++) {
+			final ElementEarth elem = elementEarthplantes.get(i);
+			TileMapService.getInstance().placerElementEarth(elem);
+		}
+	}
+
+	/**
+	 * @param baseData
+	 */
+	public static void chargerStructure(Base baseData) {
+		List<ElementEarth> elementEarthStructure = baseData.baseStructure.getElementEarthStructure();
+		for (int i = 0; i < elementEarthStructure.size(); i++) {
+			final ElementEarth elem = elementEarthStructure.get(i);
+			TileMapService.getInstance().placerElementEarth(elem);
+		}
+	}
+
+	/**
+	 * @param baseData
+	 */
+	public static void chargerNature(Base baseData) {
+		List<ElementEarth> elementEarthNature = baseData.baseNature.getElementEarthNature();
+		for (int i = 0; i < elementEarthNature.size(); i++) {
+			final ElementEarth elem = elementEarthNature.get(i);
+			TileMapService.getInstance().placerElementEarth(elem);
+		}
+	}
 
 }

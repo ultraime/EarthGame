@@ -8,7 +8,6 @@ import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.WorldService;
-import com.ultraime.game.metier.pathfinding.Aetoile;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
 import com.ultraime.game.metier.pathfinding.Noeud;
@@ -27,10 +26,14 @@ public class MetierAgriculteur extends Metier {
 
 	public MetierAgriculteur(EntiteVivante entiteVivante) {
 		super(entiteVivante);
+		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
+		final World world = WorldService.getInstance().world;
+		initAetoile(body, world);
 	}
 
 	@Override
 	public boolean doMetier() {
+		//TODO a revoir, car quand plein, le perso ne fait plus rien
 		boolean isAction = isActionEncours();
 		if (!isAction) {
 			if (!this.entiteVivante.inventaire.placeDisponible
@@ -48,12 +51,14 @@ public class MetierAgriculteur extends Metier {
 	}
 
 	private boolean tryFindCoffre() {
+		//TODO attention, si coffre pas Accessible, rien ne sera fait..
 		boolean isDoAction = false;
 		final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
 		final ElementEarth elementEarth = Base.getInstance().rechercherCoffreDisponible();
 		if (elementEarth != null) {
-			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante);
-			if (isDoAction) {
+			isDoAction = true;
+			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante,true);
+			if (isDoAction) {;
 				aeDeposerElementDansCoffre.ajouterCible(elementEarth);
 				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
 			}
@@ -72,7 +77,8 @@ public class MetierAgriculteur extends Metier {
 		final ElementEarth elementEarth = rechercherUneCulturePrete();
 		if (elementEarth != null) {
 			if (this.entiteVivante.inventaire.placeDisponible) {
-				isDoAction = verifierAccessibilite(true, elementEarth, this.entiteVivante);
+				isDoAction = true;
+				isDoAction = verifierAccessibiliteCulture(true, elementEarth, this.entiteVivante);
 				if (isDoAction) {
 					final float poidsTotal = elementEarth.nombreRecolte * elementEarth.poids;
 					if (this.entiteVivante.inventaire.placeSuffisante(poidsTotal)) {
@@ -84,6 +90,8 @@ public class MetierAgriculteur extends Metier {
 						Base.getInstance().ajouterElementEarth(elementEarthNew);
 						isDoAction = true;
 						this.elementEarthOld = null;
+					}else{
+						isDoAction = false;
 					}
 				} else {
 					this.elementEarthOld = elementEarth;
@@ -125,7 +133,7 @@ public class MetierAgriculteur extends Metier {
 
 		if (elementEarth != null) {
 			isDoAction = true;
-			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante);
+			isDoAction = verifierAccessibiliteCulture(isDoAction, elementEarth, this.entiteVivante);
 			if (isDoAction) {
 				actionEntite.ajouterElementAconstruire(elementEarth);
 				this.entiteVivante.ajouterAction(actionEntite);
@@ -135,18 +143,18 @@ public class MetierAgriculteur extends Metier {
 		return isDoAction;
 	}
 
-	public static boolean verifierAccessibilite(boolean isDoAction, final ElementEarth element,
+	public  boolean verifierAccessibiliteCulture(boolean isDoAction, final ElementEarth element,
 			final EntiteVivante ev) {
 		final Body body = WorldService.getInstance().recupererBodyFromEntite(ev);
-		final World world = WorldService.getInstance().world;
+//		final World world = WorldService.getInstance().world;
 		final int xDepart = Math.round(body.getPosition().x);
 		final int yDepart = Math.round(body.getPosition().y);
 		Noeud noeudDepart = new Noeud(xDepart, yDepart, 0);
 		final Noeud noeudDestination = new Noeud(element.x, element.y, 0);
-
-		Aetoile aetoile = new Aetoile(world, body);
+//		Aetoile aetoile = new Aetoile(world, body);
 		try {
-			ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE_2);
+			ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,
+					Parametre.AETOILE_BASE_2);
 			ev.setListeDeNoeudDeplacement(cheminPlusCourt);
 		} catch (AetoileException e) {
 			isDoAction = false;

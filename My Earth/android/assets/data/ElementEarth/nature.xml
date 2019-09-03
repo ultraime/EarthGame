@@ -1,0 +1,51 @@
+<ElementEarth>
+	<!-- ARBRE -->
+	<elementEarths>
+		<type>nature</type>
+		<placementType>unique</placementType>
+		<nom>arbre</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>61</idTuile>
+			<collision>false</collision>
+			<layerCible>NATURE_0</layerCible>
+		</imageElement>
+		<imageElement>
+			<x>0</x>
+			<y>1</y>
+			<idTuile>51</idTuile>
+			<collision>false</collision>
+			<layerCible>NATURE_1</layerCible>
+		</imageElement>
+	</elementEarths>
+	<!--GRAND ARBRE -->
+	<elementEarths>
+		<type>nature</type>
+		<placementType>unique</placementType>
+		<nom>grand_arbre</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>72</idTuile>
+			<collision>false</collision>
+			<layerCible>NATURE_0</layerCible>
+		</imageElement>
+		<imageElement>
+			<x>0</x>
+			<y>1</y>
+			<idTuile>62</idTuile>
+			<collision>false</collision>
+			<layerCible>NATURE_1</layerCible>
+		</imageElement>
+		<imageElement>
+			<x>0</x>
+			<y>2</y>
+			<idTuile>52</idTuile>
+			<collision>false</collision>
+			<layerCible>NATURE_1</layerCible>
+		</imageElement>
+	</elementEarths>
+</ElementEarth>

@@ -68,7 +68,7 @@ public abstract class ActionEntite implements Comparable<ActionEntite>, Serializ
 				final float posY = body.getPosition().y;
 				float xVelocity = 0;
 				float yVelocity = 0;
-				float vitesse = ev.getVitesse() * Parametre.VITESSE_DE_JEU;
+				float vitesse = ev.habiliter.vitesse * Parametre.VITESSE_DE_JEU;
 				if (posX + valeurArrondi < noeuddeplacementencours.x) {
 					xVelocity = vitesse;
 					direction = EntiteVivante.DROITE;

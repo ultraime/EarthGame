@@ -28,6 +28,11 @@ public class BasePersonnage implements Serializable {
 		threadEntiteJoueurs = new EntiteManagerThread<EntiteJoueur>(entiteJoueurs);
 	}
 
+	public void initThreadEntiteJoueurs(final List<EntiteJoueur> entiteJoueurs) {
+		threadEntiteJoueurs = new EntiteManagerThread<EntiteJoueur>(entiteJoueurs);
+		threadEntiteJoueurs.start();
+	}
+
 	/**
 	 * Créer un entité au joueur à l'emplacement X,Y
 	 * 
@@ -65,7 +70,7 @@ public class BasePersonnage implements Serializable {
 		Body body = WorldBodyService.creerCercleVivant(world, radius, posx, posy, entiteVivante);
 		Body bodyAffichage = WorldBodyService.creerCercleVivant(worldAffichage, WorldService.MULTIPLICATEUR * radius,
 				posx * WorldService.MULTIPLICATEUR + 32, posy * WorldService.MULTIPLICATEUR + 32, entiteVivante);
-		
+
 		WorldService.getInstance().bodiesEntiteVivant.add(body);
 		WorldService.getInstance().bodiesAffichageEntiteVivant.add(bodyAffichage);
 
@@ -81,6 +86,14 @@ public class BasePersonnage implements Serializable {
 
 	public void setEntiteJoueurs(List<EntiteJoueur> entiteJoueurs) {
 		this.entiteJoueurs = entiteJoueurs;
+	}
+
+	public EntiteManagerThread<EntiteJoueur> getThreadEntiteJoueurs() {
+		return threadEntiteJoueurs;
+	}
+
+	public void setThreadEntiteJoueurs(EntiteManagerThread<EntiteJoueur> threadEntiteJoueurs) {
+		this.threadEntiteJoueurs = threadEntiteJoueurs;
 	}
 
 }

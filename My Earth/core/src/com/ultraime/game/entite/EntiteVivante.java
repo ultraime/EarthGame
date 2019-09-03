@@ -44,7 +44,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	private ActionEntite actionEntite = null;
 
 	// élément propre au entité
-	private float vitesse = 4f;// 3f
+	public Habiliter habiliter;
 	protected List<Metier> metiers;
 	public Inventaire inventaire;
 
@@ -63,6 +63,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.cercleShape = new Circle(x, y, radius);
 		this.metiers = new ArrayList<>();
 		this.inventaire = new Inventaire(50);
+		this.habiliter = new Habiliter();
 
 	}
 
@@ -74,7 +75,8 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	}
 
 	/**
-	 * réalise le métier. (fait le calcul du déplacement, la recherche des éléments etc..).
+	 * réalise le métier. (fait le calcul du déplacement, la recherche des
+	 * éléments etc..).
 	 */
 	public void doMetier() {
 		boolean isDoingMetier = false;
@@ -89,8 +91,9 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	}
 
 	/**
-	 * fait le déplacement, l'ajout de l'objet sur la carte etc...
-	 * il y a quand même un aetoile de réaliser. A voir pour la perf.
+	 * fait le déplacement, l'ajout de l'objet sur la carte etc... il y a quand
+	 * même un aetoile de réaliser. A voir pour la perf.
+	 * 
 	 * @param body
 	 * @param world
 	 * @param worldAffichage
@@ -139,14 +142,6 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	public void ajouterAction(ActionEntite actionEntite) {
 		listeAction.add(actionEntite);
 
-	}
-
-	public float getVitesse() {
-		return vitesse;
-	}
-
-	public void setVitesse(float vitesse) {
-		this.vitesse = vitesse;
 	}
 
 	public ArrayDeque<Noeud> getListeDeNoeudDeplacement() {

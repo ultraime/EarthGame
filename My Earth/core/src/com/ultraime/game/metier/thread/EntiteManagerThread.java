@@ -10,7 +10,7 @@ import com.ultraime.game.utile.Parametre;
 
 public class EntiteManagerThread<E> extends SuperThread {
 	public static final int tempsAppel = 0;
-	List<EntiteVivante> listEntite;
+	private List<EntiteVivante> listEntite;
 
 	@SuppressWarnings("unchecked")
 	public EntiteManagerThread(final List<E> listEntite) {
@@ -21,7 +21,6 @@ public class EntiteManagerThread<E> extends SuperThread {
 	public void doActionThread() {
 		final World world = WorldService.getInstance().world;
 		final List<Body> bodies = WorldService.getInstance().bodiesEntiteVivant;
-
 		for (int i = 0; i < bodies.size(); i++) {
 			final Body body = bodies.get(i);
 			if (!Parametre.PAUSE) {
@@ -35,6 +34,15 @@ public class EntiteManagerThread<E> extends SuperThread {
 
 		}
 
+	}
+
+	public List<EntiteVivante> getListEntite() {
+		return listEntite;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setListEntite(List<E> listEntite) {
+		this.listEntite = (List<EntiteVivante>) listEntite;
 	}
 
 }

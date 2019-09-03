@@ -143,14 +143,22 @@ public class TileMapService {
 		final int posY = elementAconstruire.y;
 		ElementEarth elementEvolue = Base.getInstance()
 				.recupererElementEarthByNom(elementAconstruire.elementEarthEvolution);
-
+		if (elementEvolue == null) {
+			elementEvolue = Base.getInstance().recupererElementEarthByNom(elementAconstruire.nom);
+		}
 		retirerElementAconstruire(posX, posY);
 
-		for (int i = 0; i < elementAconstruire.elementEarthImages.size(); i++) {
-			int posXImage = posX + elementAconstruire.elementEarthImages.get(i).x;
-			int posYImage = posY + elementAconstruire.elementEarthImages.get(i).y;
+		String layerCible = elementEvolue.layerCible;
 
-			if (!elementEvolue.layerCible.equals(SOL_0)) {
+		for (int i = 0; i < elementAconstruire.elementEarthImages.size(); i++) {
+			ElementEarthImage elementEarthImage = elementAconstruire.elementEarthImages.get(i);
+			int posXImage = posX + elementEarthImage.x;
+			int posYImage = posY + elementEarthImage.y;
+			layerCible = elementEvolue.layerCible;
+			if (layerCible == null) {
+				layerCible = elementEarthImage.layerCible;
+			}
+			if (!layerCible.equals(SOL_0)) {
 				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 				if (elementEvolue.elementEarthImages.get(i).isCollision) {
 					WorldService.getInstance().creerCollision(posXImage, posYImage);
@@ -161,11 +169,11 @@ public class TileMapService {
 				Base.getInstance().retirerElementEarth(posXImage, posYImage, ElementEarth.culture);
 			}
 		}
-		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(elementEvolue.layerCible);
+		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layerCible);
 		TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAconstruire, tiledLayerConstruction, posX, posY, true);
 		// on passe la rotation à l'objet évolué
-		elementEvolue = RotationManager.getElementRotate(elementEvolue,elementAconstruire.rotation);
+		elementEvolue = RotationManager.getElementRotate(elementEvolue, elementAconstruire.rotation);
 
 		alimenterImageFromMultiTile(elementEvolue, tiledLayer, posX, posY, false);
 
@@ -177,6 +185,29 @@ public class TileMapService {
 		elementEarth.x = posX;
 		elementEarth.y = posY;
 		Base.getInstance().ajouterElementEarth(elementEarth);
+	}
+
+	/**
+	 * Détruit un élément sur la carte à partir d'un ElementAction
+	 * 
+	 * @param elementAction
+	 */
+	public void detruireItem(final ElementEarth elementAction) {
+		final int posX = elementAction.x;
+		final int posY = elementAction.y;
+		retirerElementAconstruire(posX, posY);
+		for (int i = 0; i < elementAction.elementEarthImages.size(); i++) {
+			int posXImage = posX + elementAction.elementEarthImages.get(i).x;
+			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
+			Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
+
+		}
+		// supression de l'élément "constructible"
+		final TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
+		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
+		// juste pour l'affichage
+		creerMurEnBois();
+
 	}
 
 	/**
@@ -226,9 +257,9 @@ public class TileMapService {
 	 * @param posY
 	 * @param aVider
 	 */
-	public void alimenterImageFromMultiTile(ElementEarth elementEarth, final TiledMapTileLayer tiledLayer,
+	public void alimenterImageFromMultiTile(ElementEarth elementEarth, TiledMapTileLayer tiledLayer,
 			final int posX, final int posY, final boolean aVider) {
-
+		// TODO pb si plusieurs layer pour un obj
 		TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
 		for (int j = 0; j < elementEarth.elementEarthImages.size(); j++) {
 			Cell cell = new Cell();
@@ -236,9 +267,16 @@ public class TileMapService {
 			if (aVider) {
 				cell.setTile(null);
 			} else {
-				cell.setTile(tileSet.getTile(earthImage.idTuile));
-				RotationManager.rotateCell(cell,elementEarth.rotation);
-				
+				int idTuile = earthImage.idTuile;
+				if (elementEarth.showIdTuileNone) {
+					idTuile = elementEarth.idTuileNone;
+				}
+				cell.setTile(tileSet.getTile(idTuile));
+				RotationManager.rotateCell(cell, elementEarth.rotation);
+
+			}
+			if (elementEarth.layerCible == null) {
+				tiledLayer = TileMapService.getInstance().getLayers(earthImage.layerCible);
 			}
 			tiledLayer.setCell(posX + earthImage.x, posY + earthImage.y, cell);
 		}

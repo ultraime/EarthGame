@@ -128,22 +128,17 @@ public class Action {
 				if (vectorDepart != null && !ORDRE.elementEarth.placementType.equals(ElementEarth.unique)) {
 					validerConstruction();
 				} else {
-					// ici on initialise les variables
-					final TiledMapTileLayer tiledLayer = (TiledMapTileLayer) actor.getTiledMap().getLayers()
-							.get(ORDRE.elementEarth.layerCible);
 					int posX = (int) actor.getX();
 					int posY = (int) actor.getY();
 					final int xFinal = posX / 64;
 					final int yFinal = posY / 64;
 					vectorDepart = new Vector2(xFinal, yFinal);
 					if (ORDRE.elementEarth.placementType.equals(ElementEarth.unique)) {
-						TileMapService.getInstance().alimenterImageFromMultiTile(ORDRE.elementEarth, tiledLayer, xFinal,
-								yFinal, false);
-						ORDRE.elementEarth.x = xFinal;
-						ORDRE.elementEarth.y = yFinal;
-						ElementEarth elementEarth = new ElementEarth(ORDRE.elementEarth);
-						TileMapService.ajouterElementAconstruireNEW(elementEarth);
-						vectorDepart = null;
+						// ici on valide la construction d'un objet de type
+						// unique
+						if (ControleurActions.isConstructible(ORDRE.elementEarth)) {
+							validerConstruction();
+						}
 					} else {
 						alimenterVectorConstructionLayer(TileMapService.CONSTRUCTION_TEMP);
 					}
@@ -284,6 +279,7 @@ public class Action {
 			TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(layserStr);
 			int posX = (int) vector2.x;
 			int posY = (int) vector2.y;
+			ControleurActions.controlerIdTuileNone(ORDRE.elementEarth, posX, posY);
 			TileMapService.getInstance().alimenterImageFromMultiTile(ORDRE.elementEarth, tiledLayer, posX, posY, false);
 		}
 
@@ -399,7 +395,7 @@ public class Action {
 			final float y = vectorDepart.y * 64;
 			viderVectorConstruction();
 			ORDRE.elementEarth = RotationManager.rotateNext(ORDRE.elementEarth);
-		
+
 			ordreConstructionElementNEW(null, x, y);
 		}
 	}

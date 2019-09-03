@@ -37,12 +37,12 @@ public class Temps implements java.io.Serializable {
 	 * @param temp
 	 */
 	public Temps(final Temps temp) {
-		this.annee = temp.annee;
-		this.mois = temp.mois;
-		this.jour = temp.jour;
-		this.numeroJour = temp.numeroJour;
-		this.heure = temp.heure;
-		this.minute = temp.minute;
+		this.annee = new Integer(temp.annee);
+		this.mois = new Integer(temp.mois);
+		this.jour = new Integer(temp.jour);
+		this.numeroJour = new Integer(temp.numeroJour);
+		this.heure = new Integer(temp.heure);
+		this.minute = new Integer(temp.minute);
 	}
 
 	public StringBuilder showTemp() {
@@ -220,61 +220,70 @@ public class Temps implements java.io.Serializable {
 	}
 
 	public void addMinute(final int nb) {
-		this.minute = this.minute + 1;
-		if (this.minute >= 60) {
-			this.minute = 0;
-			addHeure(1);
+		for (int i = 0; i < nb; i++) {
+			this.minute = this.minute + 1;
+			if (this.minute >= 60) {
+				this.minute = 0;
+				addHeure(1);
+			}
 		}
 	}
 
 	public void addHeure(final int nb) {
-		this.heure = this.heure + 1;
-		if (this.heure >= 24) {
-			this.heure = 0;
-			addJour(1);
+		for (int i = 0; i < nb; i++) {
+			this.heure = this.heure + 1;
+			if (this.heure >= 24) {
+				this.heure = 0;
+				addJour(1);
+			}
 		}
-
 	}
 
 	public void addJour(final int nb) {
-		this.jour = this.jour + 1;
-		this.numeroJour = this.numeroJour + 1;
-		this.jour = 0;
-		// si février
-		if (this.mois == 1 && this.numeroJour > 28) {
-			this.numeroJour = 1;
-			addMois(1);
-		} else if (this.mois < 7) {
-			// Si mois < que aout, les mois paire sont de 31J
-			if ((this.mois % 2) == 0 && this.numeroJour > 31) {
+		for (int i = 0; i < nb; i++) {
+			this.jour = this.jour + 1;
+			this.numeroJour = this.numeroJour + 1;
+			this.jour = 0;
+			// si février
+			if (this.mois == 1 && this.numeroJour > 28) {
 				this.numeroJour = 1;
 				addMois(1);
-			} else if (this.numeroJour > 30 && (this.mois % 2) != 0) {
-				this.numeroJour = 1;
-				addMois(1);
-			}
-		} else if (this.mois > 6) {
-			// Si mois > que Juillet, les mois Impaire sont de 31J
-			if ((this.mois % 2) != 0 && this.numeroJour > 31) {
-				this.numeroJour = 1;
-				addMois(1);
-			} else if (this.numeroJour > 30 && (this.mois % 2) == 0) {
-				this.numeroJour = 1;
-				addMois(1);
+			} else if (this.mois < 7) {
+				// Si mois < que aout, les mois paire sont de 31J
+				if ((this.mois % 2) == 0 && this.numeroJour > 31) {
+					this.numeroJour = 1;
+					addMois(1);
+				} else if (this.numeroJour > 30 && (this.mois % 2) != 0) {
+					this.numeroJour = 1;
+					addMois(1);
+				}
+			} else if (this.mois > 6) {
+				// Si mois > que Juillet, les mois Impaire sont de 31J
+				if ((this.mois % 2) != 0 && this.numeroJour > 31) {
+					this.numeroJour = 1;
+					addMois(1);
+				} else if (this.numeroJour > 30 && (this.mois % 2) == 0) {
+					this.numeroJour = 1;
+					addMois(1);
+				}
 			}
 		}
 	}
 
 	public void addMois(final int nb) {
-		this.mois = this.mois + 1;
-		if (this.mois >= 12) {
-			this.mois = 0;
-			addAnnee(1);
+		for (int i = 0; i < nb; i++) {
+			this.mois = this.mois + 1;
+			if (this.mois >= 12) {
+				this.mois = 0;
+				addAnnee(1);
+			}
 		}
 	}
 
 	public void addAnnee(final int nb) {
-		this.annee = this.annee + 1;
+		for (int i = 0; i < nb; i++) {
+			this.annee = this.annee + 1;
+		}
 	}
 
 	public void addTemps(final Temps tps) {
@@ -294,6 +303,5 @@ public class Temps implements java.io.Serializable {
 			this.addAnnee(1);
 		}
 	}
-
 
 }

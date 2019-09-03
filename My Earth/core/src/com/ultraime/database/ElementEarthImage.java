@@ -23,12 +23,15 @@ public class ElementEarthImage implements Serializable {
 	public int idTuile;
 
 	/**
-	 * false = pas de collision
-	 * true = collision
+	 * false = pas de collision true = collision
 	 */
 	public boolean isCollision = false;
-	
-	
+
+	/**
+	 * le layers ou doit être affiché l'objet !
+	 */
+	public String layerCible;
+
 	public ElementEarthImage() {
 
 	}
@@ -38,8 +41,7 @@ public class ElementEarthImage implements Serializable {
 		this.y = new Integer(elementEarthImagesOld.y);
 		this.idTuile = elementEarthImagesOld.idTuile;
 		this.isCollision = elementEarthImagesOld.isCollision;
+		this.layerCible = elementEarthImagesOld.layerCible;
 	}
-
-
 
 }

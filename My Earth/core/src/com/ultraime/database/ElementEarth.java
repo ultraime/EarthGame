@@ -19,13 +19,13 @@ public class ElementEarth implements Serializable {
 	transient public final static String culture_sol_constructible = "culture_sol_constructible";
 	transient public final static String meuble_constructible = "meuble_constructible";
 	transient public final static String sol_constructible = "sol_constructible";
-	transient public final static String action = "action";
 	transient public final static String culture_sol = "culture_sol";
 	transient public final static String culture = "culture";
 	transient public final static String culture_final = "culture_final";
 	transient public final static String meuble = "meuble";
 	transient public final static String structure = "structure";
 	transient public final static String sol = "sol";
+	transient public final static String nature = "nature";
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
@@ -37,19 +37,21 @@ public class ElementEarth implements Serializable {
 	transient public final static String rot_gauche = "gauche";
 	transient public final static String rot_droite = "droite";
 
-	transient public static List<String> types = new ArrayList<String>() {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
+	// variable pour les actions
+	transient public final static String action = "action";
+	transient public final static String detruire = "detruire";
+	transient public final static String couper = "couper";
 
+	transient public static List<String> types = new ArrayList<String>() {
+		private static final long serialVersionUID = 1L;
 		{
 			add(culture);
 			add(meuble);
 			add(structure);
+			add(action);
+			add(nature);
 		}
 	};
-
 
 	/**
 	 * structure,plante,securité,fourniture,energie…
@@ -121,6 +123,14 @@ public class ElementEarth implements Serializable {
 	public String rotation = rot_haut;
 
 	/**
+	 * Tuile de l'image quand l'action ou la construction n'est pas possible.
+	 */
+	public int idTuileNone;
+	public boolean showIdTuileNone = false;
+
+	public List<ElementCible> elementCibles = new ArrayList<>();
+
+	/**
 	 * @param elementEarth
 	 */
 	public ElementEarth(final ElementEarth elementEarth) {
@@ -144,6 +154,7 @@ public class ElementEarth implements Serializable {
 		}
 		this.nombreRecolte = elementEarth.nombreRecolte;
 		this.rotation = new String(elementEarth.rotation);
+		this.elementCibles = elementEarth.elementCibles;
 	}
 
 	private List<ElementEarthImage> newElementEarthImages(List<ElementEarthImage> elementEarthImagesOld) {
@@ -189,6 +200,10 @@ public class ElementEarth implements Serializable {
 
 	public void addElementEarthImage(final ElementEarthImage elementEarthImage) {
 		elementEarthImages.add(elementEarthImage);
+	}
+
+	public void addElementCible(final ElementCible elementCible) {
+		elementCibles.add(elementCible);
 	}
 
 }
