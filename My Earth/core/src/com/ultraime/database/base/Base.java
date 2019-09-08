@@ -331,6 +331,9 @@ public class Base implements java.io.Serializable {
 		case ElementEarth.nature:
 			earths = baseNature.getElementEarthNature();
 			break;
+		case ElementEarth.eau:
+			earths = baseNature.getElementEarthEau();
+			break;
 		default:
 			break;
 		}

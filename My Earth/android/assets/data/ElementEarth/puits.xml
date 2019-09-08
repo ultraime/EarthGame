@@ -1,33 +1,35 @@
 <ElementEarth>
-	<!-- COFFRE -->
+<!-- PUITS -->
 	<elementEarths>
-		<type>meuble_constructible</type>
+		<type>structure_constructible</type>
 		<placementType>unique</placementType>
-		<nom>coffre_bois_constructible</nom>
-		<evolution>coffre_bois</evolution>
+		<nom>puits_constructible</nom>
+		<evolution>puits</evolution>
 		<imageElement>
 			<x>0</x>
 			<y>0</y>
-			<idTuile>20</idTuile>
-			<collision>true</collision>
+			<idTuile>50</idTuile>
+			<collision>false</collision>
 		</imageElement>
-		<logoImage>logo/coffre_bois.png</logoImage>
+		<logoImage>logo/puits.png</logoImage>
 		<layerCible>CONSTRUCTION</layerCible>
+		<elementsCible>
+			<nom>eau souterraine</nom>
+		</elementsCible>
 	</elementEarths>
 	<!-- -->
 	<elementEarths>
-		<type>meuble</type>
+		<type>structure</type>
 		<placementType>unique</placementType>
-		<nom>coffre_bois</nom>
+		<nom>puits</nom>
 		<evolution></evolution>
 		<imageElement>
 			<x>0</x>
 			<y>0</y>
-			<idTuile>26</idTuile>
+			<idTuile>49</idTuile>
 			<collision>true</collision>
 		</imageElement>
+		<poids>15</poids>
 		<layerCible>OBJET_0</layerCible>
-		<capaciteInventaire>50</capaciteInventaire>
-		<poids>10</poids>
 	</elementEarths>
 </ElementEarth>

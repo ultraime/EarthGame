@@ -1,0 +1,16 @@
+<ElementEarth>
+	<!-- eau souterraine -->
+	<elementEarths>
+		<type>eau</type>
+		<placementType>unique</placementType>
+		<nom>eau souterraine</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>43</idTuile>
+			<collision>false</collision>
+			<layerCible>NATURE_0</layerCible>
+		</imageElement>
+	</elementEarths>
+</ElementEarth>

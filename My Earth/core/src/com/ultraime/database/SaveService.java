@@ -62,10 +62,12 @@ public class SaveService {
 			LecteurXML.getInstance().traiterToutLesFichiers();
 
 			// ici chargement et ajout des différents objets sur la carte
-			chargerStructure(baseData);
-			chargerCulture(baseData);
-			chargerMeuble(baseData);
-			chargerSol(baseData);
+			chargerData(baseData.baseStructure.getElementEarthStructure());
+			chargerData(baseData.baseCulture.getElementEarthPlantes());
+			chargerData(baseData.baseMeuble.getElementEarthMeubles());
+			chargerData(baseData.baseSol.getElementEarthSol());
+			chargerData(baseData.baseNature.getElementEarthNature());
+			chargerData(baseData.baseNature.getElementEarthEau());
 			chargerPersonnage(baseData);
 
 			ois.close();
@@ -75,7 +77,6 @@ public class SaveService {
 		if (Parametre.MODE_DEBUG) {
 			System.out.println("<< fin de chargement des datas");
 		}
-
 	}
 
 	/**
@@ -96,54 +97,9 @@ public class SaveService {
 	/**
 	 * @param baseData
 	 */
-	public static void chargerSol(Base baseData) {
-		List<ElementEarth> elementEarthSol = baseData.baseSol.getElementEarthSol();
-		for (int i = 0; i < elementEarthSol.size(); i++) {
-			final ElementEarth elem = elementEarthSol.get(i);
-			TileMapService.getInstance().placerElementEarth(elem);
-		}
-	}
-
-	/**
-	 * @param baseData
-	 */
-	public static void chargerMeuble(Base baseData) {
-		List<ElementEarth> elementEarthMeubles = baseData.baseMeuble.getElementEarthMeubles();
-		for (int i = 0; i < elementEarthMeubles.size(); i++) {
-			final ElementEarth elem = elementEarthMeubles.get(i);
-			TileMapService.getInstance().placerElementEarth(elem);
-		}
-	}
-
-	/**
-	 * @param baseData
-	 */
-	public static void chargerCulture(Base baseData) {
-		List<ElementEarth> elementEarthplantes = baseData.baseCulture.getElementEarthPlantes();
-		for (int i = 0; i < elementEarthplantes.size(); i++) {
-			final ElementEarth elem = elementEarthplantes.get(i);
-			TileMapService.getInstance().placerElementEarth(elem);
-		}
-	}
-
-	/**
-	 * @param baseData
-	 */
-	public static void chargerStructure(Base baseData) {
-		List<ElementEarth> elementEarthStructure = baseData.baseStructure.getElementEarthStructure();
-		for (int i = 0; i < elementEarthStructure.size(); i++) {
-			final ElementEarth elem = elementEarthStructure.get(i);
-			TileMapService.getInstance().placerElementEarth(elem);
-		}
-	}
-
-	/**
-	 * @param baseData
-	 */
-	public static void chargerNature(Base baseData) {
-		List<ElementEarth> elementEarthNature = baseData.baseNature.getElementEarthNature();
-		for (int i = 0; i < elementEarthNature.size(); i++) {
-			final ElementEarth elem = elementEarthNature.get(i);
+	private static void chargerData(List<ElementEarth> earths) {
+		for (int i = 0; i < earths.size(); i++) {
+			final ElementEarth elem = earths.get(i);
 			TileMapService.getInstance().placerElementEarth(elem);
 		}
 	}

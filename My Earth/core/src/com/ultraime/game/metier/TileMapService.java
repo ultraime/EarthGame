@@ -218,20 +218,24 @@ public class TileMapService {
 	public void placerElementEarth(final ElementEarth elementAconstruire) {
 		final int posX = elementAconstruire.x;
 		final int posY = elementAconstruire.y;
-
+		String layer = elementAconstruire.layerCible;
 		for (int i = 0; i < elementAconstruire.elementEarthImages.size(); i++) {
-			int posXImage = posX + elementAconstruire.elementEarthImages.get(i).x;
-			int posYImage = posY + elementAconstruire.elementEarthImages.get(i).y;
+			final ElementEarthImage elementEarthImage = elementAconstruire.elementEarthImages.get(i);
+			int posXImage = posX + elementEarthImage.x;
+			int posYImage = posY + elementEarthImage.y;
 
-			if (!elementAconstruire.layerCible.equals(SOL_0)) {
-				if (elementAconstruire.elementEarthImages.get(i).isCollision) {
+			if (layer == null) {
+				layer = elementEarthImage.layerCible;
+			}
+			if (!layer.equals(SOL_0)) {
+				if (elementEarthImage.isCollision) {
 					WorldService.getInstance().creerCollision(posXImage, posYImage);
 				} else {
 					WorldService.getInstance().retirerCollision(posXImage, posYImage);
 				}
 			}
 		}
-		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(elementAconstruire.layerCible);
+		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layer);
 		TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAconstruire, tiledLayerConstruction, posX, posY, true);
 		alimenterImageFromMultiTile(elementAconstruire, tiledLayer, posX, posY, false);
@@ -257,8 +261,8 @@ public class TileMapService {
 	 * @param posY
 	 * @param aVider
 	 */
-	public void alimenterImageFromMultiTile(ElementEarth elementEarth, TiledMapTileLayer tiledLayer,
-			final int posX, final int posY, final boolean aVider) {
+	public void alimenterImageFromMultiTile(ElementEarth elementEarth, TiledMapTileLayer tiledLayer, final int posX,
+			final int posY, final boolean aVider) {
 		// TODO pb si plusieurs layer pour un obj
 		TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
 		for (int j = 0; j < elementEarth.elementEarthImages.size(); j++) {

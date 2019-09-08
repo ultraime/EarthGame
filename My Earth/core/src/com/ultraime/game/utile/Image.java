@@ -26,10 +26,7 @@ public class Image {
 			tableauImage[VariableCommune.LOGO_VITESSE2] = new Texture(Gdx.files.internal("logo/vitesse2.png"));
 			tableauImage[VariableCommune.LOGO_VITESSE3] = new Texture(Gdx.files.internal("logo/vitesse3.png"));
 			tableauImage[VariableCommune.LOGO_PAUSE] = new Texture(Gdx.files.internal("logo/pause.png"));
-//			tableauImage[VariableCommune.SPRITE_TEST] = new Texture(Gdx.files.internal("bouton/bouton_3parts/carre.png"));
-			// tableauImage[Element.MUR] = new
-			// Texture(Gdx.files.internal("objet/mur.png"));
-
+			tableauImage[VariableCommune.HUD_CADRE_STATS] = new Texture(Gdx.files.internal("hud/hud_cadre_stats.png"));
 		}
 		return tableauImage[typeElement];
 	}

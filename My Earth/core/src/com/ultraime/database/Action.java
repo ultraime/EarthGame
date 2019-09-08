@@ -361,25 +361,25 @@ public class Action {
 			Vector2 vector2 = vectorsConstruction.get(i);
 			final int posX = (int) vector2.x;
 			final int posY = (int) vector2.y;
-
-			ElementEarth earth = new ElementEarth(ORDRE.elementEarth);
-			earth.x = posX;
-			earth.y = posY;
-			boolean doitEtreConstruit = true;
-			if (ElementEarth.culture_sol_constructible.equals(earth.type)) {
-				if (Base.getInstance().isObjetPresentSaufPlante(posX, posY)) {
-					doitEtreConstruit = false;
+			if (!ControleurActions.controlerIdTuileNone(ORDRE.elementEarth, posX, posY)) {
+				ElementEarth earth = new ElementEarth(ORDRE.elementEarth);
+				earth.x = posX;
+				earth.y = posY;
+				boolean doitEtreConstruit = true;
+				if (ElementEarth.culture_sol_constructible.equals(earth.type)) {
+					if (Base.getInstance().isObjetPresentSaufPlante(posX, posY)) {
+						doitEtreConstruit = false;
+					}
+				}
+				if (doitEtreConstruit) {
+					TileMapService.ajouterElementAconstruireNEW(earth);
+					alimenterVectorConstructionLayer(vector2);
+					if (earth.elementEarthImages.get(0).isCollision) {
+						final Rectangle rectangle = new Rectangle(posX, posY, 0.5f, 0.5f);
+						Base.getInstance().ajouterRectangleConstructible(rectangle);
+					}
 				}
 			}
-			if (doitEtreConstruit) {
-				TileMapService.ajouterElementAconstruireNEW(earth);
-				alimenterVectorConstructionLayer(vector2);
-				if (earth.elementEarthImages.get(0).isCollision) {
-					final Rectangle rectangle = new Rectangle(posX, posY, 0.5f, 0.5f);
-					Base.getInstance().ajouterRectangleConstructible(rectangle);
-				}
-			}
-
 		}
 		vectorDepart = null;
 		viderVectorConstruction();

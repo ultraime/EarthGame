@@ -146,7 +146,12 @@ public class LecteurXML extends ApplicationAdapter {
 		Array<Element> elementsCible = child.getChildrenByName("elementsCible");
 		for (Element elementCibleXML : elementsCible) {
 			ElementCible elementCible = new ElementCible();
-			elementCible.type = elementCibleXML.getChildByName("type").getText();
+			if (elementCibleXML.getChildByName("type") != null) {
+				elementCible.type = elementCibleXML.getChildByName("type").getText();
+			}
+			if (elementCibleXML.getChildByName("nom") != null) {
+				elementCible.nom = elementCibleXML.getChildByName("nom").getText();
+			}
 
 			elementEarth.addElementCible(elementCible);
 		}

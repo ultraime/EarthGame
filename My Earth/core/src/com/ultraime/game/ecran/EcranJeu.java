@@ -97,7 +97,11 @@ public class EcranJeu extends Ecran {
 		// chargement de la music
 		MusicManager.getInstance();
 		
-		//TODO test ajout arbre.
+		initThread();
+		
+	}
+	public void initialiserTest() {
+		// TODO data de test
 		final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom("arbre");
 		final ElementEarth arbre = new ElementEarth(elementEarth);
 		arbre.x = 36;
@@ -109,9 +113,12 @@ public class EcranJeu extends Ecran {
 		grandArbre.x = 37;
 		grandArbre.y = 51;
 		TileMapService.getInstance().construireItem(grandArbre);
-		//
 		
-		initThread();
+		final ElementEarth elementEarth3 = Base.getInstance().recupererElementEarthByNom("eau souterraine");
+		final ElementEarth eau_souterraine = new ElementEarth(elementEarth3);
+		eau_souterraine.x = 43;
+		eau_souterraine.y = 48;
+		TileMapService.getInstance().construireItem(eau_souterraine);
 		
 	}
 	public void initThread(){
@@ -331,5 +338,7 @@ public class EcranJeu extends Ecran {
 
 		return false;
 	}
+
+
 
 }

@@ -14,6 +14,11 @@ public class ElementCible {
 	public String type;
 
 	/**
+	 * nom de la cible.
+	 */
+	public String nom;
+
+	/**
 	 * @param elementCibles
 	 * @param typeCible
 	 * @return true si la liste contient le type cible.
@@ -30,5 +35,21 @@ public class ElementCible {
 		return isContain;
 	}
 
+	/**
+	 * @param elementCibles
+	 * @param nomCible
+	 * @return true si la liste contient le type cible.
+	 */
+	public static boolean containsNom(final List<ElementCible> elementCibles, final String nomCible) {
+		boolean isContain = false;
+		for (int i = 0; i < elementCibles.size(); i++) {
+			final ElementCible elementCible = elementCibles.get(i);
+			if (elementCible.nom.equals(nomCible)) {
+				isContain = true;
+				break;
+			}
+		}
+		return isContain;
+	}
 
 }

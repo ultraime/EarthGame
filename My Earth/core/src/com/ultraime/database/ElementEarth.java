@@ -26,6 +26,7 @@ public class ElementEarth implements Serializable {
 	transient public final static String structure = "structure";
 	transient public final static String sol = "sol";
 	transient public final static String nature = "nature";
+	transient public final static String eau = "eau";
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
@@ -50,6 +51,7 @@ public class ElementEarth implements Serializable {
 			add(structure);
 			add(action);
 			add(nature);
+			add(eau);
 		}
 	};
 
@@ -124,8 +126,9 @@ public class ElementEarth implements Serializable {
 
 	/**
 	 * Tuile de l'image quand l'action ou la construction n'est pas possible.
+	 * 27 est le cercle rouge par défaut.
 	 */
-	public int idTuileNone;
+	public int idTuileNone = 27;
 	public boolean showIdTuileNone = false;
 
 	public List<ElementCible> elementCibles = new ArrayList<>();

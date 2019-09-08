@@ -16,4 +16,6 @@ public class VariableCommune {
 	public static final int LOGO_VITESSE2 = 4;
 	public static final int LOGO_VITESSE3 = 5;
 	public static final int LOGO_PAUSE = 6;
+	public static final int HUD_CADRE_STATS = 7;
+	
 }
