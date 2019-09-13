@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.ultraime.database.Action;
+import com.ultraime.database.ElementEarth;
 import com.ultraime.game.utile.Parametre;
 
 /**
@@ -76,6 +77,15 @@ public class EcranDebug extends Ecran implements Disposable {
 			if (Action.elementEarthSelect.inventaire != null) {
 				font.draw(batch, "Inventaire : " + Action.elementEarthSelect.inventaire.capaciteActuel + "/"
 						+ Action.elementEarthSelect.inventaire.capaciteMax, 3, Gdx.graphics.getHeight() - 13);
+			} else if (Action.elementEarthSelect.sousType != null
+					&& Action.elementEarthSelect.sousType.equals(ElementEarth.literie)) {
+				if (Action.elementEarthSelect.proprietaire != null) {
+					font.draw(batch, "Propriétaire : " + Action.elementEarthSelect.proprietaire.prenom, 3,
+							Gdx.graphics.getHeight() - 13);
+				}else{
+					font.draw(batch, "Le lit n a pas de propriétaire", 3,
+							Gdx.graphics.getHeight() - 13);
+				}
 			}
 		}
 		batch.end();

@@ -27,6 +27,15 @@ public class Image {
 			tableauImage[VariableCommune.LOGO_VITESSE3] = new Texture(Gdx.files.internal("logo/vitesse3.png"));
 			tableauImage[VariableCommune.LOGO_PAUSE] = new Texture(Gdx.files.internal("logo/pause.png"));
 			tableauImage[VariableCommune.HUD_CADRE_STATS] = new Texture(Gdx.files.internal("hud/hud_cadre_stats.png"));
+			tableauImage[VariableCommune.HUD_BARRE_STATS] = new Texture(Gdx.files.internal("hud/hud_barre_stats.png"));
+			tableauImage[VariableCommune.HUD_STAT_VIE] = new Texture(Gdx.files.internal("hud/stat_vie.png"));
+			tableauImage[VariableCommune.HUD_STAT_ENERGIE] = new Texture(Gdx.files.internal("hud/stat_energie.png"));
+			tableauImage[VariableCommune.HUD_STAT_SATIETE] = new Texture(Gdx.files.internal("hud/stat_satiete.png"));
+			tableauImage[VariableCommune.HUD_STAT_HYDRA] = new Texture(Gdx.files.internal("hud/stat_hydra.png"));
+			tableauImage[VariableCommune.ANIMATION_DORMIR] = new Texture(Gdx.files.internal("animations/dormir.png"));
+//			tableauImage[VariableCommune.ANIMATION_DORMIR] = new Texture(Gdx.files.internal("objet/plante/carotte_1.png"));
+			
+			
 		}
 		return tableauImage[typeElement];
 	}

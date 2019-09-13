@@ -17,5 +17,10 @@ public class VariableCommune {
 	public static final int LOGO_VITESSE3 = 5;
 	public static final int LOGO_PAUSE = 6;
 	public static final int HUD_CADRE_STATS = 7;
-	
+	public static final int HUD_BARRE_STATS = 8;
+	public static final int HUD_STAT_VIE = 9;
+	public static final int HUD_STAT_ENERGIE = 10;
+	public static final int HUD_STAT_SATIETE = 11;
+	public static final int HUD_STAT_HYDRA = 12;
+	public static final int ANIMATION_DORMIR = 13;
 }

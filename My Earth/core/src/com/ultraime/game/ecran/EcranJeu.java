@@ -29,6 +29,7 @@ import com.ultraime.game.metier.TiledMapStage;
 import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.travail.MetierAgriculteur;
 import com.ultraime.game.metier.travail.MetierConstructeur;
+import com.ultraime.game.metier.travail.MetierGeneral;
 import com.ultraime.game.metier.travail.MetierParesse;
 import com.ultraime.game.utile.Parametre;
 import com.ultraime.music.MusicManager;
@@ -96,10 +97,11 @@ public class EcranJeu extends Ecran {
 
 		// chargement de la music
 		MusicManager.getInstance();
-		
+
 		initThread();
-		
+
 	}
+
 	public void initialiserTest() {
 		// TODO data de test
 		final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom("arbre");
@@ -107,36 +109,42 @@ public class EcranJeu extends Ecran {
 		arbre.x = 36;
 		arbre.y = 51;
 		TileMapService.getInstance().construireItem(arbre);
-		
+
 		final ElementEarth elementEarth2 = Base.getInstance().recupererElementEarthByNom("grand_arbre");
 		final ElementEarth grandArbre = new ElementEarth(elementEarth2);
 		grandArbre.x = 37;
 		grandArbre.y = 51;
 		TileMapService.getInstance().construireItem(grandArbre);
-		
+
 		final ElementEarth elementEarth3 = Base.getInstance().recupererElementEarthByNom("eau souterraine");
 		final ElementEarth eau_souterraine = new ElementEarth(elementEarth3);
 		eau_souterraine.x = 43;
 		eau_souterraine.y = 48;
 		TileMapService.getInstance().construireItem(eau_souterraine);
-		
+
 	}
-	public void initThread(){
-		// création des  thread.
-		Temps temps = new Temps(3000, 0, 1, 1, 12, 00);
+
+	public void initThread() {
+		// création des thread.
+		Temps temps = new Temps(3000, 0, 1, 1, 7, 00);
 		Base.getInstance().setTemps(temps);
 		Base.getInstance().startTempsThread();
 		Base.getInstance().basePersonnage.startEntiteThread();
 	}
+
 	public void initialiserPersonnage() {
 		final int posx = (int) (this.cameraGame.camera.position.x / WorldService.MULTIPLICATEUR);
 		final int posy = (int) (this.cameraGame.camera.position.y / WorldService.MULTIPLICATEUR);
 		// TODO INIT DES PERSO
 		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
+		entiteJoueur.prenom = "Alain";
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierGeneral(entiteJoueur), entiteJoueur);
 		Base.getInstance().basePersonnage.ajouterMetier(new MetierConstructeur(entiteJoueur), entiteJoueur);
 		Base.getInstance().basePersonnage.ajouterMetier(new MetierParesse(entiteJoueur), entiteJoueur);
 
 		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
+		entiteJoueur.prenom = "Pierre";
+		Base.getInstance().basePersonnage.ajouterMetier(new MetierGeneral(entiteJoueur), entiteJoueur);
 		Base.getInstance().basePersonnage.ajouterMetier(new MetierAgriculteur(entiteJoueur), entiteJoueur);
 		Base.getInstance().basePersonnage.ajouterMetier(new MetierParesse(entiteJoueur), entiteJoueur);
 	}
@@ -338,7 +346,5 @@ public class EcranJeu extends Ecran {
 
 		return false;
 	}
-
-
 
 }

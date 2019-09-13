@@ -49,7 +49,7 @@ public class AEDeplacement extends ActionEntite {
 		EntiteVivante ev = (EntiteVivante) body.getUserData();
 		Aetoile aetoile = new Aetoile(world, body);
 		try {
-			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE));
+			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE_2));
 		} catch (AetoileException e) {
 			if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
 				e.printStackTrace();

@@ -84,7 +84,7 @@ public abstract class Metier implements Serializable {
 
 				aetoile.setCollisionEntiteConstructible(true);
 				ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,
-						Parametre.AETOILE_BASE);
+						Parametre.AETOILE_BASE_2);
 				ev.setListeDeNoeudDeplacement(cheminPlusCourt);
 				// si c'est ok on sort de la boucle
 				break;

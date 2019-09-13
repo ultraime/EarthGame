@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ultraime.animation.AnimationManager;
+import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.entite.Inventaire;
 
 public class ElementEarth implements Serializable {
@@ -27,6 +28,9 @@ public class ElementEarth implements Serializable {
 	transient public final static String sol = "sol";
 	transient public final static String nature = "nature";
 	transient public final static String eau = "eau";
+	// sous type
+	transient public final static String literie = "literie";
+	transient public final static String aqua = "aqua";
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
@@ -59,6 +63,10 @@ public class ElementEarth implements Serializable {
 	 * structure,plante,securité,fourniture,energie…
 	 */
 	public String type;
+	/**
+	 * 
+	 */
+	public String sousType;
 	/**
 	 * pour la méthode de placement de l'objet, unitaire, rectangle, ligne.
 	 */
@@ -125,13 +133,22 @@ public class ElementEarth implements Serializable {
 	public String rotation = rot_haut;
 
 	/**
-	 * Tuile de l'image quand l'action ou la construction n'est pas possible.
-	 * 27 est le cercle rouge par défaut.
+	 * Tuile de l'image quand l'action ou la construction n'est pas possible. 27
+	 * est le cercle rouge par défaut.
 	 */
 	public int idTuileNone = 27;
 	public boolean showIdTuileNone = false;
 
+	/**
+	 * Element sur lequelle l'objet peut être posé. Si pas d'élément, il peut
+	 * être posé partout
+	 */
 	public List<ElementCible> elementCibles = new ArrayList<>();
+
+	/**
+	 * Proprietaire de l'objet
+	 */
+	public EntiteVivante proprietaire;
 
 	/**
 	 * @param elementEarth
@@ -139,6 +156,7 @@ public class ElementEarth implements Serializable {
 	public ElementEarth(final ElementEarth elementEarth) {
 		super();
 		this.type = elementEarth.type;
+		this.sousType = elementEarth.sousType;
 		this.placementType = elementEarth.placementType;
 		this.nom = elementEarth.nom;
 		this.elementEarthEvolution = elementEarth.elementEarthEvolution;
@@ -158,6 +176,8 @@ public class ElementEarth implements Serializable {
 		this.nombreRecolte = elementEarth.nombreRecolte;
 		this.rotation = new String(elementEarth.rotation);
 		this.elementCibles = elementEarth.elementCibles;
+		this.proprietaire = elementEarth.proprietaire;
+
 	}
 
 	private List<ElementEarthImage> newElementEarthImages(List<ElementEarthImage> elementEarthImagesOld) {

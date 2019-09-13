@@ -55,6 +55,7 @@ public class Parametre {
 		FileHandle baseFileHandle = Gdx.files.internal("i18n/Bundle");
 		Locale locale = new Locale(Locale.FRANCE.getLanguage(), Locale.FRANCE.getCountry());
 		bundle = I18NBundle.createBundle(baseFileHandle, locale);
+		// bundle.setSimpleFormatter(false);
 	}
 
 	public synchronized static void gererPause() {

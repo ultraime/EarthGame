@@ -193,7 +193,6 @@ public class Bouton {
 		}
 		this.bitmapFont.getData().setScale(0.6f);
 		this.bitmapFont.draw(batch, this.label, this.x, this.y + this.hauteur / 2 + Parametre.y(10));
-
 	}
 
 	/**

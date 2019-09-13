@@ -24,6 +24,7 @@
 	<!-- -->
 	<elementEarths>
 		<type>meuble</type>
+		<sousType>literie</sousType>
 		<placementType>unique</placementType>
 		<nom>lit</nom>
 		<evolution></evolution>

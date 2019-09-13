@@ -20,6 +20,7 @@
 	<!-- -->
 	<elementEarths>
 		<type>structure</type>
+		<sousType>aqua</sousType>
 		<placementType>unique</placementType>
 		<nom>puits</nom>
 		<evolution></evolution>

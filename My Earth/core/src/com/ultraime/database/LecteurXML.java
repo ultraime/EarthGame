@@ -79,6 +79,9 @@ public class LecteurXML extends ApplicationAdapter {
 		for (Element child : items) {
 			ElementEarth elementEarth = new ElementEarth();
 			elementEarth.type = child.getChildByName("type").getText();
+			if (child.getChildByName("sousType") != null) {
+				elementEarth.sousType = child.getChildByName("sousType").getText();
+			}
 			elementEarth.placementType = child.getChildByName("placementType").getText();
 			elementEarth.nom = child.getChildByName("nom").getText();
 

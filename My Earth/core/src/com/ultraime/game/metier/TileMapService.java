@@ -207,6 +207,7 @@ public class TileMapService {
 		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
 		// juste pour l'affichage
 		creerMurEnBois();
+		
 
 	}
 

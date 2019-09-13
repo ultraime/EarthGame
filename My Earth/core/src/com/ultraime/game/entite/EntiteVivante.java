@@ -8,7 +8,9 @@ import java.util.List;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ultraime.animation.AnimationEntite;
 import com.ultraime.animation.AnimationManager;
+import com.ultraime.database.ElementEarth;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.Metier;
 import com.ultraime.game.metier.travail.action.ActionEntite;
@@ -36,8 +38,10 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	protected Circle cercleShape;
 
 	// pour l'animation
+	protected AnimationEntite animationEntite;
 	protected AnimationManager animationManager;
 	protected int direction = 0;
+
 	// pour le deplacement
 	private ArrayDeque<Noeud> listeDeNoeudDeplacement;
 	private List<ActionEntite> listeAction;
@@ -47,6 +51,22 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	public Habiliter habiliter;
 	protected List<Metier> metiers;
 	public Inventaire inventaire;
+
+	// etat de l'entite
+	public Etat etat = Etat.NORMAL;
+
+	public static enum Etat {
+		NORMAL, DORT
+	}
+
+	// Autre
+	public String prenom = "Prenom par defaut";
+
+	// Possesion
+	/**
+	 * Le lit de l'entité
+	 */
+	public ElementEarth lit;
 
 	protected abstract void creerAnimation();
 
@@ -64,7 +84,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.metiers = new ArrayList<>();
 		this.inventaire = new Inventaire(50);
 		this.habiliter = new Habiliter();
-
+		this.animationEntite = new AnimationEntite();
 	}
 
 	/**
@@ -166,6 +186,16 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+
+	public boolean isSurLit() {
+		boolean isSurLit = false;
+		if (lit != null) {
+			if (lit.x == Math.round(this.x) && (int) lit.y == Math.round(this.y)) {
+				isSurLit = true;
+			}
+		}
+		return isSurLit;
 	}
 
 }

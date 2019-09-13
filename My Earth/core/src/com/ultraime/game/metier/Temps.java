@@ -8,6 +8,9 @@ import com.ultraime.game.utile.Parametre;
 public class Temps implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public transient static int HUIT_HEURES = 480;
+
 	public int annee;
 	public int mois;
 	public int jour;
