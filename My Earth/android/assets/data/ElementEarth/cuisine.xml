@@ -1,0 +1,43 @@
+<ElementEarth>
+	<elementEarths>
+		<type>meuble_constructible</type>
+		<placementType>unique</placementType>
+		<nom>cuisine_constructible</nom>
+		<evolution>cuisine</evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>59</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<imageElement>
+			<x>1</x>
+			<y>0</y>
+			<idTuile>60</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<logoImage>logo/cuisine.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+	</elementEarths>
+	<!-- -->
+	<elementEarths>
+		<type>meuble</type>
+		<placementType>unique</placementType>
+		<nom>cuisine</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>57</idTuile>
+			<collision>true</collision>
+		</imageElement>
+			<imageElement>
+			<x>1</x>
+			<y>0</y>
+			<idTuile>58</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<layerCible>OBJET_0</layerCible>
+		<poids>50</poids>
+	</elementEarths>
+</ElementEarth>

@@ -1,0 +1,31 @@
+<ElementEarth>
+	<elementEarths>
+		<type>meuble_constructible</type>
+		<placementType>unique</placementType>
+		<nom>tabouret_constructible</nom>
+		<evolution>tabouret</evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>54</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<logoImage>logo/tabouret.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+	</elementEarths>
+	<!-- -->
+	<elementEarths>
+		<type>meuble</type>
+		<placementType>unique</placementType>
+		<nom>tabouret</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>53</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<layerCible>OBJET_0</layerCible>
+		<poids>50</poids>
+	</elementEarths>
+</ElementEarth>

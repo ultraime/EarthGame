@@ -37,7 +37,8 @@ public class MetierGeneral extends Metier {
 		if (!isAction) {
 			if (this.entiteVivante.habiliter.hydratation[Habiliter.ACTUEL] < 20) {
 				isAction = rechercheEau();
-			} else if (this.entiteVivante.habiliter.energie[Habiliter.ACTUEL] < 20) {
+			}
+			if (!isAction && this.entiteVivante.habiliter.energie[Habiliter.ACTUEL] < 20) {
 				if (!this.entiteVivante.isSurLit()) {
 					isAction = rechercheLit();
 				} else {
