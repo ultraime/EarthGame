@@ -12,7 +12,7 @@ public class ComposantManager {
 	}
 
 	public void render() {
-		if (this.composant instanceof ActionEntiteVivantComposant && Action.body != null) {
+		if (this.composant instanceof EntiteVivantStatsComposant && Action.body != null) {
 			if (Action.body.getUserData() instanceof EntiteJoueur) {
 				this.composant.render();
 			}
@@ -23,9 +23,9 @@ public class ComposantManager {
 
 	public boolean isClique(final float x, float y) {
 		boolean isClique = false;
-		if (this.composant instanceof ActionEntiteVivantComposant && Action.body != null) {
+		if (this.composant instanceof EntiteVivantStatsComposant && Action.body != null) {
 			if (Action.body.getUserData() instanceof EntiteJoueur) {
-				ActionEntiteVivantComposant actionEntiteVivantComposant = (ActionEntiteVivantComposant) this.composant;
+				EntiteVivantStatsComposant actionEntiteVivantComposant = (EntiteVivantStatsComposant) this.composant;
 				isClique = actionEntiteVivantComposant.isClique(x, y);
 			}
 		}
@@ -38,7 +38,7 @@ public class ComposantManager {
 
 	public boolean isOver(final float x, float y) {
 		boolean isOver = false;
-		if (this.composant instanceof ActionEntiteVivantComposant && Action.body != null) {
+		if (this.composant instanceof EntiteVivantStatsComposant && Action.body != null) {
 			if (Action.body.getUserData() instanceof EntiteJoueur) {
 				isOver = this.composant.isOver(x, y);
 			}
@@ -49,7 +49,7 @@ public class ComposantManager {
 	}
 
 	public void touchUP(int x, int y) {
-		if (this.composant instanceof ActionEntiteVivantComposant && Action.body != null) {
+		if (this.composant instanceof EntiteVivantStatsComposant && Action.body != null) {
 			if (Action.body.getUserData() instanceof EntiteJoueur) {
 				this.composant.touchUP(x, y);
 			}

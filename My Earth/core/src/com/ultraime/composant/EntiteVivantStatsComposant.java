@@ -12,7 +12,7 @@ import com.ultraime.game.utile.Image;
 import com.ultraime.game.utile.Parametre;
 import com.ultraime.game.utile.VariableCommune;
 
-public class ActionEntiteVivantComposant extends Composant {
+public class EntiteVivantStatsComposant extends Composant {
 	private Sprite srpiteFont;
 	private Sprite[] spriteStatsBarre = new Sprite[4];
 	private BitmapFont bitmapFont;
@@ -23,18 +23,18 @@ public class ActionEntiteVivantComposant extends Composant {
 	public final static int stat_satiete = 2;
 	public final static int stat_hydra = 3;
 
-	public ActionEntiteVivantComposant() {
+	public EntiteVivantStatsComposant() {
 		batch = new SpriteBatch();
 		final Texture textureFond = Image.getImage(VariableCommune.HUD_CADRE_STATS);
 		this.srpiteFont = new Sprite(textureFond);
-		this.srpiteFont.setPosition(0, 15 + Parametre.DECALAGE_Y);
+		this.srpiteFont.setPosition(0, 15 + Parametre.DECALAGE_Y * 2);
 		this.bitmapFont = new BitmapFont(Gdx.files.internal(Parametre.FONT), false);
 
 		final Texture textureStat = Image.getImage(VariableCommune.HUD_BARRE_STATS);
 
 		for (int i = 0; i < spriteStatsBarre.length; i++) {
 			spriteStatsBarre[i] = new Sprite(textureStat);
-			spriteStatsBarre[i].setPosition(Parametre.x(120), 405 - (Parametre.y(40) + (Parametre.y(30) * i)));
+			spriteStatsBarre[i].setPosition(120, 405 - (40 + (30 * i) - Parametre.DECALAGE_Y * 2));
 		}
 		initialiserSpriteStat();
 	}
@@ -42,16 +42,16 @@ public class ActionEntiteVivantComposant extends Composant {
 	private void initialiserSpriteStat() {
 		int i = 0;
 		spriteColor[stat_vie] = new Sprite(Image.getImage(VariableCommune.HUD_STAT_VIE));
-		spriteColor[stat_vie].setPosition(Parametre.x(122), 405 - (Parametre.y(38) + (Parametre.y(28) * i++)));
+		spriteColor[stat_vie].setPosition(122, 405 - (38 + (28 * i++) - Parametre.DECALAGE_Y * 2));
 
 		spriteColor[stat_energie] = new Sprite(Image.getImage(VariableCommune.HUD_STAT_ENERGIE));
-		spriteColor[stat_energie].setPosition(Parametre.x(122), 405 - (Parametre.y(38) + (Parametre.y(30) * i++)));
+		spriteColor[stat_energie].setPosition(122, 405 - (38 + (30 * i++) - Parametre.DECALAGE_Y * 2));
 
 		spriteColor[stat_satiete] = new Sprite(Image.getImage(VariableCommune.HUD_STAT_SATIETE));
-		spriteColor[stat_satiete].setPosition(Parametre.x(122), 405 - (Parametre.y(38) + (Parametre.y(30) * i++)));
+		spriteColor[stat_satiete].setPosition(122, 405 - (38 + (30 * i++) - Parametre.DECALAGE_Y * 2));
 
 		spriteColor[stat_hydra] = new Sprite(Image.getImage(VariableCommune.HUD_STAT_HYDRA));
-		spriteColor[stat_hydra].setPosition(Parametre.x(122), 405 - (Parametre.y(38) + (Parametre.y(30) * i++)));
+		spriteColor[stat_hydra].setPosition(122, 405 - (38 + (30 * i++) - Parametre.DECALAGE_Y * 2));
 
 	}
 
@@ -64,13 +64,13 @@ public class ActionEntiteVivantComposant extends Composant {
 
 		final EntiteVivante entiteVivante = (EntiteVivante) Action.body.getUserData();
 
-		this.bitmapFont.draw(batch, entiteVivante.prenom, Parametre.x(100), 405 - Parametre.y(0));
+		this.bitmapFont.draw(batch, entiteVivante.prenom, 100, 405 + Parametre.DECALAGE_Y * 2);
 
-		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.sante"), Parametre.x(15), 405 - Parametre.y(30));
-		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.energie"), Parametre.x(15), 405 - Parametre.y(60));
-		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.satiete"), Parametre.x(15), 405 - Parametre.y(90));
-		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.hydratation"), Parametre.x(15),
-				405 - Parametre.y(120));
+		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.sante"), 15, 405 - 30 + Parametre.DECALAGE_Y * 2);
+		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.energie"), 15, 405 - 60 + Parametre.DECALAGE_Y * 2);
+		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.satiete"), 15, 405 - 90 + Parametre.DECALAGE_Y * 2);
+		this.bitmapFont.draw(batch, Parametre.bundle.get("txt.stat.hydratation"), 15,
+				405 - 120 + Parametre.DECALAGE_Y * 2);
 
 		for (int i = 0; i < spriteStatsBarre.length; i++) {
 			spriteStatsBarre[i].draw(batch);

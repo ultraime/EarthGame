@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.ultraime.composant.ActionEntiteVivantComposant;
+import com.ultraime.composant.EntiteVivantStatsComposant;
 import com.ultraime.composant.ComposantManager;
 import com.ultraime.composant.HudComposant;
 import com.ultraime.database.Action;
@@ -89,7 +89,7 @@ public class EcranJeu extends Ecran {
 		this.stage = new TiledMapStage(tileMapService.tiledMap);
 
 		// les composants
-		this.actionEntiteVivantComposant = new ComposantManager(new ActionEntiteVivantComposant());
+		this.actionEntiteVivantComposant = new ComposantManager(new EntiteVivantStatsComposant());
 		this.hudComposant = new ComposantManager(new HudComposant());
 
 		// la lumiere
