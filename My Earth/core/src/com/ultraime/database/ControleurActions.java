@@ -1,6 +1,5 @@
 package com.ultraime.database;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 import com.ultraime.database.base.Base;
 
 /**

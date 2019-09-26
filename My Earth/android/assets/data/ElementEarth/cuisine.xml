@@ -7,12 +7,24 @@
 		<imageElement>
 			<x>0</x>
 			<y>0</y>
+			<idTuile>69</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<imageElement>
+			<x>0</x>
+			<y>1</y>
 			<idTuile>59</idTuile>
+			<collision>true</collision>
+		</imageElement>
+			<imageElement>
+			<x>1</x>
+			<y>0</y>
+			<idTuile>70</idTuile>
 			<collision>true</collision>
 		</imageElement>
 		<imageElement>
 			<x>1</x>
-			<y>0</y>
+			<y>1</y>
 			<idTuile>60</idTuile>
 			<collision>true</collision>
 		</imageElement>
@@ -28,14 +40,26 @@
 		<imageElement>
 			<x>0</x>
 			<y>0</y>
-			<idTuile>57</idTuile>
+			<idTuile>67</idTuile>
 			<collision>true</collision>
 		</imageElement>
 			<imageElement>
+			<x>0</x>
+			<y>1</y>
+			<idTuile>57</idTuile>
+			<collision>true</collision>
+		</imageElement>
+		<imageElement>
 			<x>1</x>
 			<y>0</y>
+			<idTuile>68</idTuile>
+			<collision>false</collision>
+		</imageElement>
+			<imageElement>
+			<x>1</x>
+			<y>1</y>
 			<idTuile>58</idTuile>
-			<collision>true</collision>
+			<collision>false</collision>
 		</imageElement>
 		<layerCible>OBJET_0</layerCible>
 		<poids>50</poids>
