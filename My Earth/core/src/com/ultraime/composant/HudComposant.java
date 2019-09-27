@@ -62,7 +62,7 @@ public class HudComposant extends Composant {
 		final Texture textureBtn116px = Image.getBtnNormal(Bouton.ROND_HD_MENU_116PX);
 
 		posX = Parametre.LARGEUR_ECRAN - textureFond.getWidth() * 0.40f;
-		posY = 20 + Parametre.DECALAGE_Y;
+		posY = 25 + Parametre.DECALAGE_Y;
 		boutonConstruction = new Bouton(posX, posY, textureBtn116px.getWidth(), textureBtn116px.getHeight(), "",
 				Bouton.ROND_HD_MENU_116PX);
 
@@ -116,7 +116,7 @@ public class HudComposant extends Composant {
 		this.boutonTroisParsConstruction = new ArrayList<>();
 		int largeurBtn = 150;
 		float posX = Parametre.LARGEUR_ECRAN - (textureFond.getWidth() * 0.40f + largeurBtn);
-		float posY = 20 + Parametre.DECALAGE_Y;
+		float posY = 25 + Parametre.DECALAGE_Y;
 		final BoutonTroisPars boutonTroisPars_structure = creerBtnMenu(textureFond, largeurBtn,
 				"txt.construction.structure", posX, posY);
 		this.boutonTroisParsConstruction.add(boutonTroisPars_structure);
