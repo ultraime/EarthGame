@@ -73,7 +73,7 @@ public class AEAttend extends ActionEntite {
 
 	private boolean isActionEnd(final EntiteVivante entiteVivante) {
 		boolean isActionEnd = false;
-		if (Base.getInstance().getTemps().compare(tempsFinAttente) == 1) {
+		if (tempsFinAttente != null && Base.getInstance().getTemps().compare(tempsFinAttente) == 1) {
 			isActionEnd = true;
 		} else if (isRengenEnergie) {
 			if (entiteVivante.habiliter.energie[Habiliter.ACTUEL] == entiteVivante.habiliter.energie[Habiliter.MAX]) {

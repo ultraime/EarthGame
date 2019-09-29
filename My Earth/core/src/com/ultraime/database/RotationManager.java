@@ -33,8 +33,6 @@ public class RotationManager {
 		return ElementEarthRotate;
 	}
 
-	
-
 	public static ElementEarth getElementRotate(final ElementEarth elementEarth, String rotation) {
 		ElementEarth ElementEarthRotate = null;
 		switch (rotation) {
@@ -56,6 +54,7 @@ public class RotationManager {
 
 		return ElementEarthRotate;
 	}
+
 	private static ElementEarth rotateHaut(ElementEarth elementEarth) {
 		List<ElementEarthImage> elementEarthImageRef = Base.getInstance()
 				.recupererElementEarthByNom(elementEarth.nom).elementEarthImages;
@@ -70,6 +69,7 @@ public class RotationManager {
 		earth.rotation = ElementEarth.rot_haut;
 		return earth;
 	}
+
 	private static ElementEarth rotateGauche(ElementEarth elementEarth) {
 		List<ElementEarthImage> elementEarthImageRef = Base.getInstance()
 				.recupererElementEarthByNom(elementEarth.nom).elementEarthImages;
@@ -79,7 +79,7 @@ public class RotationManager {
 			ElementEarthImage elementEarthImage = earth.elementEarthImages.get(i);
 			final ElementEarthImage refImage = elementEarthImageRef.get(i);
 			elementEarthImage.y = refImage.x;
-			elementEarthImage.x = refImage.y-refImage.y-refImage.y;
+			elementEarthImage.x = refImage.y - refImage.y - refImage.y;
 		}
 		earth.rotation = ElementEarth.rot_gauche;
 		return earth;
@@ -91,10 +91,26 @@ public class RotationManager {
 
 		ElementEarth earth = new ElementEarth(elementEarth);
 		for (int i = 0; i < earth.elementEarthImages.size(); i++) {
+
 			ElementEarthImage elementEarthImage = earth.elementEarthImages.get(i);
 			final ElementEarthImage refImage = elementEarthImageRef.get(i);
-			elementEarthImage.y = refImage.y - refImage.y - refImage.y;
-			elementEarthImage.x = refImage.x;
+			if (refImage.y > 0) {
+				elementEarthImage.y = refImage.y - refImage.y - refImage.y;
+				elementEarthImage.x = refImage.x;
+				if(refImage.x > 0){
+					elementEarthImage.x = refImage.x - refImage.x - refImage.x;
+				}
+			}
+			else if (refImage.x > 0) {
+				elementEarthImage.y = refImage.y;
+				elementEarthImage.x = refImage.x - refImage.x - refImage.x;
+			}
+
+			else {
+				elementEarthImage.y = refImage.y;
+				elementEarthImage.x = refImage.x;
+			}
+			//System.err.println(i + " => x:" + elementEarthImage.x + " y:" + elementEarthImage.y);
 		}
 		earth.rotation = ElementEarth.rot_bas;
 		return earth;
@@ -108,8 +124,16 @@ public class RotationManager {
 		for (int i = 0; i < earth.elementEarthImages.size(); i++) {
 			ElementEarthImage elementEarthImage = earth.elementEarthImages.get(i);
 			final ElementEarthImage refImage = elementEarthImageRef.get(i);
-			elementEarthImage.y = refImage.x;
-			elementEarthImage.x = refImage.y;
+			if (refImage.y > 0 && refImage.x == 0) {
+				elementEarthImage.y = 0;
+				elementEarthImage.x = refImage.y;
+			} else if (refImage.y == 0 && refImage.x > 0) {
+				elementEarthImage.y = refImage.x - refImage.x - refImage.x;
+				elementEarthImage.x = refImage.y;
+			} else {
+				elementEarthImage.y = refImage.y - refImage.y - refImage.y;
+				elementEarthImage.x = refImage.y;
+			}
 		}
 		earth.rotation = ElementEarth.rot_droite;
 		return earth;
