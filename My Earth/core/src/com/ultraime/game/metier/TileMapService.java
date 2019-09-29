@@ -201,13 +201,24 @@ public class TileMapService {
 			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
 			Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 
+			// Quand on suprimme une culture, on met de l'herbe à la place du
+			// sol.
+			if (elementAction.nom.equals(ElementEarth.anti_culture)) {
+				// TODO retirer culture_final et culture_sol.
+				Cell cell = new Cell();
+				final TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
+				final TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(SOL_0);
+				cell.setTile(tileSet.getTile(21));
+				tiledLayer.setCell(posXImage, posYImage, cell);
+			}
+
 		}
 		// supression de l'élément "constructible"
 		final TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
+
 		// juste pour l'affichage
 		creerMurEnBois();
-		
 
 	}
 
@@ -469,19 +480,6 @@ public class TileMapService {
 	}
 
 	/**
-	 * @return le premier element de la liste elementAconstruire. Attention,
-	 *         peut return null
-	 */
-	public ElementAconstruire getElementACultiver() {
-		ElementAconstruire elementACultiver = null;
-		if (elementsAcultiver.size() > 0) {
-			elementACultiver = elementsAcultiver.get(0);
-			retirerElementAcultiver(elementsAcultiver.get(0));
-		}
-		return elementACultiver;
-	}
-
-	/**
 	 * @param ElementEarth
 	 *            AJoute un élément à construire. Attention si on place un
 	 *            élément à l'endroit d'un objet en construction présent on le
@@ -490,20 +488,6 @@ public class TileMapService {
 	public static void ajouterElementAconstruireNEW(ElementEarth elementAconstruire) {
 		retirerElementAconstruire(elementAconstruire.x, elementAconstruire.y);
 		elementAconstruiresNEW.add(elementAconstruire);
-	}
-
-	/**
-	 * @param elementAconstruire
-	 */
-	public static void ajouterElementAcultiver(ElementAconstruire elementAcultiver) {
-		elementsAcultiver.add(elementAcultiver);
-	}
-
-	/**
-	 * @param elementAconstruire
-	 */
-	public static void retirerElementAcultiver(ElementAconstruire elementAcultiver) {
-		elementsAcultiver.remove(elementAcultiver);
 	}
 
 	/**

@@ -243,6 +243,7 @@ public class Base implements java.io.Serializable {
 			boolean isOk = retirerElementEarth(x, y, type);
 			if (isOk) {
 				elementRetire = isOk;
+				break;
 			}
 		}
 		return elementRetire;

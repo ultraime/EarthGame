@@ -45,16 +45,16 @@ public class AEConstruction extends ActionEntite {
 			} else {
 				// on regarde si le temps de l'action est ok.
 				if (Base.getInstance().getTemps().compare(tempsConstruction) == 1) {
-					
+
 					if (elem.type.equals(ElementEarth.action)) {
-						if (elem.nom.equals(ElementEarth.detruire) || 
-								elem.nom.equals(ElementEarth.couper)) {
+						if (elem.nom.equals(ElementEarth.detruire) || elem.nom.equals(ElementEarth.couper)
+								|| elem.nom.equals(ElementEarth.anti_culture)) {
 							TileMapService.getInstance().detruireItem(elem);
 						}
 					} else {
 						TileMapService.getInstance().construireItem(elem);
 						Base.getInstance().retirerRectangleConstructible(elem.x, elem.y);
-						
+
 					}
 					elementAconstruires.remove(0);
 					tempsConstruction = null;

@@ -46,7 +46,8 @@ public class ElementEarth implements Serializable {
 	transient public final static String action = "action";
 	transient public final static String detruire = "detruire";
 	transient public final static String couper = "couper";
-
+	transient public final static String anti_culture = "anti_culture";
+	
 	transient public static List<String> types = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
 		{

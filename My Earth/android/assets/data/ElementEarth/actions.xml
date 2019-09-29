@@ -39,4 +39,30 @@
 			<type>nature</type>
 		</elementsCible>
 	</elementEarths>
+	
+	<elementEarths>
+		<type>action</type>
+		<placementType>unique</placementType>
+		<nom>anti_culture</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>63</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<idTuileNone>64</idTuileNone>
+		<logoImage>logo/anti_culture.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+		<elementsCible>
+			<type>culture_sol</type>
+		</elementsCible>
+		<elementsCible>
+			<type>culture</type>
+		</elementsCible>
+		<elementsCible>
+			<type>culture_final</type>
+		</elementsCible>
+	</elementEarths>
+
 </ElementEarth>

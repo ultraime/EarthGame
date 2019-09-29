@@ -80,10 +80,14 @@ public class MetierGeneral extends Metier {
 	}
 
 	private boolean rechercheLit() {
+		boolean litTrouve = false;
 		final ElementEarth lit = this.entiteVivante.lit;
-		AEDeplacement actionEntite = new AEDeplacement(lit.x, lit.y, 0);
-		this.entiteVivante.ajouterAction(actionEntite);
-		return true;
+		if (lit != null) {
+			AEDeplacement actionEntite = new AEDeplacement(lit.x, lit.y, 0);
+			this.entiteVivante.ajouterAction(actionEntite);
+			litTrouve =  true;
+		}
+		return litTrouve;
 	}
 
 }
