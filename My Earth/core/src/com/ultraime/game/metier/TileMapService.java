@@ -16,7 +16,6 @@ import com.ultraime.database.ElementEarth;
 import com.ultraime.database.ElementEarthImage;
 import com.ultraime.database.RotationManager;
 import com.ultraime.database.base.Base;
-import com.ultraime.game.entite.ElementAconstruire;
 
 public class TileMapService {
 
@@ -32,13 +31,12 @@ public class TileMapService {
 	private TiledMapTileLayer tileSol_0;
 	public OrthogonalTiledMapRenderer rendererMap;
 	private static TileMapService instance;
+	private TileMurManager tileMurManager;
 
 	// Pour la construction
 	// private static List<ElementAconstruire> elementAconstruires;
 	// Pour la construction
 	private static List<ElementEarth> elementAconstruiresNEW;
-
-	private static List<ElementAconstruire> elementsAcultiver;
 
 	public static TileMapService getInstance() {
 		if (instance == null) {
@@ -51,8 +49,8 @@ public class TileMapService {
 		tiledMap = new TmxMapLoader().load("carte/carte.tmx");
 		rendererMap = new OrthogonalTiledMapRenderer(tiledMap, 1);
 		tileSol_0 = (TiledMapTileLayer) tiledMap.getLayers().get("SOL_0");
-		elementsAcultiver = new ArrayList<>();
 		elementAconstruiresNEW = new ArrayList<>();
+		tileMurManager = new TileMurManager(tiledMap);
 	}
 
 	public TiledMapTileSet getTileSet(final String tileName) {
@@ -116,7 +114,7 @@ public class TileMapService {
 				WorldService.getInstance().retirerCollision(posX, posY);
 			}
 		}
-		retirerElementAconstruire(posX, posY);
+		retirerElementAconstruireSaufAction(posX, posY);
 		// ajout dans la liste des éléments de culture.
 		if (elementEvolue.type.equals(ElementEarth.culture_sol) || elementEvolue.type.equals(ElementEarth.culture)
 				|| elementEvolue.type.equals(ElementEarth.culture_final)) {
@@ -178,7 +176,8 @@ public class TileMapService {
 		alimenterImageFromMultiTile(elementEvolue, tiledLayer, posX, posY, false);
 
 		if (elementEvolue.nom.equals("mur_en_bois")) {
-			creerMurEnBois();
+			tileMurManager.creerMurEnBois();
+//			creerMurEnBois();
 		}
 
 		ElementEarth elementEarth = new ElementEarth(elementEvolue);
@@ -207,9 +206,13 @@ public class TileMapService {
 				// TODO retirer culture_final et culture_sol.
 				Cell cell = new Cell();
 				final TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
-				final TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(SOL_0);
+				TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(SOL_0);
 				cell.setTile(tileSet.getTile(21));
 				tiledLayer.setCell(posXImage, posYImage, cell);
+
+				tiledLayer = TileMapService.getInstance().getLayers(OBJET_0);
+				viderCellMap(posXImage, posYImage, tiledLayer);
+
 			}
 
 		}
@@ -218,7 +221,8 @@ public class TileMapService {
 		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
 
 		// juste pour l'affichage
-		creerMurEnBois();
+		tileMurManager.creerMurEnBois();
+//		creerMurEnBois();
 
 	}
 
@@ -253,7 +257,8 @@ public class TileMapService {
 		alimenterImageFromMultiTile(elementAconstruire, tiledLayer, posX, posY, false);
 
 		if (elementAconstruire.nom.equals("mur_en_bois")) {
-			creerMurEnBois();
+			tileMurManager.creerMurEnBois();
+//			creerMurEnBois();
 		}
 		// si c'est une culture, on place la terre en dessous d'elle
 		if (elementAconstruire.type.equals(ElementEarth.culture)
@@ -310,82 +315,6 @@ public class TileMapService {
 		}
 	}
 
-	public void creerMurEnBois() {
-		final TiledMapTileLayer tilePourMur = (TiledMapTileLayer) tiledMap.getLayers().get(OBJET_0);
-		final TiledMapTileSet tileSet = this.tiledMap.getTileSets().getTileSet(TUILE);
-		final int nbTileY = tilePourMur.getHeight();
-		final int nbTileX = tilePourMur.getWidth();
-		for (int x = 0; x < nbTileX; x++) {
-			for (int y = 0; y < nbTileY; y++) {
-				Cell cell = tilePourMur.getCell(x, y);
-				if (cell != null && cell.getTile() != null) {
-					if (isMurEnBois(cell.getTile().getId())) {
-						cell.setTile(tileSet.getTile(1));
-						if (!isMurEnHaut(x, y) && !isMurADroite(x, y) && !isMurEnBas(x, y) && !isMurAgauche(x, y)) {
-							// le mur est seul
-							cell.setTile(tileSet.getTile(1));
-						} else if (!isMurEnHaut(x, y) && !isMurEnBas(x, y)) {
-							// pas de mur en haut et en bas
-							if (isMurADroite(x, y) && isMurAgauche(x, y)) {
-								cell.setTile(tileSet.getTile(2));
-							} else if (isMurADroite(x, y)) {
-								cell.setTile(tileSet.getTile(4));
-							} else if (isMurAgauche(x, y)) {
-								cell.setTile(tileSet.getTile(4));
-								cell.setFlipHorizontally(true);
-							}
-						} else if (!isMurADroite(x, y) && !isMurAgauche(x, y)) {
-							// pas de mur à gauche et à droite.
-							if (isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-								cell.setTile(tileSet.getTile(7));
-							} else if (isMurEnHaut(x, y)) {
-								cell.setTile(tileSet.getTile(5));
-							} else if (isMurEnBas(x, y)) {
-								cell.setTile(tileSet.getTile(9));
-							}
-						} else {
-							// il y a un mur en haut ou en bas et a gauche ou a
-							// droite
-							if (isMurADroite(x, y) && !isMurAgauche(x, y)) {
-								if (isMurEnHaut(x, y) && !isMurEnBas(x, y)) {
-									cell.setTile(tileSet.getTile(3));
-								} else if (!isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-									cell.setTile(tileSet.getTile(8));
-									cell.setFlipVertically(true);
-								} else if (isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-									cell.setTile(tileSet.getTile(7));
-								}
-							} else if (!isMurADroite(x, y) && isMurAgauche(x, y)) {
-								if (isMurEnHaut(x, y) && !isMurEnBas(x, y)) {
-									cell.setTile(tileSet.getTile(3));
-									cell.setFlipHorizontally(true);
-								} else if (!isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-									cell.setTile(tileSet.getTile(8));
-									cell.setFlipVertically(true);
-									cell.setFlipHorizontally(true);
-								} else if (isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-									cell.setTile(tileSet.getTile(7));
-								}
-							} else {
-								if (isMurADroite(x, y) && isMurAgauche(x, y)) {
-									if (!isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-										cell.setTile(tileSet.getTile(9));
-									} else if (isMurEnHaut(x, y) && isMurEnBas(x, y)) {
-										cell.setTile(tileSet.getTile(6));
-									} else if (isMurEnHaut(x, y) && !isMurEnBas(x, y)) {
-										cell.setTile(tileSet.getTile(5));
-									}
-								}
-							}
-						}
-
-					}
-				}
-			}
-		}
-
-	}
-
 	public boolean isObjetPresent(final int x, final int y) {
 		boolean isObjetPresent = false;
 		final TiledMapTileLayer tileObjt0 = (TiledMapTileLayer) tiledMap.getLayers().get(OBJET_0);
@@ -407,63 +336,9 @@ public class TileMapService {
 		return isObjetPresent;
 	}
 
-	public boolean isMurAgauche(final int x, final int y) {
-		boolean isMurAgauche = false;
-		final TiledMapTileLayer tilePourMur = (TiledMapTileLayer) tiledMap.getLayers().get(OBJET_0);
-		if (x > 1) {
-			if (tilePourMur.getCell(x - 1, y) != null) {
-				if (isMurEnBois(tilePourMur.getCell(x - 1, y).getTile().getId())) {
-					isMurAgauche = true;
-				}
-			}
-		}
-		return isMurAgauche;
-	}
-
-	public boolean isMurADroite(final int x, int y) {
-		boolean isMurADroite = false;
-		final TiledMapTileLayer tilePourMur = (TiledMapTileLayer) tiledMap.getLayers().get(OBJET_0);
-		final int nbTileX = tilePourMur.getWidth();
-		if (x + 1 < nbTileX) {
-			if (tilePourMur.getCell(x + 1, y) != null) {
-				if (isMurEnBois(tilePourMur.getCell(x + 1, y).getTile().getId())) {
-					isMurADroite = true;
-				}
-			}
-		}
-		return isMurADroite;
-	}
-
-	public boolean isMurEnHaut(final int x, int y) {
-		boolean isMurEnHaut = false;
-		final TiledMapTileLayer tilePourMur = (TiledMapTileLayer) tiledMap.getLayers().get(OBJET_0);
-		final int nbTileY = tilePourMur.getHeight();
-		if (y + 1 < nbTileY) {
-			if (tilePourMur.getCell(x, y + 1) != null) {
-				if (isMurEnBois(tilePourMur.getCell(x, y + 1).getTile().getId())) {
-					isMurEnHaut = true;
-				}
-			}
-		}
-		return isMurEnHaut;
-	}
-
-	public boolean isMurEnBas(final int x, int y) {
-		boolean isMurEnBas = false;
-		final TiledMapTileLayer tilePourMur = (TiledMapTileLayer) tiledMap.getLayers().get(OBJET_0);
-		if (y > 1) {
-			if (tilePourMur.getCell(x, y - 1) != null) {
-				if (isMurEnBois(tilePourMur.getCell(x, y - 1).getTile().getId())) {
-					isMurEnBas = true;
-				}
-			}
-		}
-		return isMurEnBas;
-	}
-
 	/**
-	 * @return le premier element de la liste elementAconstruire. Attention,
-	 *         peut return null
+	 * @return le premier element de la liste elementAconstruire. Attention, peut
+	 *         return null
 	 */
 	public ElementEarth getElementAConstruire() {
 		ElementEarth elementAconstruire = null;
@@ -480,10 +355,9 @@ public class TileMapService {
 	}
 
 	/**
-	 * @param ElementEarth
-	 *            AJoute un élément à construire. Attention si on place un
-	 *            élément à l'endroit d'un objet en construction présent on le
-	 *            suprimme.
+	 * @param ElementEarth AJoute un élément à construire. Attention si on place
+	 *                     un élément à l'endroit d'un objet en construction
+	 *                     présent on le suprimme.
 	 */
 	public static void ajouterElementAconstruireNEW(ElementEarth elementAconstruire) {
 		retirerElementAconstruire(elementAconstruire.x, elementAconstruire.y);
@@ -501,6 +375,25 @@ public class TileMapService {
 			if (elementAconstruire.x == x && elementAconstruire.y == y) {
 				elementAconstruiresNEW.remove(i);
 				isRemove = true;
+				break;
+			}
+		}
+		return isRemove;
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public static boolean retirerElementAconstruireSaufAction(final int x, final int y) {
+		boolean isRemove = false;
+		for (int i = 0; i < elementAconstruiresNEW.size(); i++) {
+			ElementEarth elementAconstruire = elementAconstruiresNEW.get(i);
+			if (elementAconstruire.x == x && elementAconstruire.y == y) {
+				if (!elementAconstruire.type.equals(ElementEarth.action)) {
+					elementAconstruiresNEW.remove(i);
+					isRemove = true;
+				}
 				break;
 			}
 		}
