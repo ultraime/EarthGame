@@ -1,5 +1,22 @@
 <ElementEarth>
-<!-- PLANTE-->
+	<!-- Element récoltable -->
+	<elementEarths>
+		<type>objet_sol</type>
+		<placementType>unique</placementType>
+		<nom>objet_sol_carrote</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>34</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<layerCible>SOL_1</layerCible>
+		<nombreRecolte>2</nombreRecolte>
+		<poids>0.50</poids>
+	</elementEarths>
+
+	<!-- PLANTE -->
 	<elementEarths>
 		<type>culture_sol_constructible</type>
 		<placementType>rectangle</placementType>
@@ -42,7 +59,7 @@
 		<layerCible>OBJET_0</layerCible>
 		<poids>0.10</poids>
 	</elementEarths>
-	<!-- PLANTE ANIME-->
+	<!-- PLANTE ANIME -->
 	<elementEarths>
 		<type>culture</type>
 		<placementType>unique</placementType>
@@ -103,5 +120,8 @@
 		<layerCible>OBJET_0</layerCible>
 		<nombreRecolte>2</nombreRecolte>
 		<poids>0.50</poids>
+		<elementEarthGenere>
+			<nom>objet_sol_carrote</nom>
+		</elementEarthGenere>
 	</elementEarths>
 </ElementEarth>

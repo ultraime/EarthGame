@@ -34,6 +34,7 @@ public class Base implements java.io.Serializable {
 	public BasePersonnage basePersonnage;
 	public BaseAction baseAction;
 	public BaseNature baseNature;
+	public BaseObjetSol baseObjetSol;
 	/**
 	 * pour les collisions
 	 */
@@ -60,6 +61,7 @@ public class Base implements java.io.Serializable {
 		basePersonnage = new BasePersonnage();
 		baseAction = new BaseAction();
 		baseNature = new BaseNature();
+		baseObjetSol = new BaseObjetSol();
 	}
 
 	/**
@@ -93,8 +95,7 @@ public class Base implements java.io.Serializable {
 	}
 
 	/**
-	 * @param elementEarthEvolution
-	 *            elementEarthEvolution
+	 * @param elementEarthEvolution elementEarthEvolution
 	 * @return
 	 */
 	public ElementEarth recupererElementEarthByNom(String elementEarthEvolution) {
@@ -334,6 +335,9 @@ public class Base implements java.io.Serializable {
 			break;
 		case ElementEarth.eau:
 			earths = baseNature.getElementEarthEau();
+			break;
+		case ElementEarth.objet_sol:
+			earths = baseObjetSol.getElementEarthsObjetSol();
 			break;
 		default:
 			break;

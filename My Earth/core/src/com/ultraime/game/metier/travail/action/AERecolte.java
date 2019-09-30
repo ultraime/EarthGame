@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
+import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.pathfinding.Aetoile;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
@@ -34,6 +35,7 @@ public class AERecolte extends ActionEntite {
 
 		if (isDeplacementEnd) {
 			ElementEarth elem = elementArecolter.get(0);
+
 			// ajout dans l'inventaire du perso l'element.
 			EntiteVivante ev = (EntiteVivante) body.getUserData();
 			for (int i = 0; i < elem.nombreRecolte; i++) {
@@ -46,6 +48,12 @@ public class AERecolte extends ActionEntite {
 			if (elementArecolter.size() == 0) {
 				isActionEnd = true;
 			}
+
+			// TODO placement de l'objet sur la carte.
+			ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom(elem.elementGenere.nom);
+			elementEarth.x = elem.x;
+			elementEarth.y = elem.y;
+			TileMapService.getInstance().construireItem(elementEarth);
 		}
 
 		EntiteVivante ev = (EntiteVivante) body.getUserData();
@@ -66,7 +74,8 @@ public class AERecolte extends ActionEntite {
 		EntiteVivante ev = (EntiteVivante) body.getUserData();
 		Aetoile aetoile = new Aetoile(world, body);
 		try {
-			ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination, noeudDepart,Parametre.AETOILE_BASE_2));
+			ev.setListeDeNoeudDeplacement(
+					aetoile.cheminPlusCourt(noeudDestination, noeudDepart, Parametre.AETOILE_BASE_2));
 		} catch (AetoileException e) {
 			if (Parametre.MODE_DEBUG)
 				e.printStackTrace();

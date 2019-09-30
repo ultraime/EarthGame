@@ -119,6 +119,8 @@ public class LecteurXML extends ApplicationAdapter {
 
 			alimenterElementCible(child, elementEarth);
 
+			alimenterElementGenere(child, elementEarth);
+
 			Base.getInstance().addReferenceElementEarth(elementEarth);
 		}
 
@@ -157,6 +159,19 @@ public class LecteurXML extends ApplicationAdapter {
 			}
 
 			elementEarth.addElementCible(elementCible);
+		}
+	}
+
+	/**
+	 * @param child
+	 * @param elementEarth
+	 */
+	public void alimenterElementGenere(final Element child, final ElementEarth elementEarth) {
+		Array<Element> elementsCible = child.getChildrenByName("elementEarthGenere");
+		for (Element elementGenereXML : elementsCible) {
+			final String elem = elementGenereXML.getChildByName("nom").getText();
+			ElementGenere elementGenere = new ElementGenere(elem);
+			elementEarth.elementGenere = elementGenere;
 		}
 	}
 

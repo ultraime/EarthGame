@@ -144,7 +144,9 @@ public class TileMapService {
 		if (elementEvolue == null) {
 			elementEvolue = Base.getInstance().recupererElementEarthByNom(elementAconstruire.nom);
 		}
-		retirerElementAconstruire(posX, posY);
+		if (!elementAconstruire.type.equals(ElementEarth.objet_sol)) {
+			retirerElementAconstruire(posX, posY);
+		}
 
 		String layerCible = elementEvolue.layerCible;
 
@@ -156,15 +158,17 @@ public class TileMapService {
 			if (layerCible == null) {
 				layerCible = elementEarthImage.layerCible;
 			}
-			if (!layerCible.equals(SOL_0)) {
-				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
-				if (elementEvolue.elementEarthImages.get(i).isCollision) {
-					WorldService.getInstance().creerCollision(posXImage, posYImage);
+			if (!elementAconstruire.type.equals(ElementEarth.objet_sol)) {
+				if (!layerCible.equals(SOL_0)) {
+					Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
+					if (elementEvolue.elementEarthImages.get(i).isCollision) {
+						WorldService.getInstance().creerCollision(posXImage, posYImage);
+					} else {
+						WorldService.getInstance().retirerCollision(posXImage, posYImage);
+					}
 				} else {
-					WorldService.getInstance().retirerCollision(posXImage, posYImage);
+					Base.getInstance().retirerElementEarth(posXImage, posYImage, ElementEarth.culture);
 				}
-			} else {
-				Base.getInstance().retirerElementEarth(posXImage, posYImage, ElementEarth.culture);
 			}
 		}
 		TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layerCible);

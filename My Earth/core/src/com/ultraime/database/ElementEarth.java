@@ -28,6 +28,7 @@ public class ElementEarth implements Serializable {
 	transient public final static String sol = "sol";
 	transient public final static String nature = "nature";
 	transient public final static String eau = "eau";
+	transient public final static String objet_sol = "objet_sol";
 	// sous type
 	transient public final static String literie = "literie";
 	transient public final static String aqua = "aqua";
@@ -47,7 +48,7 @@ public class ElementEarth implements Serializable {
 	transient public final static String detruire = "detruire";
 	transient public final static String couper = "couper";
 	transient public final static String anti_culture = "anti_culture";
-	
+
 	transient public static List<String> types = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
@@ -83,8 +84,7 @@ public class ElementEarth implements Serializable {
 	public String elementEarthEvolution;
 
 	/**
-	 * DonnÃ©e non obligatoire. Concerne les plantes. Temps pour Ã©voluer En
-	 * minute.
+	 * DonnÃ©e non obligatoire. Concerne les plantes. Temps pour Ã©voluer En minute.
 	 */
 	public int tempEvolution = -1;
 
@@ -134,8 +134,8 @@ public class ElementEarth implements Serializable {
 	public String rotation = rot_haut;
 
 	/**
-	 * Tuile de l'image quand l'action ou la construction n'est pas possible. 27
-	 * est le cercle rouge par dÃ©faut.
+	 * Tuile de l'image quand l'action ou la construction n'est pas possible. 27 est
+	 * le cercle rouge par dÃ©faut.
 	 */
 	public int idTuileNone = 27;
 	public boolean showIdTuileNone = false;
@@ -150,6 +150,12 @@ public class ElementEarth implements Serializable {
 	 * Proprietaire de l'objet
 	 */
 	public EntiteVivante proprietaire;
+
+	/**
+	 * Liste des elements que génére l'objet (ex : générateur de monstre, plante
+	 * etc..)
+	 */
+	public ElementGenere elementGenere;
 
 	/**
 	 * @param elementEarth
@@ -178,6 +184,7 @@ public class ElementEarth implements Serializable {
 		this.rotation = new String(elementEarth.rotation);
 		this.elementCibles = elementEarth.elementCibles;
 		this.proprietaire = elementEarth.proprietaire;
+		this.elementGenere = elementEarth.elementGenere;
 
 	}
 
