@@ -16,6 +16,7 @@ public class ElementEarth implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	//type
 	transient public final static String structure_constructible = "structure_constructible";
 	transient public final static String culture_sol_constructible = "culture_sol_constructible";
 	transient public final static String meuble_constructible = "meuble_constructible";
@@ -32,6 +33,7 @@ public class ElementEarth implements Serializable {
 	// sous type
 	transient public final static String literie = "literie";
 	transient public final static String aqua = "aqua";
+	transient public final static String legume = "legume";
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
@@ -152,7 +154,7 @@ public class ElementEarth implements Serializable {
 	public EntiteVivante proprietaire;
 
 	/**
-	 * Liste des elements que génére l'objet (ex : générateur de monstre, plante
+	 * Liste des elements que gï¿½nï¿½re l'objet (ex : gï¿½nï¿½rateur de monstre, plante
 	 * etc..)
 	 */
 	public ElementGenere elementGenere;

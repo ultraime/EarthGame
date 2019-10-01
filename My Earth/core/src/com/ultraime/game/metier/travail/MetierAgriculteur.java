@@ -13,6 +13,7 @@ import com.ultraime.game.metier.pathfinding.AetoileException;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.AEConstruction;
 import com.ultraime.game.metier.travail.action.AEDeposerElementDansCoffre;
+import com.ultraime.game.metier.travail.action.AERamasserObjetSol;
 import com.ultraime.game.metier.travail.action.AERecolte;
 import com.ultraime.game.utile.Parametre;
 
@@ -33,37 +34,74 @@ public class MetierAgriculteur extends Metier {
 
 	@Override
 	public boolean doMetier() {
-		//TODO a revoir, car quand plein, le perso ne fait plus rien
 		boolean isAction = isActionEncours();
 		if (!isAction) {
-			if (!this.entiteVivante.inventaire.placeDisponible
-					|| this.entiteVivante.inventaire.espaceDisponnible() <= 1f) {
-				isAction = tryFindCoffre();
-			}
+			// option 1 : on fait la recolte
+			isAction = rechercherRecolte();
+			// option 2 : on apporte les légumes dans un coffre.
 			if (!isAction) {
-				isAction = tryFindRecolte();
-				if (!isAction) {
-					isAction = tryFindCulture();
-				}
+				isAction = rangerLegume();
 			}
+			// option 3 : on plante
+			if(!isAction) {
+				isAction = rechercherCulture();
+			}
+			
+//			if (!this.entiteVivante.inventaire.placeDisponible
+//					|| this.entiteVivante.inventaire.espaceDisponnible() <= 1f) {
+//				// isAction = rechercherCoffre();
+//			}
+//			if (!isAction) {
+//				isAction = rechercherRecolte();
+//				if (!isAction) {
+//					isAction = rechercherCulture();
+//				}
+//			}
 		}
 		return isAction;
 	}
 
-	private boolean tryFindCoffre() {
-		//TODO attention, si coffre pas Accessible, rien ne sera fait..
+	private boolean rangerLegume() {
+		final ElementEarth coffre = rechercherCoffre();
 		boolean isDoAction = false;
-		final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
-		final ElementEarth elementEarth = Base.getInstance().rechercherCoffreDisponible();
-		if (elementEarth != null) {
-			isDoAction = true;
-			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante,true);
-			if (isDoAction) {;
-				aeDeposerElementDansCoffre.ajouterCible(elementEarth);
-				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
-			}
+		if (coffre != null) {
+			// un coffre est bien dispo, on recherche alors un legume.
+			ElementEarth legume = null;
+			do {
+				legume = Base.getInstance().baseObjetSol.rechercheObjetSol(ElementEarth.legume, legume);
+				if (legume != null) {
+					if (verifierAccessibilite(true, legume, this.entiteVivante, true)) {
+						// Un legume est bien disponible.
+						isDoAction = true;
+						// deux action à faire : Ramasser le legume et le deposer dans le coffre
+						final AERamasserObjetSol aeRamasserObjetSol = new AERamasserObjetSol(0);
+						aeRamasserObjetSol.ajouterCible(legume);
+						this.entiteVivante.ajouterAction(aeRamasserObjetSol);
+						//
+						final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
+						aeDeposerElementDansCoffre.ajouterCible(coffre);
+						this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
+
+					}
+				}
+			} while (!isDoAction && legume != null);
 		}
 		return isDoAction;
+
+	}
+
+	private ElementEarth rechercherCoffre() {
+		// TODO attention, si coffre pas Accessible, rien ne sera fait..
+		ElementEarth coffre = null;
+		Boolean isDoAction = true;
+		final ElementEarth elementEarth = Base.getInstance().rechercherCoffreDisponible();
+		if (elementEarth != null) {
+			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante, true);
+			if (isDoAction) {
+				coffre = elementEarth;
+			}
+		}
+		return coffre;
 	}
 
 	/**
@@ -71,31 +109,36 @@ public class MetierAgriculteur extends Metier {
 	 * 
 	 * @return isDoAction
 	 */
-	private boolean tryFindRecolte() {
+	private boolean rechercherRecolte() {
 		boolean isDoAction = false;
 		final AERecolte actionEntiteRecolte = new AERecolte(0);
-		final ElementEarth elementEarth = rechercherUneCulturePrete();
+		final ElementEarth elementEarth = getUneCulturePrete();
 		if (elementEarth != null) {
-			if (this.entiteVivante.inventaire.placeDisponible) {
-				isDoAction = true;
-				isDoAction = verifierAccessibiliteCulture(true, elementEarth, this.entiteVivante);
-				if (isDoAction) {
-					final float poidsTotal = elementEarth.nombreRecolte * elementEarth.poids;
-					if (this.entiteVivante.inventaire.placeSuffisante(poidsTotal)) {
-						actionEntiteRecolte.ajouterElementArecolter(elementEarth);
-						this.entiteVivante.ajouterAction(actionEntiteRecolte);
-						ElementEarth elementEarthNew = new ElementEarth(
-								Base.getInstance().recupererElementEarthByNom(elementEarth.elementEarthEvolution),
-								elementEarth.x, elementEarth.y);
-						Base.getInstance().ajouterElementEarth(elementEarthNew);
-						isDoAction = true;
-						this.elementEarthOld = null;
-					}else{
-						isDoAction = false;
+			// si un ObjetSOl est présent sur la case, on ne peut pas recolter l'élément.
+			if (!Base.getInstance().baseObjetSol.isObjetPresent(elementEarth.x, elementEarth.y)) {
+
+				if (this.entiteVivante.inventaire.placeDisponible) {
+					isDoAction = true;
+					isDoAction = verifierAccessibiliteCulture(true, elementEarth, this.entiteVivante);
+					if (isDoAction) {
+						final float poidsTotal = elementEarth.nombreRecolte * elementEarth.poids;
+						if (this.entiteVivante.inventaire.placeSuffisante(poidsTotal)) {
+							actionEntiteRecolte.ajouterElementArecolter(elementEarth);
+							this.entiteVivante.ajouterAction(actionEntiteRecolte);
+							ElementEarth elementEarthNew = new ElementEarth(
+									Base.getInstance().recupererElementEarthByNom(elementEarth.elementEarthEvolution),
+									elementEarth.x, elementEarth.y);
+							Base.getInstance().ajouterElementEarth(elementEarthNew);
+							isDoAction = true;
+							this.elementEarthOld = null;
+						} else {
+							isDoAction = false;
+						}
+					} else {
+						this.elementEarthOld = elementEarth;
 					}
-				} else {
-					this.elementEarthOld = elementEarth;
 				}
+
 			}
 
 		}
@@ -103,12 +146,12 @@ public class MetierAgriculteur extends Metier {
 	}
 
 	/**
-	 * Permet de récupérer une culture. Un système de "old" est mis en place
-	 * pour récupérer la prochaine plante si la premiere n'est pas dispo
+	 * Permet de récupérer une culture. Un système de "old" est mis en place pour
+	 * récupérer la prochaine plante si la premiere n'est pas dispo
 	 * 
 	 * @return elementEarth
 	 */
-	public ElementEarth rechercherUneCulturePrete() {
+	public ElementEarth getUneCulturePrete() {
 		ElementEarth elementEarth = null;
 		if (this.elementEarthOld != null) {
 			elementEarth = Base.getInstance().baseCulture.rechercherElementARecolterNext(elementEarthOld);
@@ -125,7 +168,7 @@ public class MetierAgriculteur extends Metier {
 	 * 
 	 * @return isDoAction
 	 */
-	private boolean tryFindCulture() {
+	private boolean rechercherCulture() {
 		boolean isDoAction = false;
 
 		AEConstruction actionEntite = new AEConstruction(0);
@@ -143,7 +186,7 @@ public class MetierAgriculteur extends Metier {
 		return isDoAction;
 	}
 
-	public  boolean verifierAccessibiliteCulture(boolean isDoAction, final ElementEarth element,
+	public boolean verifierAccessibiliteCulture(boolean isDoAction, final ElementEarth element,
 			final EntiteVivante ev) {
 		final Body body = WorldService.getInstance().recupererBodyFromEntite(ev);
 //		final World world = WorldService.getInstance().world;

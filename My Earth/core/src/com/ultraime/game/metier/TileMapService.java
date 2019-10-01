@@ -21,6 +21,7 @@ public class TileMapService {
 
 	public static final String OBJET_0 = "OBJET_0";
 	public static final String SOL_0 = "SOL_0";
+	public static final String SOL_1 = "SOL_1";
 	public final static String CONSTRUCTION = "CONSTRUCTION";
 	public final static String CONSTRUCTION_TEMP = "CONSTRUCTION_TEMP";
 
@@ -48,7 +49,7 @@ public class TileMapService {
 	private TileMapService() {
 		tiledMap = new TmxMapLoader().load("carte/carte.tmx");
 		rendererMap = new OrthogonalTiledMapRenderer(tiledMap, 1);
-		tileSol_0 = (TiledMapTileLayer) tiledMap.getLayers().get("SOL_0");
+		tileSol_0 = (TiledMapTileLayer) tiledMap.getLayers().get(SOL_0);
 		elementAconstruiresNEW = new ArrayList<>();
 		tileMurManager = new TileMurManager(tiledMap);
 	}
