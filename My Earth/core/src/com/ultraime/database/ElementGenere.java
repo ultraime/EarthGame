@@ -10,9 +10,14 @@ public class ElementGenere implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Nom de l'élément généré
+	 * Nom de l'Ã©lÃ©ment
 	 */
 	public String nom;
+	
+	/**
+	 * nombre d'Ã©lÃ©ment gÃ©nÃ©rÃ©
+	 */
+	public int nbGenere;
 
 	public ElementGenere(final String elem) {
 		this.nom = elem;

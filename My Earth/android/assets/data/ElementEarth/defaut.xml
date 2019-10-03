@@ -104,6 +104,22 @@
 		<layerCible>OBJET_0</layerCible>
 	</elementEarths>
 	<!-- PLANTE ANIME-->
+		<!-- Element récoltable -->
+	<elementEarths>
+		<type>objet_sol</type>
+		<sousType>legume</sousType>
+		<placementType>unique</placementType>
+		<nom>objet_sol_mais</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>34</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<layerCible>SOL_1</layerCible>
+		<poids>0.700</poids>
+	</elementEarths>
 	<elementEarths>
 		<type>culture</type>
 		<placementType>unique</placementType>
@@ -162,7 +178,9 @@
 			<lienImage>objet/plante/mais_3.png</lienImage>
 		</animation>
 		<layerCible>OBJET_0</layerCible>
-		<nombreRecolte>5</nombreRecolte>
-		<poids>0.200</poids>
+		<elementEarthGenere>
+			<nom>objet_sol_mais</nom>
+			<nbGenere>2</nbGenere>
+		</elementEarthGenere>
 	</elementEarths>
 </ElementEarth>

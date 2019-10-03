@@ -36,6 +36,7 @@ public class EntiteJoueur extends EntiteVivante {
 			this.typeUnite = VariableCommune.PERSO1;
 		}
 		this.animationManager = new AnimationManager(typeEntiteEnum, typeUnite);
+		initAnimationEtat();
 
 	}
 

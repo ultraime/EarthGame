@@ -170,8 +170,12 @@ public class LecteurXML extends ApplicationAdapter {
 		Array<Element> elementsCible = child.getChildrenByName("elementEarthGenere");
 		for (Element elementGenereXML : elementsCible) {
 			final String elem = elementGenereXML.getChildByName("nom").getText();
+			final int nbGenere = Integer.parseInt(elementGenereXML.getChildByName("nbGenere").getText());
+
 			ElementGenere elementGenere = new ElementGenere(elem);
+			elementGenere.nbGenere = nbGenere;
 			elementEarth.elementGenere = elementGenere;
+
 		}
 	}
 

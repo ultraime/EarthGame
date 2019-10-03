@@ -84,7 +84,11 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.metiers = new ArrayList<>();
 		this.inventaire = new Inventaire(50);
 		this.habiliter = new Habiliter();
-		this.animationEntite = new AnimationEntite();
+		initAnimationEtat();
+	}
+
+	public void initAnimationEtat() {
+			this.animationEntite = new AnimationEntite();
 	}
 
 	/**
@@ -95,8 +99,8 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	}
 
 	/**
-	 * réalise le métier. (fait le calcul du déplacement, la recherche des
-	 * éléments etc..).
+	 * réalise le métier. (fait le calcul du déplacement, la recherche des éléments
+	 * etc..).
 	 */
 	public void doMetier() {
 		boolean isDoingMetier = false;
@@ -111,8 +115,8 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	}
 
 	/**
-	 * fait le déplacement, l'ajout de l'objet sur la carte etc... il y a quand
-	 * même un aetoile de réaliser. A voir pour la perf.
+	 * fait le déplacement, l'ajout de l'objet sur la carte etc... il y a quand même
+	 * un aetoile de réaliser. A voir pour la perf.
 	 * 
 	 * @param body
 	 * @param world

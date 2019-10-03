@@ -18,9 +18,9 @@ public class AnimationManager implements Serializable {
 	// Animation spécifique
 	protected transient Animation animation[];
 	protected transient TextureRegion regionCourante;
-	protected  float largeur;
-	protected  float hauteur;
-	protected  float vitesseAnimation;
+	protected float largeur;
+	protected float hauteur;
+	protected float vitesseAnimation;
 	protected transient Texture texture;
 	// pour que les plantes ne bouge pas en même temps
 	private float tempsAnimation = 0;
@@ -87,9 +87,15 @@ public class AnimationManager implements Serializable {
 	 * @param lienImage
 	 */
 	public void creerAnimationByLienImage() {
+		try {
 		Texture txt = new Texture(Gdx.files.internal(lienImage));
 		this.texture = txt;
 		creerAnimation(txt, largeur, hauteur, vitesseAnimation);
+		}catch (Exception e) {
+			//TODO Exception qui doit être analysé.
+			e.printStackTrace();
+			System.err.println("erreur d'animation. Le lien était : "+lienImage);
+		}
 	}
 
 	/**
@@ -122,7 +128,7 @@ public class AnimationManager implements Serializable {
 	 * @param nbLigne
 	 */
 	public void render(final SpriteBatch batch, final float x, final float y, final int nbLigne) {
-		if(this.animation == null){
+		if (this.animation == null) {
 			creerAnimationByLienImage();
 		}
 		this.tempsAnimation += Gdx.graphics.getDeltaTime();

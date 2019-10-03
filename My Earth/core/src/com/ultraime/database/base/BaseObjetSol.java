@@ -71,10 +71,12 @@ public class BaseObjetSol implements Serializable {
 	}
 
 	public void remove(final ElementEarth elemenCible) {
-		TiledMapTileLayer layer = (TiledMapTileLayer) TileMapService.getInstance().tiledMap.getLayers()
-				.get(TileMapService.SOL_1);
-		TileMapService.getInstance().viderCellMap(elemenCible.x, elemenCible.y, layer);
 		elementEarthsObjetSol.remove(elemenCible);
+		if (!isObjetPresent(elemenCible.x, elemenCible.y)) {
+			TiledMapTileLayer layer = (TiledMapTileLayer) TileMapService.getInstance().tiledMap.getLayers()
+					.get(elemenCible.layerCible);
+			TileMapService.getInstance().viderCellMap(elemenCible.x, elemenCible.y, layer);
+		}
 
 	}
 

@@ -50,10 +50,12 @@ public class AERecolte extends ActionEntite {
 			}
 
 			// TODO placement de l'objet sur la carte.
-			ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom(elem.elementGenere.nom);
-			elementEarth.x = elem.x;
-			elementEarth.y = elem.y;
-			TileMapService.getInstance().construireItem(elementEarth);
+			final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom(elem.elementGenere.nom);
+			for (int i = 0; i < elem.elementGenere.nbGenere; i++) {
+				elementEarth.x = elem.x;
+				elementEarth.y = elem.y;
+				TileMapService.getInstance().construireItem(elementEarth);
+			}
 		}
 
 		EntiteVivante ev = (EntiteVivante) body.getUserData();

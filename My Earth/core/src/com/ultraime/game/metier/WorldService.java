@@ -153,7 +153,7 @@ public class WorldService {
 				final Cell cell = layer.getCell(x, y);
 				if (cell != null && cell.getTile() != null) {
 					final int id = cell.getTile().getId();
-					if (TileMapService.isMurEnBois(id)) {
+					if (TileMurManager.isMurEnBois(id)) {
 						EntiteStatic entiteStatic = new EntiteStatic(x, y, 1, 1);
 						Base.getInstance().creerRectangleStatic(this.world, this.worldAffichage, x, y, 1, 1,
 								entiteStatic);

@@ -75,15 +75,6 @@ public class TileMapService {
 		return posDepart;
 	}
 
-	public static Boolean isMurEnBois(int id) {
-		boolean isMurEnBois = false;
-		if (id > 0 && id < 10) {
-			isMurEnBois = true;
-		}
-
-		return isMurEnBois;
-	}
-
 	public void render() {
 		this.rendererMap.render();
 
@@ -132,8 +123,8 @@ public class TileMapService {
 	}
 
 	/**
-	 * Ajout un item sur la carte (méthode appelée quand un personnage construit
-	 * un élément)
+	 * Ajout un item sur la carte (méthode appelée quand un personnage construit un
+	 * élément)
 	 * 
 	 * @param elementAconstruire
 	 */
@@ -182,7 +173,6 @@ public class TileMapService {
 
 		if (elementEvolue.nom.equals("mur_en_bois")) {
 			tileMurManager.creerMurEnBois();
-//			creerMurEnBois();
 		}
 
 		ElementEarth elementEarth = new ElementEarth(elementEvolue);
@@ -208,7 +198,7 @@ public class TileMapService {
 			// Quand on suprimme une culture, on met de l'herbe à la place du
 			// sol.
 			if (elementAction.nom.equals(ElementEarth.anti_culture)) {
-				// TODO retirer culture_final et culture_sol.
+				// retire culture_final et culture_sol.
 				Cell cell = new Cell();
 				final TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
 				TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(SOL_0);
@@ -360,9 +350,9 @@ public class TileMapService {
 	}
 
 	/**
-	 * @param ElementEarth AJoute un élément à construire. Attention si on place
-	 *                     un élément à l'endroit d'un objet en construction
-	 *                     présent on le suprimme.
+	 * @param ElementEarth AJoute un élément à construire. Attention si on place un
+	 *                     élément à l'endroit d'un objet en construction présent on
+	 *                     le suprimme.
 	 */
 	public static void ajouterElementAconstruireNEW(ElementEarth elementAconstruire) {
 		retirerElementAconstruire(elementAconstruire.x, elementAconstruire.y);

@@ -47,16 +47,6 @@ public class MetierAgriculteur extends Metier {
 				isAction = rechercherCulture();
 			}
 			
-//			if (!this.entiteVivante.inventaire.placeDisponible
-//					|| this.entiteVivante.inventaire.espaceDisponnible() <= 1f) {
-//				// isAction = rechercherCoffre();
-//			}
-//			if (!isAction) {
-//				isAction = rechercherRecolte();
-//				if (!isAction) {
-//					isAction = rechercherCulture();
-//				}
-//			}
 		}
 		return isAction;
 	}
@@ -64,6 +54,10 @@ public class MetierAgriculteur extends Metier {
 	private boolean rangerLegume() {
 		final ElementEarth coffre = rechercherCoffre();
 		boolean isDoAction = false;
+		float poids = 0;
+		final float poidsMax = this.entiteVivante.inventaire.capaciteMax;
+		final float poidsActuel = this.entiteVivante.inventaire.capaciteActuel;
+		boolean aRamasserUnLegume = false;
 		if (coffre != null) {
 			// un coffre est bien dispo, on recherche alors un legume.
 			ElementEarth legume = null;
@@ -72,19 +66,25 @@ public class MetierAgriculteur extends Metier {
 				if (legume != null) {
 					if (verifierAccessibilite(true, legume, this.entiteVivante, true)) {
 						// Un legume est bien disponible.
-						isDoAction = true;
-						// deux action à faire : Ramasser le legume et le deposer dans le coffre
+						
+						// deux action à faire : Ramasser les legumes et le deposer dans le coffre
 						final AERamasserObjetSol aeRamasserObjetSol = new AERamasserObjetSol(0);
 						aeRamasserObjetSol.ajouterCible(legume);
 						this.entiteVivante.ajouterAction(aeRamasserObjetSol);
-						//
-						final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
-						aeDeposerElementDansCoffre.ajouterCible(coffre);
-						this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
-
+						poids += legume.poids;
+						aRamasserUnLegume = true;
 					}
 				}
-			} while (!isDoAction && legume != null);
+			} while (legume != null && poidsMax > poidsActuel + poids);
+			
+			if(aRamasserUnLegume) {
+				final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
+				aeDeposerElementDansCoffre.ajouterCible(coffre);
+				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
+				isDoAction = true;
+			}
+			
+			
 		}
 		return isDoAction;
 
