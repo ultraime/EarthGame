@@ -16,7 +16,7 @@ public class ElementEarth implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	//type
+	// type
 	transient public final static String structure_constructible = "structure_constructible";
 	transient public final static String culture_sol_constructible = "culture_sol_constructible";
 	transient public final static String meuble_constructible = "meuble_constructible";
@@ -50,6 +50,10 @@ public class ElementEarth implements Serializable {
 	transient public final static String detruire = "detruire";
 	transient public final static String couper = "couper";
 	transient public final static String anti_culture = "anti_culture";
+
+	// variable de calcul
+	transient public final static int max = 1;
+	transient public final static int min = -1;
 
 	transient public static List<String> types = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -143,8 +147,8 @@ public class ElementEarth implements Serializable {
 	public boolean showIdTuileNone = false;
 
 	/**
-	 * Element sur lequelle l'objet peut être posé. Si pas d'élément, il peut
-	 * être posé partout
+	 * Element sur lequelle l'objet peut être posé. Si pas d'élément, il peut être
+	 * posé partout
 	 */
 	public List<ElementCible> elementCibles = new ArrayList<>();
 
@@ -239,4 +243,51 @@ public class ElementEarth implements Serializable {
 		elementCibles.add(elementCible);
 	}
 
+	/**
+	 * retourne le plus grand ou plus petit Y
+	 * 
+	 * @param minMax
+	 * @return
+	 */
+	public int elementY(final int minMax) {
+		int y = 0;
+		for (int i = 0; i < elementEarthImages.size(); i++) {
+			final ElementEarthImage earthImage = elementEarthImages.get(i);
+			int yImage = earthImage.y;
+			if (minMax == min) {
+				if (yImage < y) {
+					y = yImage;
+				}
+			} else {
+				if (yImage > y) {
+					y = yImage;
+				}
+			}
+		}
+		return y;
+	}
+
+	/**
+	 * retourne le plus grand ou plus petit X
+	 * 
+	 * @param minMax
+	 * @return
+	 */
+	public int elementX(final int minMax) {
+		int x = 0;
+		for (int i = 0; i < elementEarthImages.size(); i++) {
+			final ElementEarthImage earthImage = elementEarthImages.get(i);
+			int xImage = earthImage.x;
+			if (minMax == min) {
+				if (xImage < x) {
+					x = xImage;
+				}
+			} else {
+				if (xImage > x) {
+					x = xImage;
+				}
+			}
+		}
+		return x;
+	}
 }

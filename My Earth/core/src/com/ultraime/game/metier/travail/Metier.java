@@ -66,21 +66,31 @@ public abstract class Metier implements Serializable {
 		// on essaie d'aller en bas sinon à gauche sinon en haut, sinon à
 		// droite sinon à droite. si ce n'est pas possible on annule
 		// l'action
+		int xElementAconstruire = elementAconstruire.x;
+		int yElementAconstuire = elementAconstruire.y;
+		
 		for (int i = 0; i < 4; i++) {
 			try {
 				int decalageX = 0;
 				int decalageY = 0;
 				if (i == 0) {
 					decalageY = -1;
+					yElementAconstuire =  elementAconstruire.y - elementAconstruire.elementY(ElementEarth.min);
 				} else if (i == 1) {
 					decalageX = -1;
+					xElementAconstruire =  elementAconstruire.x - elementAconstruire.elementX(ElementEarth.min);
 				} else if (i == 2) {
 					decalageY = 1;
+					yElementAconstuire =  elementAconstruire.y + elementAconstruire.elementY(ElementEarth.max);
 				} else if (i == 3) {
 					decalageX = 1;
+					xElementAconstruire =  elementAconstruire.x - elementAconstruire.elementX(ElementEarth.max);;
 				}
-				final Noeud noeudDestination = new Noeud((elementAconstruire.x + decalageX),
-						(elementAconstruire.y + decalageY), 0);
+				
+
+				
+				final Noeud noeudDestination = new Noeud((xElementAconstruire + decalageX),
+						(yElementAconstuire + decalageY), 0);
 
 				aetoile.setCollisionEntiteConstructible(true);
 				ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,

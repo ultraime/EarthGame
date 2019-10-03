@@ -27,12 +27,12 @@ public class MetierConstructeur extends Metier {
 		// on regarde si l'entite à déja une construction à faire.
 		boolean isAction = isActionEncours();
 		if (!isAction) {
-			isAction = tryFindConstruct();
+			isAction = rechercherUneConstruction();
 		}
 		return isAction;
 	}
 
-	private boolean tryFindConstruct() {
+	private boolean rechercherUneConstruction() {
 		boolean isDoAction = false;
 		AEConstruction actionEntite = new AEConstruction(0);
 		ElementEarth elementAconstruire = TileMapService.getInstance().getElementAConstruire();
