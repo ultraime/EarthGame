@@ -190,35 +190,39 @@ public class TileMapService {
 		final int posX = elementAction.x;
 		final int posY = elementAction.y;
 		retirerElementAconstruire(posX, posY);
+		
 		for (int i = 0; i < elementAction.elementEarthImages.size(); i++) {
 			int posXImage = posX + elementAction.elementEarthImages.get(i).x;
 			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
 			Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 
-			// Quand on suprimme une culture, on met de l'herbe à la place du
-			// sol.
+			// Quand on suprimme une culture, on met de l'herbe à la place du sol.
 			if (elementAction.nom.equals(ElementEarth.anti_culture)) {
-				// retire culture_final et culture_sol.
-				Cell cell = new Cell();
-				final TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
-				TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(SOL_0);
-				cell.setTile(tileSet.getTile(21));
-				tiledLayer.setCell(posXImage, posYImage, cell);
-
-				tiledLayer = TileMapService.getInstance().getLayers(OBJET_0);
-				viderCellMap(posXImage, posYImage, tiledLayer);
-
+				detruireTuileCulture(posXImage, posYImage);
 			}
 
 		}
+
+		
 		// supression de l'élément "constructible"
 		final TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
-
 		// juste pour l'affichage
 		tileMurManager.creerMurEnBois();
 //		creerMurEnBois();
 
+	}
+
+	private void detruireTuileCulture(int posXImage, int posYImage) {
+		// retire culture_final et culture_sol.
+		Cell cell = new Cell();
+		final TiledMapTileSet tileSet = TileMapService.getInstance().getTileSet(TileMapService.TUILE);
+		TiledMapTileLayer tiledLayer = TileMapService.getInstance().getLayers(SOL_0);
+		cell.setTile(tileSet.getTile(21));
+		tiledLayer.setCell(posXImage, posYImage, cell);
+
+		tiledLayer = TileMapService.getInstance().getLayers(OBJET_0);
+		viderCellMap(posXImage, posYImage, tiledLayer);
 	}
 
 	/**

@@ -1,4 +1,21 @@
 <ElementEarth>
+	<!-- Element récoltable -->
+	<elementEarths>
+		<type>objet_sol</type>
+		<sousType>materiaux</sousType>
+		<placementType>unique</placementType>
+		<nom>objet_sol_bois</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>34</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<layerCible>SOL_1</layerCible>
+		<poids>3</poids>
+	</elementEarths>
+
 	<!-- ARBRE -->
 	<elementEarths>
 		<type>nature</type>
@@ -19,6 +36,10 @@
 			<collision>false</collision>
 			<layerCible>NATURE_1</layerCible>
 		</imageElement>
+		<elementEarthGenere>
+			<nom>objet_sol_bois</nom>
+			<nbGenere>4</nbGenere>
+		</elementEarthGenere>
 	</elementEarths>
 	<!--GRAND ARBRE -->
 	<elementEarths>
@@ -47,5 +68,9 @@
 			<collision>false</collision>
 			<layerCible>NATURE_1</layerCible>
 		</imageElement>
+		<elementEarthGenere>
+			<nom>objet_sol_bois</nom>
+			<nbGenere>6</nbGenere>
+		</elementEarthGenere>
 	</elementEarths>
 </ElementEarth>

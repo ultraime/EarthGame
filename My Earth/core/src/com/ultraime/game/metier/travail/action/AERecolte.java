@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
-import com.ultraime.game.metier.TileMapService;
+import com.ultraime.game.metier.ElementEarthService;
 import com.ultraime.game.metier.pathfinding.Aetoile;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
@@ -50,12 +50,8 @@ public class AERecolte extends ActionEntite {
 			}
 
 			// TODO placement de l'objet sur la carte.
-			final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom(elem.elementGenere.nom);
-			for (int i = 0; i < elem.elementGenere.nbGenere; i++) {
-				elementEarth.x = elem.x;
-				elementEarth.y = elem.y;
-				TileMapService.getInstance().construireItem(elementEarth);
-			}
+			ElementEarthService.genererElement(elem);
+
 		}
 
 		EntiteVivante ev = (EntiteVivante) body.getUserData();

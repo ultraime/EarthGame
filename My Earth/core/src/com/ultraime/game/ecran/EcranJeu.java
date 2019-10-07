@@ -148,7 +148,7 @@ public class EcranJeu extends Ecran {
 		MetierService.ajouterMetier(new MetierGeneral(entiteJoueur, 1), entiteJoueur);
 		MetierService.ajouterMetier(new MetierAgriculteur(entiteJoueur, 2), entiteJoueur);
 		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 3), entiteJoueur);
-		
+
 	}
 
 	// création de l'IHM

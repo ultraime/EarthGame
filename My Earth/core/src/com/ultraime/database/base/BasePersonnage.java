@@ -50,10 +50,6 @@ public class BasePersonnage implements Serializable {
 		return entiteVivante;
 	}
 
-//	public void ajouterMetier(final Metier metier, final EntiteJoueur entiteJoueur) {
-//		entiteJoueur.ajouterMetier(metier);
-//	}
-
 	/**
 	 * Créer la hitbox du personnage.
 	 * 

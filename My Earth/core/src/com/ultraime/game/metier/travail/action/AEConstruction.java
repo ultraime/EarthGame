@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
+import com.ultraime.game.metier.ElementEarthService;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.music.MusicManager;
@@ -47,9 +48,17 @@ public class AEConstruction extends ActionEntite {
 				if (Base.getInstance().getTemps().compare(tempsConstruction) == 1) {
 
 					if (elem.type.equals(ElementEarth.action)) {
-						if (elem.nom.equals(ElementEarth.detruire) || elem.nom.equals(ElementEarth.couper)
-								|| elem.nom.equals(ElementEarth.anti_culture)) {
+						if (ElementEarth.actionDeDestruction.contains(elem.nom)) {
+							if (elem.nom.equals(ElementEarth.couper)) {
+								// quand on veut couper, on récupére un objet de type nature.
+								// peut nous donner une ressource quand il est coupé
+								// TODO gestion couper.
+								final ElementEarth earthNature = Base.getInstance().recupererElementEarth(elem.x,
+										elem.y);
+								ElementEarthService.genererElement(earthNature);
+							}
 							TileMapService.getInstance().detruireItem(elem);
+
 						}
 					} else {
 						TileMapService.getInstance().construireItem(elem);

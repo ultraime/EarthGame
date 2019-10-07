@@ -34,6 +34,8 @@ public class ElementEarth implements Serializable {
 	transient public final static String literie = "literie";
 	transient public final static String aqua = "aqua";
 	transient public final static String legume = "legume";
+	transient public final static String materiaux = "materiaux";
+	
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
@@ -64,6 +66,15 @@ public class ElementEarth implements Serializable {
 			add(action);
 			add(nature);
 			add(eau);
+		}
+	};
+
+	transient public static List<String> actionDeDestruction = new ArrayList<String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			add(detruire);
+			add(couper);
+			add(anti_culture);
 		}
 	};
 
