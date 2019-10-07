@@ -12,7 +12,6 @@ import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
 import com.ultraime.game.metier.WorldBodyService;
 import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.thread.EntiteManagerThread;
-import com.ultraime.game.metier.travail.Metier;
 
 public class BasePersonnage implements Serializable {
 
@@ -51,9 +50,9 @@ public class BasePersonnage implements Serializable {
 		return entiteVivante;
 	}
 
-	public void ajouterMetier(final Metier metier, final EntiteJoueur entiteJoueur) {
-		entiteJoueur.ajouterMetier(metier);
-	}
+//	public void ajouterMetier(final Metier metier, final EntiteJoueur entiteJoueur) {
+//		entiteJoueur.ajouterMetier(metier);
+//	}
 
 	/**
 	 * Créer la hitbox du personnage.

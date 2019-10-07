@@ -14,7 +14,6 @@ import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.AEAttend;
 import com.ultraime.game.metier.travail.action.AEDeplacement;
-import com.ultraime.game.metier.travail.action.AEDeposerElementDansCoffre;
 
 public class MetierGeneral extends Metier {
 
@@ -23,8 +22,8 @@ public class MetierGeneral extends Metier {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MetierGeneral(EntiteVivante entiteVivante) {
-		super(entiteVivante);
+	public MetierGeneral(EntiteVivante entiteVivante, final int priorite) {
+		super(entiteVivante, priorite);
 		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
 		final World world = WorldService.getInstance().world;
 		initAetoile(body, world);
@@ -85,7 +84,7 @@ public class MetierGeneral extends Metier {
 		if (lit != null) {
 			AEDeplacement actionEntite = new AEDeplacement(lit.x, lit.y, 0);
 			this.entiteVivante.ajouterAction(actionEntite);
-			litTrouve =  true;
+			litTrouve = true;
 		}
 		return litTrouve;
 	}

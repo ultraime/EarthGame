@@ -15,8 +15,8 @@ public class MetierConstructeur extends Metier {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MetierConstructeur(EntiteVivante entiteVivante) {
-		super(entiteVivante);
+	public MetierConstructeur(final EntiteVivante entiteVivante, final int priorite) {
+		super(entiteVivante, priorite);
 		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
 		final World world = WorldService.getInstance().world;
 		initAetoile(body, world);

@@ -22,6 +22,7 @@ import com.ultraime.database.SaveService;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.metier.Lumiere;
+import com.ultraime.game.metier.MetierService;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.TiledMapClickListener;
@@ -138,15 +139,16 @@ public class EcranJeu extends Ecran {
 		// TODO INIT DES PERSO
 		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
 		entiteJoueur.prenom = "Alain";
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierGeneral(entiteJoueur), entiteJoueur);
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierConstructeur(entiteJoueur), entiteJoueur);
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierParesse(entiteJoueur), entiteJoueur);
+		MetierService.ajouterMetier(new MetierGeneral(entiteJoueur, 1), entiteJoueur);
+		MetierService.ajouterMetier(new MetierConstructeur(entiteJoueur, 2), entiteJoueur);
+		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 3), entiteJoueur);
 
 		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
 		entiteJoueur.prenom = "Pierre";
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierGeneral(entiteJoueur), entiteJoueur);
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierAgriculteur(entiteJoueur), entiteJoueur);
-		Base.getInstance().basePersonnage.ajouterMetier(new MetierParesse(entiteJoueur), entiteJoueur);
+		MetierService.ajouterMetier(new MetierGeneral(entiteJoueur, 1), entiteJoueur);
+		MetierService.ajouterMetier(new MetierAgriculteur(entiteJoueur, 2), entiteJoueur);
+		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 3), entiteJoueur);
+		
 	}
 
 	// création de l'IHM
@@ -254,8 +256,7 @@ public class EcranJeu extends Ecran {
 	 * @param screenX
 	 * @param screenY
 	 * @param pointer
-	 * @param button
-	 *            0 = clique gauche. 1 = clique droit
+	 * @param button  0 = clique gauche. 1 = clique droit
 	 * @return
 	 */
 	@Override

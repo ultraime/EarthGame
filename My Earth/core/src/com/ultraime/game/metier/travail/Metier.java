@@ -17,7 +17,7 @@ import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.ActionEntite;
 import com.ultraime.game.utile.Parametre;
 
-public abstract class Metier implements Serializable {
+public abstract class Metier implements Serializable, Comparable<Metier> {
 
 	/**
 	 * 
@@ -25,11 +25,12 @@ public abstract class Metier implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected EntiteVivante entiteVivante;
 	protected Aetoile aetoile;
+	public int priorite = 0;
 
-	public Metier(final EntiteVivante entiteVivante) {
+	public Metier(final EntiteVivante entiteVivante, final int priorite) {
 		super();
 		this.entiteVivante = entiteVivante;
-
+		this.priorite = priorite;
 	}
 
 	protected void initAetoile(final Body body, final World world) {
@@ -68,27 +69,26 @@ public abstract class Metier implements Serializable {
 		// l'action
 		int xElementAconstruire = elementAconstruire.x;
 		int yElementAconstuire = elementAconstruire.y;
-		
+
 		for (int i = 0; i < 4; i++) {
 			try {
 				int decalageX = 0;
 				int decalageY = 0;
 				if (i == 0) {
 					decalageY = -1;
-					yElementAconstuire =  elementAconstruire.y - elementAconstruire.elementY(ElementEarth.min);
+					yElementAconstuire = elementAconstruire.y - elementAconstruire.elementY(ElementEarth.min);
 				} else if (i == 1) {
 					decalageX = -1;
-					xElementAconstruire =  elementAconstruire.x - elementAconstruire.elementX(ElementEarth.min);
+					xElementAconstruire = elementAconstruire.x - elementAconstruire.elementX(ElementEarth.min);
 				} else if (i == 2) {
 					decalageY = 1;
-					yElementAconstuire =  elementAconstruire.y + elementAconstruire.elementY(ElementEarth.max);
+					yElementAconstuire = elementAconstruire.y + elementAconstruire.elementY(ElementEarth.max);
 				} else if (i == 3) {
 					decalageX = 1;
-					xElementAconstruire =  elementAconstruire.x + elementAconstruire.elementX(ElementEarth.max);;
+					xElementAconstruire = elementAconstruire.x + elementAconstruire.elementX(ElementEarth.max);
+					;
 				}
-				
 
-				
 				final Noeud noeudDestination = new Noeud((xElementAconstruire + decalageX),
 						(yElementAconstuire + decalageY), 0);
 
@@ -116,5 +116,10 @@ public abstract class Metier implements Serializable {
 			}
 		}
 		return isDoAction;
+	}
+
+	@Override
+	public int compareTo(Metier metier) {
+		return this.priorite < metier.priorite ? -1 : 1;
 	}
 }

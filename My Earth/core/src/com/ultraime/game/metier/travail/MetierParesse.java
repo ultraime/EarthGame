@@ -12,8 +12,8 @@ public class MetierParesse extends Metier {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MetierParesse(EntiteVivante entiteVivante) {
-		super(entiteVivante);
+	public MetierParesse(EntiteVivante entiteVivante, final int priorite) {
+		super(entiteVivante, priorite);
 	}
 
 	@Override

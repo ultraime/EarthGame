@@ -25,8 +25,8 @@ public class MetierAgriculteur extends Metier {
 	private static final long serialVersionUID = 1L;
 	private ElementEarth elementEarthOld;
 
-	public MetierAgriculteur(EntiteVivante entiteVivante) {
-		super(entiteVivante);
+	public MetierAgriculteur(final EntiteVivante entiteVivante, final int priorite) {
+		super(entiteVivante, priorite);
 		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
 		final World world = WorldService.getInstance().world;
 		initAetoile(body, world);
@@ -43,10 +43,10 @@ public class MetierAgriculteur extends Metier {
 				isAction = rangerLegume();
 			}
 			// option 3 : on plante
-			if(!isAction) {
+			if (!isAction) {
 				isAction = rechercherCulture();
 			}
-			
+
 		}
 		return isAction;
 	}
@@ -66,7 +66,7 @@ public class MetierAgriculteur extends Metier {
 				if (legume != null) {
 					if (verifierAccessibilite(true, legume, this.entiteVivante, true)) {
 						// Un legume est bien disponible.
-						
+
 						// deux action à faire : Ramasser les legumes et le deposer dans le coffre
 						final AERamasserObjetSol aeRamasserObjetSol = new AERamasserObjetSol(0);
 						aeRamasserObjetSol.ajouterCible(legume);
@@ -76,15 +76,14 @@ public class MetierAgriculteur extends Metier {
 					}
 				}
 			} while (legume != null && poidsMax > poidsActuel + poids);
-			
-			if(aRamasserUnLegume) {
+
+			if (aRamasserUnLegume) {
 				final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
 				aeDeposerElementDansCoffre.ajouterCible(coffre);
 				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
 				isDoAction = true;
 			}
-			
-			
+
 		}
 		return isDoAction;
 

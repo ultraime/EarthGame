@@ -49,7 +49,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 
 	// élément propre au entité
 	public Habiliter habiliter;
-	protected List<Metier> metiers;
+	public List<Metier> metiers;
 	public Inventaire inventaire;
 
 	// etat de l'entite
