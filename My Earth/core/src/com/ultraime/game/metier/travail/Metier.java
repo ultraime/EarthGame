@@ -84,7 +84,7 @@ public abstract class Metier implements Serializable {
 					yElementAconstuire =  elementAconstruire.y + elementAconstruire.elementY(ElementEarth.max);
 				} else if (i == 3) {
 					decalageX = 1;
-					xElementAconstruire =  elementAconstruire.x - elementAconstruire.elementX(ElementEarth.max);;
+					xElementAconstruire =  elementAconstruire.x + elementAconstruire.elementX(ElementEarth.max);;
 				}
 				
 
