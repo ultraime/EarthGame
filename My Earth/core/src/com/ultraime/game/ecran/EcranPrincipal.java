@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ultraime.composant.Bouton;
 import com.ultraime.database.SaveService;
 import com.ultraime.game.utile.Parametre;
+import com.ultraime.music.MusicManager;
 
 public class EcranPrincipal extends Ecran {
 
@@ -86,6 +87,7 @@ public class EcranPrincipal extends Ecran {
 			this.ecranManager.initialiserEcran(this.ecranManager.ecranCarte);
 			SaveService.chargementData();
 		}
+		MusicManager.getInstance().musicDeFond();
 		return false;
 	}
 

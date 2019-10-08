@@ -33,7 +33,7 @@ public class LecteurXML extends ApplicationAdapter {
 	 */
 	public void traiterToutLesFichiers() {
 		long startTime = System.currentTimeMillis();
-		recuperationDataFromXML("data/ElementEarth/");
+		recuperationDataFromXML("data/elementEarth/");
 		long endTime = System.currentTimeMillis();
 
 		if (Parametre.MODE_DEBUG) {
@@ -47,6 +47,7 @@ public class LecteurXML extends ApplicationAdapter {
 	private void recuperationDataFromXML(final String chemin) {
 		//
 		FileHandle handle = Gdx.files.internal(chemin);
+//		System.err.println(handle.toString());
 		String[] listefichiers = getFichierDansRepertoire(handle);
 		for (int i = 0; i < listefichiers.length; i++) {
 			traiterFichier(listefichiers[i], chemin);
