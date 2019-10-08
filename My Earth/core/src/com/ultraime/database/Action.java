@@ -372,7 +372,7 @@ public class Action {
 					}
 				}
 				if (doitEtreConstruit) {
-					TileMapService.ajouterElementAconstruireNEW(earth);
+					Base.getInstance().baseObjetAConstruire.ajouterElementAconstruire(earth);
 					alimenterVectorConstructionLayer(vector2);
 					if (earth.elementEarthImages.get(0).isCollision) {
 						final Rectangle rectangle = new Rectangle(posX, posY, 0.5f, 0.5f);

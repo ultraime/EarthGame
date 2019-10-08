@@ -1,6 +1,5 @@
 package com.ultraime.game.metier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,11 +33,6 @@ public class TileMapService {
 	private static TileMapService instance;
 	private TileMurManager tileMurManager;
 
-	// Pour la construction
-	// private static List<ElementAconstruire> elementAconstruires;
-	// Pour la construction
-	private static List<ElementEarth> elementAconstruiresNEW;
-
 	public static TileMapService getInstance() {
 		if (instance == null) {
 			instance = new TileMapService();
@@ -50,7 +44,6 @@ public class TileMapService {
 		tiledMap = new TmxMapLoader().load("carte/carte.tmx");
 		rendererMap = new OrthogonalTiledMapRenderer(tiledMap, 1);
 		tileSol_0 = (TiledMapTileLayer) tiledMap.getLayers().get(SOL_0);
-		elementAconstruiresNEW = new ArrayList<>();
 		tileMurManager = new TileMurManager(tiledMap);
 	}
 
@@ -106,7 +99,7 @@ public class TileMapService {
 				WorldService.getInstance().retirerCollision(posX, posY);
 			}
 		}
-		retirerElementAconstruireSaufAction(posX, posY);
+		Base.getInstance().baseObjetAConstruire.retirerElementAconstruireSaufAction(posX, posY);
 		// ajout dans la liste des éléments de culture.
 		if (elementEvolue.type.equals(ElementEarth.culture_sol) || elementEvolue.type.equals(ElementEarth.culture)
 				|| elementEvolue.type.equals(ElementEarth.culture_final)) {
@@ -137,7 +130,7 @@ public class TileMapService {
 			elementEvolue = Base.getInstance().recupererElementEarthByNom(elementAconstruire.nom);
 		}
 		if (!elementAconstruire.type.equals(ElementEarth.objet_sol)) {
-			retirerElementAconstruire(posX, posY);
+			Base.getInstance().baseObjetAConstruire.retirerElementAconstruire(posX, posY);
 		}
 
 		String layerCible = elementEvolue.layerCible;
@@ -189,8 +182,8 @@ public class TileMapService {
 	public void detruireItem(final ElementEarth elementAction) {
 		final int posX = elementAction.x;
 		final int posY = elementAction.y;
-		retirerElementAconstruire(posX, posY);
-		
+		Base.getInstance().baseObjetAConstruire.retirerElementAconstruire(posX, posY);
+
 		for (int i = 0; i < elementAction.elementEarthImages.size(); i++) {
 			int posXImage = posX + elementAction.elementEarthImages.get(i).x;
 			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
@@ -203,7 +196,6 @@ public class TileMapService {
 
 		}
 
-		
 		// supression de l'élément "constructible"
 		final TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
@@ -242,7 +234,7 @@ public class TileMapService {
 			if (layer == null) {
 				layer = elementEarthImage.layerCible;
 			}
-			if (!layer.equals(SOL_0)) {
+			if (!layer.equals(SOL_0) && !layer.equals(CONSTRUCTION)) {
 				if (elementEarthImage.isCollision) {
 					WorldService.getInstance().creerCollision(posXImage, posYImage);
 				} else {
@@ -333,70 +325,6 @@ public class TileMapService {
 			}
 		}
 		return isObjetPresent;
-	}
-
-	/**
-	 * @return le premier element de la liste elementAconstruire. Attention, peut
-	 *         return null
-	 */
-	public ElementEarth getElementAConstruire() {
-		ElementEarth elementAconstruire = null;
-		if (elementAconstruiresNEW.size() > 0) {
-			elementAconstruire = elementAconstruiresNEW.get(0);
-			retirerElementAconstruireNEW(elementAconstruiresNEW.get(0));
-		}
-		return elementAconstruire;
-	}
-
-	private void retirerElementAconstruireNEW(ElementEarth elementEarth) {
-		elementAconstruiresNEW.remove(elementEarth);
-
-	}
-
-	/**
-	 * @param ElementEarth AJoute un élément à construire. Attention si on place un
-	 *                     élément à l'endroit d'un objet en construction présent on
-	 *                     le suprimme.
-	 */
-	public static void ajouterElementAconstruireNEW(ElementEarth elementAconstruire) {
-		retirerElementAconstruire(elementAconstruire.x, elementAconstruire.y);
-		elementAconstruiresNEW.add(elementAconstruire);
-	}
-
-	/**
-	 * @param x
-	 * @param y
-	 */
-	public static boolean retirerElementAconstruire(final int x, final int y) {
-		boolean isRemove = false;
-		for (int i = 0; i < elementAconstruiresNEW.size(); i++) {
-			ElementEarth elementAconstruire = elementAconstruiresNEW.get(i);
-			if (elementAconstruire.x == x && elementAconstruire.y == y) {
-				elementAconstruiresNEW.remove(i);
-				isRemove = true;
-				break;
-			}
-		}
-		return isRemove;
-	}
-
-	/**
-	 * @param x
-	 * @param y
-	 */
-	public static boolean retirerElementAconstruireSaufAction(final int x, final int y) {
-		boolean isRemove = false;
-		for (int i = 0; i < elementAconstruiresNEW.size(); i++) {
-			ElementEarth elementAconstruire = elementAconstruiresNEW.get(i);
-			if (elementAconstruire.x == x && elementAconstruire.y == y) {
-				if (!elementAconstruire.type.equals(ElementEarth.action)) {
-					elementAconstruiresNEW.remove(i);
-					isRemove = true;
-				}
-				break;
-			}
-		}
-		return isRemove;
 	}
 
 }

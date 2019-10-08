@@ -35,6 +35,7 @@ public class Base implements java.io.Serializable {
 	public BaseAction baseAction;
 	public BaseNature baseNature;
 	public BaseObjetSol baseObjetSol;
+	public BaseObjetAConstruire baseObjetAConstruire;
 	/**
 	 * pour les collisions
 	 */
@@ -62,6 +63,7 @@ public class Base implements java.io.Serializable {
 		baseAction = new BaseAction();
 		baseNature = new BaseNature();
 		baseObjetSol = new BaseObjetSol();
+		baseObjetAConstruire = new BaseObjetAConstruire();
 	}
 
 	/**

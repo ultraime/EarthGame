@@ -69,6 +69,7 @@ public class SaveService {
 			chargerData(baseData.baseNature.getElementEarthNature());
 			chargerData(baseData.baseNature.getElementEarthEau());
 			chargerData(baseData.baseObjetSol.getElementEarthsObjetSol());
+			chargerData(baseData.baseObjetAConstruire.getElementEarthsAConstruire());
 			chargerPersonnage(baseData);
 
 			ois.close();

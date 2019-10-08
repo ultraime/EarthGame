@@ -79,6 +79,7 @@ public class EcranPrincipal extends Ecran {
 			this.ecranManager.initialiserEcran(this.ecranManager.ecranCarte);
 			this.ecranManager.ecranCarte.initialiserPersonnage();
 			this.ecranManager.ecranCarte.initialiserTest();
+			this.ecranManager.ecranCarte.initialiserCollisionNewGame();
 		}
 		isClique = this.boutonLoadPartie.isClique(screenX, screenY);
 		if (isClique) {

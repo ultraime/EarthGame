@@ -84,7 +84,6 @@ public class EcranJeu extends Ecran {
 
 		// Pour le monde
 		this.worldService = WorldService.getInstance();
-		this.worldService.initialiserCollision(this.tileMapService.getLayers("OBJET_0"));
 
 		// this.worldService.initialiserEntite(posx + 1, posy);
 		this.stage = new TiledMapStage(tileMapService.tiledMap);
@@ -103,6 +102,9 @@ public class EcranJeu extends Ecran {
 
 	}
 
+	public void initialiserCollisionNewGame() {
+		this.worldService.initialiserCollision(this.tileMapService.getLayers("OBJET_0"));
+	}
 	public void initialiserTest() {
 		// TODO data de test
 		final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom("arbre");
