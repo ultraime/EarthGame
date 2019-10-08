@@ -3,14 +3,11 @@ package com.ultraime.game.metier.travail;
 import java.util.ArrayDeque;
 import java.util.List;
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.entite.Habiliter;
 import com.ultraime.game.metier.Temps;
-import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.AEAttend;
 import com.ultraime.game.metier.travail.action.AEDeplacement;
@@ -24,9 +21,6 @@ public class MetierGeneral extends Metier {
 
 	public MetierGeneral(EntiteVivante entiteVivante, final int priorite) {
 		super(entiteVivante, priorite);
-		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
-		final World world = WorldService.getInstance().world;
-		initAetoile(body, world);
 	}
 
 	@Override

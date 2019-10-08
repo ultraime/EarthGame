@@ -31,6 +31,10 @@ public abstract class Metier implements Serializable, Comparable<Metier> {
 		super();
 		this.entiteVivante = entiteVivante;
 		this.priorite = priorite;
+		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
+		final World world = WorldService.getInstance().world;
+		initAetoile(body, world);
+
 	}
 
 	protected void initAetoile(final Body body, final World world) {
@@ -116,6 +120,23 @@ public abstract class Metier implements Serializable, Comparable<Metier> {
 			}
 		}
 		return isDoAction;
+	}
+
+	protected ElementEarth rechercherCoffre() {
+		ElementEarth coffreRetour = null;
+		ElementEarth coffre = null;
+		Boolean isDoAction = true;
+		do {
+			coffre = Base.getInstance().rechercherCoffreDisponible(coffre);
+			if (coffre != null) {
+				isDoAction = verifierAccessibilite(isDoAction, coffre, this.entiteVivante, true);
+				if (isDoAction) {
+					coffreRetour = coffre;
+				}
+			}
+		} while (coffre != null && !isDoAction);
+		
+		return coffreRetour;
 	}
 
 	@Override

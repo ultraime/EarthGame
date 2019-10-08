@@ -3,7 +3,6 @@ package com.ultraime.game.metier.travail;
 import java.util.ArrayDeque;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
 import com.ultraime.game.entite.EntiteVivante;
@@ -27,9 +26,6 @@ public class MetierAgriculteur extends Metier {
 
 	public MetierAgriculteur(final EntiteVivante entiteVivante, final int priorite) {
 		super(entiteVivante, priorite);
-		final Body body = WorldService.getInstance().recupererBodyFromEntite(entiteVivante);
-		final World world = WorldService.getInstance().world;
-		initAetoile(body, world);
 	}
 
 	@Override
@@ -89,19 +85,7 @@ public class MetierAgriculteur extends Metier {
 
 	}
 
-	private ElementEarth rechercherCoffre() {
-		// TODO attention, si coffre pas Accessible, rien ne sera fait..
-		ElementEarth coffre = null;
-		Boolean isDoAction = true;
-		final ElementEarth elementEarth = Base.getInstance().rechercherCoffreDisponible();
-		if (elementEarth != null) {
-			isDoAction = verifierAccessibilite(isDoAction, elementEarth, this.entiteVivante, true);
-			if (isDoAction) {
-				coffre = elementEarth;
-			}
-		}
-		return coffre;
-	}
+
 
 	/**
 	 * recherche les plantes prêtes à être récolté

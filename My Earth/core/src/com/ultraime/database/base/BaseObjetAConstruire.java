@@ -21,13 +21,18 @@ public class BaseObjetAConstruire implements Serializable {
 
 	/**
 	 * @return le premier element de la liste elementAconstruire et le suprimme de
-	 *         la liste. Attention, peut return null
+	 *         la liste. Attention, peut return null Ne retourne pas l'action
+	 *         "couper"
 	 */
 	public ElementEarth getElementAConstruire() {
 		ElementEarth elementAconstruire = null;
 		if (elementEarthsAConstruire.size() > 0) {
 			elementAconstruire = elementEarthsAConstruire.get(0);
-			retirerElementAconstruire(elementEarthsAConstruire.get(0));
+			if (ElementEarth.couper.equals(elementAconstruire.nom)) {
+				elementAconstruire = null;
+			} else {
+				retirerElementAconstruire(elementEarthsAConstruire.get(0));
+			}
 		}
 		return elementAconstruire;
 	}
@@ -81,6 +86,29 @@ public class BaseObjetAConstruire implements Serializable {
 			}
 		}
 		return isRemove;
+	}
+
+	/**
+	 * @param elementAcouper
+	 * @return le prochain élément à couper. SI param = null, on prend le premier de
+	 *         la liste. Sinon celui après le paramètre
+	 */
+	public ElementEarth getElementACouper(ElementEarth elementAcouper) {
+		ElementEarth earthRetour = null;
+		for (int i = 0; i < elementEarthsAConstruire.size(); i++) {
+			final ElementEarth earth = elementEarthsAConstruire.get(i);
+			if (ElementEarth.couper.equals(earth.nom)) {
+				if (elementAcouper == null) {
+					earthRetour = earth;
+				} else {
+					if (elementAcouper == earth) {
+						elementAcouper = null;
+					}
+				}
+			}
+
+		}
+		return earthRetour;
 	}
 
 	public List<ElementEarth> getElementEarthsAConstruire() {

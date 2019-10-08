@@ -30,6 +30,7 @@ import com.ultraime.game.metier.TiledMapStage;
 import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.travail.MetierAgriculteur;
 import com.ultraime.game.metier.travail.MetierConstructeur;
+import com.ultraime.game.metier.travail.MetierForestier;
 import com.ultraime.game.metier.travail.MetierGeneral;
 import com.ultraime.game.metier.travail.MetierParesse;
 import com.ultraime.game.utile.Parametre;
@@ -105,6 +106,7 @@ public class EcranJeu extends Ecran {
 	public void initialiserCollisionNewGame() {
 		this.worldService.initialiserCollision(this.tileMapService.getLayers("OBJET_0"));
 	}
+
 	public void initialiserTest() {
 		// TODO data de test
 		final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom("arbre");
@@ -142,8 +144,9 @@ public class EcranJeu extends Ecran {
 		EntiteJoueur entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx, posy);
 		entiteJoueur.prenom = "Alain";
 		MetierService.ajouterMetier(new MetierGeneral(entiteJoueur, 1), entiteJoueur);
-		MetierService.ajouterMetier(new MetierConstructeur(entiteJoueur, 2), entiteJoueur);
-		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 3), entiteJoueur);
+		MetierService.ajouterMetier(new MetierForestier(entiteJoueur, 2), entiteJoueur);
+		MetierService.ajouterMetier(new MetierConstructeur(entiteJoueur, 3), entiteJoueur);
+		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 4), entiteJoueur);
 
 		entiteJoueur = Base.getInstance().basePersonnage.creerEntiteJoueur(posx + 1, posy);
 		entiteJoueur.prenom = "Pierre";

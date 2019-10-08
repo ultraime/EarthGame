@@ -417,20 +417,30 @@ public class Base implements java.io.Serializable {
 	}
 
 	/**
+	 * Récupére le coffre aprés "elementBefore"
+	 * 
 	 * @return elementEarth
 	 */
-	public ElementEarth rechercherCoffreDisponible() {
+	public ElementEarth rechercherCoffreDisponible(ElementEarth elementBefore) {
 		ElementEarth elementEarthCoffre = null;
 		for (int i = 0; i < getListEarth(ElementEarth.meuble).size(); i++) {
 			final ElementEarth elementEarth = getListEarth(ElementEarth.meuble).get(i);
 			if (elementEarth.inventaire != null) {
-				if (elementEarth.inventaire.placeDisponible) {
-					if (elementEarth.inventaire.espaceDisponnible() >= 1f) {
-						elementEarthCoffre = elementEarth;
-						break;
+
+				if (elementBefore == null) {
+					if (elementEarth.inventaire.placeDisponible) {
+						if (elementEarth.inventaire.espaceDisponnible() >= 1f) {
+							elementEarthCoffre = elementEarth;
+							break;
+						}
+					}
+				} else {
+					if (elementBefore == elementEarth) {
+						elementBefore = null;
 					}
 				}
 			}
+
 		}
 		return elementEarthCoffre;
 	}
