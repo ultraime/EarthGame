@@ -3,8 +3,8 @@ package com.ultraime.game.metier.travail;
 import java.util.ArrayDeque;
 import java.util.List;
 
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.entite.Habiliter;
 import com.ultraime.game.metier.Temps;

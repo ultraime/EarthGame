@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.utile.Calcul;
 
 /**
@@ -37,7 +37,7 @@ public class Inventaire implements Serializable {
 		List<ElementEarth> elementNonAjouter = new ArrayList<>();
 		for (ElementEarth earth : elementAajouter) {
 			if (Calcul.arrondirFloat(capaciteActuel + earth.poids) <= capaciteMax) {
-				capaciteActuel = Calcul.arrondirFloat(capaciteActuel+ earth.poids);
+				capaciteActuel = Calcul.arrondirFloat(capaciteActuel + earth.poids);
 				elementEarths.add(earth);
 				placeDisponible = true;
 			} else {
@@ -48,14 +48,19 @@ public class Inventaire implements Serializable {
 		return elementNonAjouter;
 	}
 
+	public void retirerElement(final ElementEarth elementEarthAprendre) {
+		elementEarths.remove(elementEarthAprendre);
+		calculerCapaciter();
+	}
+
 	/**
 	 * @param elementAajouter
 	 * @return elementNonAjouter car inventaire plein.
 	 */
 	public ElementEarth ajouterElement(ElementEarth elementAajouter) {
 		ElementEarth elementNonAjouter = null;
-		if (Calcul.arrondirFloat(capaciteActuel + elementAajouter.poids)<= capaciteMax) {
-			capaciteActuel = Calcul.arrondirFloat(Float.sum(capaciteActuel,  elementAajouter.poids));
+		if (Calcul.arrondirFloat(capaciteActuel + elementAajouter.poids) <= capaciteMax) {
+			capaciteActuel = Calcul.arrondirFloat(Float.sum(capaciteActuel, elementAajouter.poids));
 			elementEarths.add(elementAajouter);
 			placeDisponible = true;
 		} else {
@@ -80,6 +85,17 @@ public class Inventaire implements Serializable {
 
 	public float espaceDisponnible() {
 		return capaciteMax - capaciteActuel;
+	}
+
+	public List<ElementEarth> recupererAllElementByNom(final String nomElement) {
+		List<ElementEarth> elementRetour = new ArrayList<ElementEarth>();
+		for (int i = 0; i < elementEarths.size(); i++) {
+			final ElementEarth earth = elementEarths.get(i);
+			if (nomElement.equals(earth.nom)) {
+				elementRetour.add(earth);
+			}
+		}
+		return elementRetour;
 	}
 
 	public List<ElementEarth> getElementEarths() {

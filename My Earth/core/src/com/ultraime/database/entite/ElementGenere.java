@@ -1,4 +1,4 @@
-package com.ultraime.database;
+package com.ultraime.database.entite;
 
 import java.io.Serializable;
 

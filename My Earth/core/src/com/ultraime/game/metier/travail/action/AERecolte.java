@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.ElementEarthService;
 import com.ultraime.game.metier.pathfinding.Aetoile;

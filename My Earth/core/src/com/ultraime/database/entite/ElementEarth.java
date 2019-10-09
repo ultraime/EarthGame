@@ -1,4 +1,4 @@
-package com.ultraime.database;
+package com.ultraime.database.entite;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class ElementEarth implements Serializable {
 	transient public final static String literie = "literie";
 	transient public final static String aqua = "aqua";
 	transient public final static String legume = "legume";
-	transient public final static String materiaux = "materiaux";
-	
+	transient public final static String materiaux_bois = "materiaux_bois";
+
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
@@ -175,6 +175,11 @@ public class ElementEarth implements Serializable {
 	public ElementGenere elementGenere;
 
 	/**
+	 * Matériaux requis pour constuire l'élément
+	 */
+	public List<Materiau> materiaux_requis = new ArrayList<>();
+
+	/**
 	 * @param elementEarth
 	 */
 	public ElementEarth(final ElementEarth elementEarth) {
@@ -202,6 +207,7 @@ public class ElementEarth implements Serializable {
 		this.elementCibles = elementEarth.elementCibles;
 		this.proprietaire = elementEarth.proprietaire;
 		this.elementGenere = elementEarth.elementGenere;
+		this.materiaux_requis = elementEarth.materiaux_requis;
 
 	}
 

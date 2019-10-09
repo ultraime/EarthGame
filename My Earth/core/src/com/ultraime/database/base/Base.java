@@ -8,8 +8,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.ultraime.database.ElementEarth;
-import com.ultraime.database.ElementEarthImage;
+import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.database.entite.ElementEarthImage;
 import com.ultraime.game.entite.EntiteStatic;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
@@ -433,6 +433,34 @@ public class Base implements java.io.Serializable {
 							elementEarthCoffre = elementEarth;
 							break;
 						}
+					}
+				} else {
+					if (elementBefore == elementEarth) {
+						elementBefore = null;
+					}
+				}
+			}
+
+		}
+		return elementEarthCoffre;
+	}
+
+	/**
+	 * Récupére le coffre aprés "elementBefore"
+	 * 
+	 * @param elementBefore
+	 * @param element
+	 * @return
+	 */
+	public ElementEarth rechercherCoffreAvecElement(ElementEarth elementBefore, final String element) {
+		ElementEarth elementEarthCoffre = null;
+		for (int i = 0; i < getListEarth(ElementEarth.meuble).size(); i++) {
+			final ElementEarth elementEarth = getListEarth(ElementEarth.meuble).get(i);
+			if (elementEarth.inventaire != null) {
+				if (elementBefore == null) {
+					if (elementEarth.inventaire.recupererAllElementByNom(element).size() > 0) {
+						elementEarthCoffre = elementEarth;
+						break;
 					}
 				} else {
 					if (elementBefore == elementEarth) {

@@ -14,6 +14,10 @@
 		<logoImage>logo/mur_bois.png</logoImage>
 		<layerCible>CONSTRUCTION</layerCible>
 		<poids>20</poids>
+		<materiaux_requis>
+				<nom>objet_sol_bois</nom>
+				<requis>1</requis>
+		</materiaux_requis>
 	</elementEarths>
 	<!-- -->
 	<elementEarths>

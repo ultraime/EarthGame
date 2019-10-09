@@ -1,7 +1,7 @@
 package com.ultraime.composant;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 
 public class ElementEarthBouton {
 

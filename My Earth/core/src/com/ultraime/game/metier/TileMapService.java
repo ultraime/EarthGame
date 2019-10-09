@@ -11,10 +11,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.ultraime.database.ElementEarth;
-import com.ultraime.database.ElementEarthImage;
 import com.ultraime.database.RotationManager;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.database.entite.ElementEarthImage;
 
 public class TileMapService {
 

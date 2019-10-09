@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.ultraime.database.Action;
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.utile.Parametre;
 
 /**

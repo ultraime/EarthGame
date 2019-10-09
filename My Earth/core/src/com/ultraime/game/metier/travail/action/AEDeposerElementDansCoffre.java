@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.pathfinding.Aetoile;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
@@ -31,6 +31,7 @@ public class AEDeposerElementDansCoffre extends ActionEntite {
 
 		if (isDeplacementEnd) {
 			EntiteVivante ev = (EntiteVivante) body.getUserData();
+			//TODO peut vider complétement l'inventaire si on a des objet différent 
 			ev.inventaire.setElementEarths(elemenCible.inventaire.ajouterElement(ev.inventaire.getElementEarths()));
 			elemenCible = null;
 			isActionEnd = true;

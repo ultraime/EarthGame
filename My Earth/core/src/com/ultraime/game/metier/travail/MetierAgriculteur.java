@@ -3,16 +3,14 @@ package com.ultraime.game.metier.travail;
 import java.util.ArrayDeque;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.AEConstruction;
-import com.ultraime.game.metier.travail.action.AEDeposerElementDansCoffre;
-import com.ultraime.game.metier.travail.action.AERamasserObjetSol;
 import com.ultraime.game.metier.travail.action.AERecolte;
 import com.ultraime.game.utile.Parametre;
 
@@ -36,7 +34,7 @@ public class MetierAgriculteur extends Metier {
 			isAction = rechercherRecolte();
 			// option 2 : on apporte les légumes dans un coffre.
 			if (!isAction) {
-				isAction = rangerLegume();
+				isAction = rangerElement(ElementEarth.legume);
 			}
 			// option 3 : on plante
 			if (!isAction) {
@@ -46,46 +44,6 @@ public class MetierAgriculteur extends Metier {
 		}
 		return isAction;
 	}
-
-	private boolean rangerLegume() {
-		final ElementEarth coffre = rechercherCoffre();
-		boolean isDoAction = false;
-		float poids = 0;
-		final float poidsMax = this.entiteVivante.inventaire.capaciteMax;
-		final float poidsActuel = this.entiteVivante.inventaire.capaciteActuel;
-		boolean aRamasserUnLegume = false;
-		if (coffre != null) {
-			// un coffre est bien dispo, on recherche alors un legume.
-			ElementEarth legume = null;
-			do {
-				legume = Base.getInstance().baseObjetSol.rechercheObjetSol(ElementEarth.legume, legume);
-				if (legume != null) {
-					if (verifierAccessibilite(true, legume, this.entiteVivante, true)) {
-						// Un legume est bien disponible.
-
-						// deux action à faire : Ramasser les legumes et le deposer dans le coffre
-						final AERamasserObjetSol aeRamasserObjetSol = new AERamasserObjetSol(0);
-						aeRamasserObjetSol.ajouterCible(legume);
-						this.entiteVivante.ajouterAction(aeRamasserObjetSol);
-						poids += legume.poids;
-						aRamasserUnLegume = true;
-					}
-				}
-			} while (legume != null && poidsMax > poidsActuel + poids);
-
-			if (aRamasserUnLegume) {
-				final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
-				aeDeposerElementDansCoffre.ajouterCible(coffre);
-				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
-				isDoAction = true;
-			}
-
-		}
-		return isDoAction;
-
-	}
-
-
 
 	/**
 	 * recherche les plantes prêtes à être récolté

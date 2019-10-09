@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.metier.TileMapService;
 
 public class BaseCulture implements Serializable {

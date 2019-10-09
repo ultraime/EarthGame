@@ -1,7 +1,7 @@
 package com.ultraime.game.metier.travail;
 
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.travail.action.AEConstruction;
 
@@ -25,17 +25,9 @@ public class MetierForestier extends Metier {
 			isAction = rechercherElementAcouper();
 		}
 		if (!isAction) {
-			isAction = recolterBois();
+			isAction = rangerElement(ElementEarth.materiaux_bois);
 		}
 		return isAction;
-	}
-
-	private boolean recolterBois() {
-
-//		AERamasserObjetSol aeRamasserObjetSol = new AERamasserObjetSol(0);
-//		aeRamasserObjetSol.ajouterCible(elementAcouper);
-//		this.entiteVivante.ajouterAction(aeRamasserObjetSol);
-		return false;
 	}
 
 	private boolean rechercherElementAcouper() {

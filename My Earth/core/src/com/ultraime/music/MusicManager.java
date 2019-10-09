@@ -3,7 +3,7 @@ package com.ultraime.music;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 
 public class MusicManager {
 
@@ -12,7 +12,7 @@ public class MusicManager {
 
 	private MusicManager() {
 		construire = Gdx.audio.newSound(Gdx.files.internal("data/son/construire.ogg"));
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/son/music.ogg"));
+	//	music = Gdx.audio.newMusic(Gdx.files.internal("data/son/music.ogg"));
 
 	}
 
@@ -26,9 +26,9 @@ public class MusicManager {
 	}
 
 	public void musicDeFond() {
-		music.setVolume(1f);
-		music.setLooping(true);
-		music.play();
+//		music.setVolume(1f);
+//		music.setLooping(true);
+//		music.play();
 
 	}
 

@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.animation.AnimationEntite;
 import com.ultraime.animation.AnimationManager;
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.Metier;
 import com.ultraime.game.metier.travail.action.ActionEntite;

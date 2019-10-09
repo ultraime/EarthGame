@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.database.entite.ElementEarthImage;
 
 /**
  * @author Ultraime

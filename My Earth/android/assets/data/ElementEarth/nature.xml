@@ -2,7 +2,7 @@
 	<!-- Element récoltable -->
 	<elementEarths>
 		<type>objet_sol</type>
-		<sousType>materiaux</sousType>
+		<sousType>materiaux_bois</sousType>
 		<placementType>unique</placementType>
 		<nom>objet_sol_bois</nom>
 		<evolution></evolution>

@@ -1,10 +1,11 @@
 package com.ultraime.game.metier.travail.action;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ultraime.database.base.Base;
 import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.pathfinding.Aetoile;
@@ -13,14 +14,15 @@ import com.ultraime.game.metier.pathfinding.AetoileException;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.utile.Parametre;
 
-public class AERamasserObjetSol extends ActionEntite {
+public class AERecupererElementDansCoffre extends ActionEntite {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	public ElementEarth elemenCible;
+	public List<ElementEarth> elementARecuperer = new ArrayList<ElementEarth>();
 
-	public AERamasserObjetSol(int priorite) {
+	public AERecupererElementDansCoffre(int priorite) {
 		super(priorite);
 	}
 
@@ -31,9 +33,14 @@ public class AERamasserObjetSol extends ActionEntite {
 		boolean isDeplacementEnd = doDeplacement(body, worldAffichage);
 
 		if (isDeplacementEnd) {
-			EntiteVivante entiteVivante = (EntiteVivante) body.getUserData();
-			entiteVivante.inventaire.ajouterElement(elemenCible);
-			Base.getInstance().baseObjetSol.remove(elemenCible);
+			EntiteVivante ev = (EntiteVivante) body.getUserData();
+
+			for (int i = 0; i < elementARecuperer.size(); i++) {
+				elemenCible.inventaire.retirerElement(elementARecuperer.get(i));
+				ev.inventaire.ajouterElement(elementARecuperer.get(i));
+			}
+
+			elemenCible = null;
 			isActionEnd = true;
 
 		}
@@ -94,4 +101,8 @@ public class AERamasserObjetSol extends ActionEntite {
 
 	}
 
+	public void ajouterElementARecuperer(ElementEarth elementEarth) {
+		elementARecuperer.add(elementEarth);
+
+	}
 }

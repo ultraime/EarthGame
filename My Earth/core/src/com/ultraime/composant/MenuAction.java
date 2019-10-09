@@ -6,9 +6,9 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ultraime.database.Action;
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.Ordre;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.metier.TiledMapClickListener;
 import com.ultraime.game.utile.Parametre;
 

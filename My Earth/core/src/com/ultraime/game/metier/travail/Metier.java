@@ -6,14 +6,16 @@ import java.util.List;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.pathfinding.Aetoile;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
 import com.ultraime.game.metier.pathfinding.Noeud;
+import com.ultraime.game.metier.travail.action.AEDeposerElementDansCoffre;
+import com.ultraime.game.metier.travail.action.AERamasserObjetSol;
 import com.ultraime.game.metier.travail.action.ActionEntite;
 import com.ultraime.game.utile.Parametre;
 
@@ -122,6 +124,7 @@ public abstract class Metier implements Serializable, Comparable<Metier> {
 		return isDoAction;
 	}
 
+	// méthode utilisé par plusieur métier
 	protected ElementEarth rechercherCoffre() {
 		ElementEarth coffreRetour = null;
 		ElementEarth coffre = null;
@@ -135,8 +138,43 @@ public abstract class Metier implements Serializable, Comparable<Metier> {
 				}
 			}
 		} while (coffre != null && !isDoAction);
-		
+
 		return coffreRetour;
+	}
+	
+	protected boolean rangerElement(final String sousType) {
+		final ElementEarth coffre = rechercherCoffre();
+		boolean isDoAction = false;
+		float poids = 0;
+		final float poidsMax = this.entiteVivante.inventaire.capaciteMax;
+		final float poidsActuel = this.entiteVivante.inventaire.capaciteActuel;
+		boolean aRamasserUnElement = false;
+		if (coffre != null) {
+			// un coffre est bien dispo, on recherche alors un legume.
+			ElementEarth element = null;
+			do {
+				element = Base.getInstance().baseObjetSol.rechercheObjetSol(sousType, element);
+				if (element != null) {
+					if (verifierAccessibilite(true, element, this.entiteVivante, true)) {
+						// deux action à faire : Ramasser l'élément et le deposer dans le coffre
+						final AERamasserObjetSol aeRamasserObjetSol = new AERamasserObjetSol(0);
+						aeRamasserObjetSol.ajouterCible(element);
+						this.entiteVivante.ajouterAction(aeRamasserObjetSol);
+						poids += element.poids;
+						aRamasserUnElement = true;
+					}
+				}
+			} while (element != null && poidsMax > poidsActuel + poids);
+
+			if (aRamasserUnElement) {
+				final AEDeposerElementDansCoffre aeDeposerElementDansCoffre = new AEDeposerElementDansCoffre(0);
+				aeDeposerElementDansCoffre.ajouterCible(coffre);
+				this.entiteVivante.ajouterAction(aeDeposerElementDansCoffre);
+				isDoAction = true;
+			}
+
+		}
+		return isDoAction;
 	}
 
 	@Override

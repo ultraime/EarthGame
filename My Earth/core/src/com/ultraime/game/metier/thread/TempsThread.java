@@ -1,7 +1,7 @@
 package com.ultraime.game.metier.thread;
 
-import com.ultraime.database.ElementEarth;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.metier.Lumiere;
 import com.ultraime.game.metier.Temps;

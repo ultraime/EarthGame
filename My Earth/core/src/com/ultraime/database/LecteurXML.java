@@ -11,6 +11,11 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.ultraime.animation.AnimationManager;
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementCible;
+import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.database.entite.ElementEarthImage;
+import com.ultraime.database.entite.ElementGenere;
+import com.ultraime.database.entite.Materiau;
 import com.ultraime.game.entite.Inventaire;
 import com.ultraime.game.utile.Parametre;
 
@@ -122,6 +127,8 @@ public class LecteurXML extends ApplicationAdapter {
 
 			alimenterElementGenere(child, elementEarth);
 
+			alimenterMateriaux(child, elementEarth);
+
 			Base.getInstance().addReferenceElementEarth(elementEarth);
 		}
 
@@ -160,6 +167,24 @@ public class LecteurXML extends ApplicationAdapter {
 			}
 
 			elementEarth.addElementCible(elementCible);
+		}
+	}
+
+	/**
+	 * @param child
+	 * @param elementEarth
+	 */
+	public void alimenterMateriaux(final Element child, final ElementEarth elementEarth) {
+		Array<Element> materiaux_requis = child.getChildrenByName("materiaux_requis");
+		for (Element elementMateriaux : materiaux_requis) {
+			final String nom = elementMateriaux.getChildByName("nom").getText();
+			final int nbRequis = Integer.parseInt(elementMateriaux.getChildByName("requis").getText());
+
+			Materiau materiau = new Materiau();
+			materiau.nom = nom;
+			materiau.nombreRequis = nbRequis;
+			elementEarth.materiaux_requis.add(materiau);
+
 		}
 	}
 

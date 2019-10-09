@@ -10,6 +10,7 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.WorldService;

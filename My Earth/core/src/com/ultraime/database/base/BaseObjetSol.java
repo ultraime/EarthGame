@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.ultraime.database.ElementEarth;
+import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.metier.TileMapService;
 
 public class BaseObjetSol implements Serializable {

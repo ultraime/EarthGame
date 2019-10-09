@@ -1,6 +1,9 @@
 package com.ultraime.database;
 
 import com.ultraime.database.base.Base;
+import com.ultraime.database.entite.ElementCible;
+import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.database.entite.ElementEarthImage;
 
 /**
  * @author Ultraime Méthode qui gére tout les contrôles des
