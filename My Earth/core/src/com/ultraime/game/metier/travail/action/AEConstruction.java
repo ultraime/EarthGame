@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.base.Base;
 import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.database.entite.Materiau;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.ElementEarthService;
 import com.ultraime.game.metier.Temps;
@@ -50,8 +51,10 @@ public class AEConstruction extends ActionEntite {
 					if (elem.type.equals(ElementEarth.action)) {
 						if (ElementEarth.actionDeDestruction.contains(elem.nom)) {
 							if (elem.nom.equals(ElementEarth.couper)) {
-								// quand on veut couper, on récupére un objet de type nature.
-								// peut nous donner une ressource quand il est coupé
+								// quand on veut couper, on récupére un objet de
+								// type nature.
+								// peut nous donner une ressource quand il est
+								// coupé
 								// TODO gestion couper.
 								final ElementEarth earthNature = Base.getInstance().recupererElementEarth(elem.x,
 										elem.y);
@@ -61,8 +64,37 @@ public class AEConstruction extends ActionEntite {
 
 						}
 					} else {
-						TileMapService.getInstance().construireItem(elem);
-						Base.getInstance().retirerRectangleConstructible(elem.x, elem.y);
+						// on ajoute le matériaux à l'objet.
+
+						for (int i = 0; i < elem.materiaux_requis.size(); i++) {
+							final Materiau materiau = elem.materiaux_requis.get(i);
+							final List<ElementEarth> listElementInventaire = ev.inventaire
+									.recupererAllElementByNom(materiau.nom);
+							for (int j = 0; j < listElementInventaire.size(); j++) {
+								materiau.nombreActuel = +1;
+								listElementInventaire.remove(i);
+								if (materiau.nombreActuel == materiau.nombreRequis) {
+									break;
+								}
+							}
+						}
+
+						// aprés avoir ajouter les matériaux, on vérifie que
+						// tout est okk
+						boolean peutEtreConstruit = true;
+						for (int i = 0; i < elem.materiaux_requis.size(); i++) {
+							final Materiau materiau = elem.materiaux_requis.get(i);
+							if (materiau.nombreActuel != materiau.nombreRequis) {
+								peutEtreConstruit = false;
+								break;
+							}
+						}
+						if (peutEtreConstruit) {
+							TileMapService.getInstance().construireItem(elem);
+							Base.getInstance().retirerRectangleConstructible(elem.x, elem.y);
+						} else {
+							ajouterElementAconstruire(elem);
+						}
 
 					}
 					elementAconstruires.remove(0);

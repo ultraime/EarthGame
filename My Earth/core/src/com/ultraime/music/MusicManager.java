@@ -12,7 +12,7 @@ public class MusicManager {
 
 	private MusicManager() {
 		construire = Gdx.audio.newSound(Gdx.files.internal("data/son/construire.ogg"));
-	//	music = Gdx.audio.newMusic(Gdx.files.internal("data/son/music.ogg"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/son/music.ogg"));
 
 	}
 

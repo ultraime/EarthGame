@@ -207,7 +207,11 @@ public class ElementEarth implements Serializable {
 		this.elementCibles = elementEarth.elementCibles;
 		this.proprietaire = elementEarth.proprietaire;
 		this.elementGenere = elementEarth.elementGenere;
-		this.materiaux_requis = elementEarth.materiaux_requis;
+		
+		for(int i = 0;i < elementEarth.materiaux_requis.size();i++){
+			Materiau materiau = new Materiau( elementEarth.materiaux_requis.get(i));
+			this.materiaux_requis.add(materiau);
+		}
 
 	}
 

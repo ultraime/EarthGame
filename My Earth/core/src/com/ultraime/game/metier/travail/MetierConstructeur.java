@@ -55,8 +55,11 @@ public class MetierConstructeur extends Metier {
 	 * @return isDoAction
 	 */
 	private boolean rechercherMateriaux(ElementEarth elementAconstruire) {
-		boolean materiauxTrouve = true;
+		boolean materiauxTrouve = false;
 		float placeDisponible = this.entiteVivante.inventaire.espaceDisponnible();
+		if (elementAconstruire.materiaux_requis.size() == 0) {
+			materiauxTrouve = true;
+		}
 
 		for (int i = 0; i < elementAconstruire.materiaux_requis.size(); i++) {
 			final Materiau materiau = elementAconstruire.materiaux_requis.get(i);
@@ -64,22 +67,27 @@ public class MetierConstructeur extends Metier {
 				List<ElementEarth> elementARecuperer = new ArrayList<ElementEarth>();
 				int nbAChercher = materiau.nombreRequis - materiau.nombreActuel;
 				Boolean isDoAction = true;
-				// TODO En cours : rechercher les materiaux de type "BOIS" ou autre dans les
+				// TODO En cours : rechercher les materiaux de type "BOIS" ou
+				// autre dans les
 				// coffres.
 				while (nbAChercher > 0 && isDoAction) {
 					ElementEarth coffre = null;
 
-					// on boucle temps que l'on a pas de coffre dispo. Ou si dans la liste rien
+					// on boucle temps que l'on a pas de coffre dispo. Ou si
+					// dans la liste rien
 					// n'est dispo
 					do {
 						coffre = Base.getInstance().rechercherCoffreAvecElement(coffre, materiau.nom);
 						if (coffre != null) {
 							isDoAction = verifierAccessibilite(true, coffre, this.entiteVivante, true);
+						} else {
+							isDoAction = false;
 						}
 					} while (coffre != null && !isDoAction);
 
 					if (isDoAction) {
-						// On test si dans l'inventaire du personnage on peut prendre les éléments.
+						// On test si dans l'inventaire du personnage on peut
+						// prendre les éléments.
 
 						List<ElementEarth> materiauARecuperer = coffre.inventaire
 								.recupererAllElementByNom(materiau.nom);
@@ -89,7 +97,11 @@ public class MetierConstructeur extends Metier {
 							placeDisponible = placeDisponible - elementARecupererEarth.poids;
 							if (placeDisponible >= 0) {
 								elementRecuperable = elementRecuperable + 1;
+								nbAChercher = nbAChercher - elementRecuperable;
 								elementARecuperer.add(elementARecupererEarth);
+								if (nbAChercher == 0) {
+									break;
+								}
 							} else {
 								break;
 							}
@@ -99,7 +111,8 @@ public class MetierConstructeur extends Metier {
 									0);
 							aeRecupererElementDansCoffre.elemenCible = coffre;
 							aeRecupererElementDansCoffre.elementARecuperer = elementARecuperer;
-							nbAChercher = nbAChercher - elementRecuperable;
+							this.entiteVivante.ajouterAction(aeRecupererElementDansCoffre);
+
 							materiauxTrouve = true;
 						}
 					}
