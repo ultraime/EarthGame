@@ -1,12 +1,18 @@
 package com.ultraime.database.entite;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Ultraime
- *
+ * ElementCible de l'action
  */
-public class ElementCible {
+public class ElementCible implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Type de la cible.

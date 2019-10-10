@@ -1,5 +1,6 @@
 package com.ultraime.game.metier.travail.action;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,11 @@ import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.ElementEarthService;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
+import com.ultraime.game.metier.pathfinding.Aetoile;
+import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
+import com.ultraime.game.metier.pathfinding.AetoileException;
+import com.ultraime.game.metier.pathfinding.Noeud;
+import com.ultraime.game.utile.Parametre;
 import com.ultraime.music.MusicManager;
 
 public class AEConstruction extends ActionEntite {
@@ -50,16 +56,19 @@ public class AEConstruction extends ActionEntite {
 
 					if (elem.type.equals(ElementEarth.action)) {
 						if (ElementEarth.actionDeDestruction.contains(elem.nom)) {
-							if (elem.nom.equals(ElementEarth.couper)) {
-								// quand on veut couper, on récupére un objet de
-								// type nature.
-								// peut nous donner une ressource quand il est
-								// coupé
-								// TODO gestion couper.
-								final ElementEarth earthNature = Base.getInstance().recupererElementEarth(elem.x,
-										elem.y);
-								ElementEarthService.genererElement(earthNature);
-							}
+							final ElementEarth earthNature = Base.getInstance().recupererElementEarth(elem.x, elem.y);
+							ElementEarthService.genererElement(earthNature);
+							// if (elem.nom.equals(ElementEarth.couper)) {
+							// // quand on veut couper, on récupére un objet de
+							// // type nature.
+							// // peut nous donner une ressource quand il est
+							// // coupé
+							// // TODO gestion couper.
+							// final ElementEarth earthNature =
+							// Base.getInstance().recupererElementEarth(elem.x,
+							// elem.y);
+							// ElementEarthService.genererElement(earthNature);
+							// }
 							TileMapService.getInstance().detruireItem(elem);
 
 						}
@@ -71,7 +80,7 @@ public class AEConstruction extends ActionEntite {
 							final List<ElementEarth> listElementInventaire = ev.inventaire
 									.recupererAllElementByNom(materiau.nom);
 							for (int j = 0; j < listElementInventaire.size(); j++) {
-								materiau.nombreActuel = +1;
+								materiau.nombreActuel += 1;
 								listElementInventaire.remove(i);
 								if (materiau.nombreActuel == materiau.nombreRequis) {
 									break;
@@ -115,9 +124,76 @@ public class AEConstruction extends ActionEntite {
 
 	@Override
 	public void initAction(World world, Body body) {
-		// TODO a décommenter ?
-		// MetierConstructeur.verifierAccessibilite(false,
-		// elementAconstruires.get(0), (EntiteVivante) body.getUserData());
+		// final int xDepart = Math.round(body.getPosition().x);
+		// final int yDepart = Math.round(body.getPosition().y);
+		// Noeud noeudDepart = new Noeud(xDepart, yDepart, 0);
+		// Noeud noeudDestination = new Noeud(elementAconstruires.get(0).x,
+		// elementAconstruires.get(0).y, 0);
+		//
+		// EntiteVivante ev = (EntiteVivante) body.getUserData();
+		// Aetoile aetoile = new Aetoile(world, body);
+		// try {
+		// ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination,
+		// noeudDepart,Parametre.AETOILE_BASE_2));
+		// } catch (AetoileException e) {
+		// if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
+		// e.printStackTrace();
+		// } catch (AetoileDestinationBlockException e) {
+		// if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
+		// e.printStackTrace();
+		// }
+		EntiteVivante ev = (EntiteVivante) body.getUserData();
+		if (ev.getListeDeNoeudDeplacement().size() == 0) {
+			final int xDepart = Math.round(body.getPosition().x);
+			final int yDepart = Math.round(body.getPosition().y);
+			Noeud noeudDepart = new Noeud(xDepart, yDepart, 0);
+			// on essaie d'aller en bas sinon à gauche sinon en haut, sinon à
+			// droite sinon à droite. si ce n'est pas possible on annule
+			// l'action
+			ElementEarth elementAconstruire = elementAconstruires.get(0);
+			int xElementAconstruire = elementAconstruire.x;
+			int yElementAconstuire = elementAconstruire.y;
+			Aetoile aetoile = new Aetoile(world, body);
+			for (int i = 0; i < 4; i++) {
+				try {
+					int decalageX = 0;
+					int decalageY = 0;
+					if (i == 0) {
+						decalageY = -1;
+						yElementAconstuire = elementAconstruire.y - elementAconstruire.elementY(ElementEarth.min);
+					} else if (i == 1) {
+						decalageX = -1;
+						xElementAconstruire = elementAconstruire.x - elementAconstruire.elementX(ElementEarth.min);
+					} else if (i == 2) {
+						decalageY = 1;
+						yElementAconstuire = elementAconstruire.y + elementAconstruire.elementY(ElementEarth.max);
+					} else if (i == 3) {
+						decalageX = 1;
+						xElementAconstruire = elementAconstruire.x + elementAconstruire.elementX(ElementEarth.max);
+						;
+					}
+
+					final Noeud noeudDestination = new Noeud((xElementAconstruire + decalageX),
+							(yElementAconstuire + decalageY), 0);
+
+					aetoile.setCollisionEntiteConstructible(true);
+					ArrayDeque<Noeud> cheminPlusCourt = aetoile.cheminPlusCourt(noeudDestination, noeudDepart,
+							Parametre.AETOILE_BASE_2);
+					ev.setListeDeNoeudDeplacement(cheminPlusCourt);
+					// si c'est ok on sort de la boucle
+					break;
+				} catch (AetoileException e) {
+					if (i == 3) {
+						System.err.println("erreur classe AECONSTRUCTION : chemin non trouvé");
+					}
+
+				} catch (AetoileDestinationBlockException e) {
+					if (i == 3) {
+						System.err.println("erreur classe AECONSTRUCTION : chemin non trouvé");
+					}
+				}
+			}
+		}
 	}
 
 	public void ajouterElementAconstruire(final ElementEarth elementAconstruire) {

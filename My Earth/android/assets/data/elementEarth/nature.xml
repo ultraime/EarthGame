@@ -13,7 +13,7 @@
 			<collision>false</collision>
 		</imageElement>
 		<layerCible>SOL_1</layerCible>
-		<poids>3</poids>
+		<poids>1</poids>
 	</elementEarths>
 
 	<!-- ARBRE -->

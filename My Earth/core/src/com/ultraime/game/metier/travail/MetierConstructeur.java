@@ -46,6 +46,9 @@ public class MetierConstructeur extends Metier {
 					this.entiteVivante.ajouterAction(actionEntite);
 				}
 			}
+			if(!isDoAction){
+				Base.getInstance().baseObjetAConstruire.ajouterElementAconstruire(elementAconstruire);
+			}
 		}
 		return isDoAction;
 	}
@@ -97,7 +100,7 @@ public class MetierConstructeur extends Metier {
 							placeDisponible = placeDisponible - elementARecupererEarth.poids;
 							if (placeDisponible >= 0) {
 								elementRecuperable = elementRecuperable + 1;
-								nbAChercher = nbAChercher - elementRecuperable;
+								nbAChercher = nbAChercher - 1;
 								elementARecuperer.add(elementARecupererEarth);
 								if (nbAChercher == 0) {
 									break;

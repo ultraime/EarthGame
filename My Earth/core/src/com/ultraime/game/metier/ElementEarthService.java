@@ -11,11 +11,13 @@ public class ElementEarthService {
 	 * @param elem
 	 */
 	public static void genererElement(final ElementEarth elem) {
-		final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom(elem.elementGenere.nom);
-		for (int i = 0; i < elem.elementGenere.nbGenere; i++) {
-			elementEarth.x = elem.x;
-			elementEarth.y = elem.y;
-			TileMapService.getInstance().construireItem(elementEarth);
+		if (elem != null && elem.elementGenere != null) {
+			final ElementEarth elementEarth = Base.getInstance().recupererElementEarthByNom(elem.elementGenere.nom);
+			for (int i = 0; i < elem.elementGenere.nbGenere; i++) {
+				elementEarth.x = elem.x;
+				elementEarth.y = elem.y;
+				TileMapService.getInstance().construireItem(elementEarth);
+			}
 		}
 	}
 

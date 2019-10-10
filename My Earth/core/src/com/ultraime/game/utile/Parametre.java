@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 public class Parametre {
 
-	public static final int MONDE_Y = 200;
-	public static final int MONDE_X = 200;
+	public static final int MONDE_Y = 100;
+	public static final int MONDE_X = 100;
 	public static final String FONT = "fonts/OpenSans-Bold.fnt";
 	public static int LARGEUR_ECRAN = 0;// Gdx.graphics.getWidth();
 	public static int HAUTEUR_ECRAN = 0;// Gdx.graphics.getHeight();
@@ -32,12 +32,22 @@ public class Parametre {
 	public static int AETOILE_BASE_2 = 1000;
 	// langue
 	public static I18NBundle bundle;
-
+	
+	//CAMERA
+	public static int CAMERA_MAX_HAUT = 550;
+	public static int CAMERA_MAX_BAS = 525;
+	public static int CAMERA_MAX_GAUCHE = 1000;
+	public static int CAMERA_MAX_DROITE= 965;
+	
 	public static void initEcran(int largeurEcran, int hauteurEcran) {
 		LARGEUR_ECRAN = largeurEcran;
 		HAUTEUR_ECRAN = hauteurEcran;
 		if (HAUTEUR_ECRAN < 1050) {
 			DECALAGE_Y = -10;
+			CAMERA_MAX_HAUT = CAMERA_MAX_HAUT - 185;
+			CAMERA_MAX_BAS = CAMERA_MAX_BAS - 150;//375
+			CAMERA_MAX_GAUCHE = CAMERA_MAX_GAUCHE - 353;
+			CAMERA_MAX_DROITE=  CAMERA_MAX_DROITE - 320;
 		}
 	}
 

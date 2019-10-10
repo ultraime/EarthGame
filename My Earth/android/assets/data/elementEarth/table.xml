@@ -30,6 +30,10 @@
 		</imageElement>
 		<logoImage>logo/table.png</logoImage>
 		<layerCible>CONSTRUCTION</layerCible>
+		<materiaux_requis>
+				<nom>objet_sol_bois</nom>
+				<requis>3</requis>
+		</materiaux_requis>
 	</elementEarths>
 	<!-- -->
 	<elementEarths>
@@ -62,6 +66,10 @@
 			<collision>true</collision>
 		</imageElement>
 		<layerCible>OBJET_0</layerCible>
-		<poids>50</poids>
+		<poids>5</poids>
+			<elementEarthGenere>
+			<nom>objet_sol_bois</nom>
+			<nbGenere>1</nbGenere>
+		</elementEarthGenere>
 	</elementEarths>
 </ElementEarth>

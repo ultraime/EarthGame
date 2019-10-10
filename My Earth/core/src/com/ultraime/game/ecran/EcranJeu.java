@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.ultraime.composant.EntiteVivantStatsComposant;
 import com.ultraime.composant.ComposantManager;
+import com.ultraime.composant.EntiteVivantStatsComposant;
 import com.ultraime.composant.HudComposant;
 import com.ultraime.database.Action;
 import com.ultraime.database.LecteurXML;
@@ -33,6 +33,7 @@ import com.ultraime.game.metier.travail.MetierConstructeur;
 import com.ultraime.game.metier.travail.MetierForestier;
 import com.ultraime.game.metier.travail.MetierGeneral;
 import com.ultraime.game.metier.travail.MetierParesse;
+import com.ultraime.game.utile.Calcul;
 import com.ultraime.game.utile.Parametre;
 import com.ultraime.music.MusicManager;
 
@@ -127,6 +128,23 @@ public class EcranJeu extends Ecran {
 		eau_souterraine.y = 48;
 		TileMapService.getInstance().construireItem(eau_souterraine);
 
+		for (int i = 0; i < 200; i++) {
+			ElementEarth elem = null;
+			if (Calcul.random(1, 2) == 1) {
+				elem = Base.getInstance().recupererElementEarthByNom("grand_arbre");
+			} else {
+				elem = Base.getInstance().recupererElementEarthByNom("arbre");
+			}
+			final ElementEarth arbreRandom = new ElementEarth(elem);
+			arbreRandom.x = Calcul.random(0, Parametre.MONDE_X);
+			arbreRandom.y = Calcul.random(0, Parametre.MONDE_Y);
+			if (Base.getInstance().recupererElementEarth(arbreRandom.x, arbreRandom.y) == null) {
+				TileMapService.getInstance().construireItem(arbreRandom);
+			} else {
+				i--;
+			}
+		}
+
 	}
 
 	public void initThread() {
@@ -160,7 +178,9 @@ public class EcranJeu extends Ecran {
 
 	@Override
 	public void render() {
+
 		updateCamera();
+
 		stage.act();
 
 		this.batch.begin();
@@ -185,6 +205,7 @@ public class EcranJeu extends Ecran {
 
 		this.hudComposant.render();
 		this.batch.end();
+	
 
 	}
 
@@ -195,6 +216,7 @@ public class EcranJeu extends Ecran {
 		batch.setProjectionMatrix(camera.combined);
 		this.worldService.updateCamera(camera);
 		this.tileMapService.updateCamera(camera);
+		
 	}
 
 	@Override
@@ -261,7 +283,8 @@ public class EcranJeu extends Ecran {
 	 * @param screenX
 	 * @param screenY
 	 * @param pointer
-	 * @param button  0 = clique gauche. 1 = clique droit
+	 * @param button
+	 *            0 = clique gauche. 1 = clique droit
 	 * @return
 	 */
 	@Override

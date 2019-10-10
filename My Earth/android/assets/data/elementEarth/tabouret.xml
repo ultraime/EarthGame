@@ -12,6 +12,10 @@
 		</imageElement>
 		<logoImage>logo/tabouret.png</logoImage>
 		<layerCible>CONSTRUCTION</layerCible>
+		<materiaux_requis>
+				<nom>objet_sol_bois</nom>
+				<requis>1</requis>
+		</materiaux_requis>
 	</elementEarths>
 	<!-- -->
 	<elementEarths>
@@ -26,6 +30,10 @@
 			<collision>false</collision>
 		</imageElement>
 		<layerCible>OBJET_0</layerCible>
-		<poids>50</poids>
+		<poids>3</poids>
+		<elementEarthGenere>
+			<nom>objet_sol_bois</nom>
+			<nbGenere>1</nbGenere>
+		</elementEarthGenere>
 	</elementEarths>
 </ElementEarth>
