@@ -64,7 +64,6 @@ public class CameraGame {
 			}
 		} else {
 			testValidite = CAMERA_ZOOM + 0.2f;
-			System.err.println(testValidite);
 			if (testValidite < 5f) {
 				CAMERA_ZOOM = CAMERA_ZOOM + 0.2f;
 			}
