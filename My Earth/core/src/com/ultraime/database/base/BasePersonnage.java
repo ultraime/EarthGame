@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ultraime.game.entite.EntiteAnimal;
 import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
@@ -20,16 +21,27 @@ public class BasePersonnage implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<EntiteJoueur> entiteJoueurs;
+	private List<EntiteAnimal> entiteAnimals;
+	
 	private transient EntiteManagerThread<EntiteJoueur> threadEntiteJoueurs;
-
+	private transient EntiteManagerThread<EntiteAnimal> threadEntiteAnimal;
+	
 	public BasePersonnage() {
 		entiteJoueurs = new ArrayList<EntiteJoueur>();
 		threadEntiteJoueurs = new EntiteManagerThread<EntiteJoueur>(entiteJoueurs);
+		
+		entiteAnimals = new ArrayList<EntiteAnimal>();
+		threadEntiteAnimal = new EntiteManagerThread<EntiteAnimal>(entiteAnimals);
 	}
 
 	public void initThreadEntiteJoueurs(final List<EntiteJoueur> entiteJoueurs) {
 		threadEntiteJoueurs = new EntiteManagerThread<EntiteJoueur>(entiteJoueurs);
 		threadEntiteJoueurs.start();
+	}
+
+	public void initThreadEntiteAnimal(final List<EntiteAnimal> entiteAnimals) {
+		threadEntiteAnimal = new EntiteManagerThread<EntiteAnimal>(entiteAnimals);
+		threadEntiteAnimal.start();
 	}
 
 	/**
@@ -89,6 +101,22 @@ public class BasePersonnage implements Serializable {
 
 	public void setThreadEntiteJoueurs(EntiteManagerThread<EntiteJoueur> threadEntiteJoueurs) {
 		this.threadEntiteJoueurs = threadEntiteJoueurs;
+	}
+
+	public List<EntiteAnimal> getEntiteAnimals() {
+		return entiteAnimals;
+	}
+
+	public void setEntiteAnimals(List<EntiteAnimal> entiteAnimals) {
+		this.entiteAnimals = entiteAnimals;
+	}
+
+	public EntiteManagerThread<EntiteAnimal> getThreadEntiteAnimal() {
+		return threadEntiteAnimal;
+	}
+
+	public void setThreadEntiteAnimal(EntiteManagerThread<EntiteAnimal> threadEntiteAnimal) {
+		this.threadEntiteAnimal = threadEntiteAnimal;
 	}
 
 }

@@ -5,12 +5,14 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.animation.AnimationEntite;
 import com.ultraime.animation.AnimationManager;
 import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.game.metier.WorldService;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.Metier;
 import com.ultraime.game.metier.travail.action.ActionEntite;
@@ -26,7 +28,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	transient public static final int HAUT = 3;
 
 	public static enum TypeEntiteVivante {
-		PERSONNAGE, ZOMBIE
+		PERSONNAGE, ZOMBIE, POULE
 	}
 
 	public static enum TypeShape {
@@ -51,6 +53,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	public Habiliter habiliter;
 	public List<Metier> metiers;
 	public Inventaire inventaire;
+	protected TypeEntiteVivante typeEntiteEnum;
 
 	// etat de l'entite
 	public Etat etat = Etat.NORMAL;
@@ -75,7 +78,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 	 * @param y
 	 * @param radius
 	 */
-	public EntiteVivante(final float x, final float y, final float radius) {
+	public EntiteVivante(final float x, final float y, final float radius, final TypeEntiteVivante typeEntite) {
 		super(x, y);
 		this.listeDeNoeudDeplacement = new ArrayDeque<Noeud>();
 		this.listeAction = new ArrayList<ActionEntite>();
@@ -85,10 +88,13 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.inventaire = new Inventaire(50);
 		this.habiliter = new Habiliter();
 		initAnimationEtat();
+
+		this.typeEntiteEnum = typeEntite;
+		creerAnimation();
 	}
 
 	public void initAnimationEtat() {
-			this.animationEntite = new AnimationEntite();
+		this.animationEntite = new AnimationEntite();
 	}
 
 	/**
@@ -153,6 +159,15 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 			}
 		}
 		return isActionEnd;
+	}
+
+	public void render(final SpriteBatch batch) {
+		final float posX = this.x * WorldService.MULTIPLICATEUR;
+		final float posY = this.y * WorldService.MULTIPLICATEUR;
+		this.animationManager.render(batch, posX, posY, this.direction);
+		if (this.etat.equals(Etat.DORT)) {
+			this.animationEntite.renderAnimationDormir(batch, posX + 30, posY + 120);
+		}
 	}
 
 	public List<ActionEntite> getListeAction() {

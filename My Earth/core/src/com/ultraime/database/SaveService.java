@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.ultraime.database.base.Base;
 import com.ultraime.database.entite.ElementEarth;
+import com.ultraime.game.entite.EntiteAnimal;
 import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.WorldService;
@@ -95,6 +96,14 @@ public class SaveService {
 		}
 		Base.getInstance().basePersonnage.initThreadEntiteJoueurs(entiteJoueurs);
 
+		List<EntiteAnimal> entiteAnimals = baseData.basePersonnage.getEntiteAnimals();
+		for (int i = 0; i < entiteAnimals.size(); i++) {
+			final EntiteAnimal elem = entiteAnimals.get(i);
+			elem.creerAnimation();
+			Base.getInstance().basePersonnage.creerHitboxPersonnage(WorldService.getInstance().world,
+					WorldService.getInstance().worldAffichage, elem.getCercleShape().radius, elem.x, elem.y, elem);
+		}
+		Base.getInstance().basePersonnage.initThreadEntiteAnimal(entiteAnimals);
 	}
 
 	/**

@@ -187,8 +187,12 @@ public class TileMapService {
 		for (int i = 0; i < elementAction.elementEarthImages.size(); i++) {
 			int posXImage = posX + elementAction.elementEarthImages.get(i).x;
 			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
-			Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
-
+			if (ElementEarth.nature.equals(elementAction.type) ||
+					ElementEarth.couper.equals(elementAction.nom)) {
+				Base.getInstance().retirerElementEarth(posXImage, posYImage,elementAction.type);
+			} else {
+				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
+			}
 			// Quand on suprimme une culture, on met de l'herbe à la place du sol.
 			if (elementAction.nom.equals(ElementEarth.anti_culture)) {
 				detruireTuileCulture(posXImage, posYImage);

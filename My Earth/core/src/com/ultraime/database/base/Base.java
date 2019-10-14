@@ -277,7 +277,9 @@ public class Base implements java.io.Serializable {
 					}
 					TileMapService.getInstance().viderCellMap(posX, posY,
 							TileMapService.getInstance().getLayers(layer));
-					WorldService.getInstance().retirerCollision(posX, posY);
+					if (earthImage.isCollision) {
+						WorldService.getInstance().retirerCollision(posX, posY);
+					}
 
 				}
 			}

@@ -55,20 +55,21 @@ public class AEConstruction extends ActionEntite {
 				if (Base.getInstance().getTemps().compare(tempsConstruction) == 1) {
 
 					if (elem.type.equals(ElementEarth.action)) {
+						ElementEarth earthNature = null;
 						if (ElementEarth.actionDeDestruction.contains(elem.nom)) {
-							final ElementEarth earthNature = Base.getInstance().recupererElementEarth(elem.x, elem.y);
+							if (ElementEarth.couper.equals(elem.nom)) {
+								// si on coupe, on ne supprime pas les éléments dérriere. (un arbre peut être
+								// sur plusieur case.
+								earthNature = Base.getInstance().recupererElementEarth(elem.x, elem.y,
+										ElementEarth.nature);
+								TileMapService.getInstance().detruireItem(earthNature);
+							} else {
+								earthNature = Base.getInstance().recupererElementEarth(elem.x, elem.y);
+							}
+
 							ElementEarthService.genererElement(earthNature);
-							// if (elem.nom.equals(ElementEarth.couper)) {
-							// // quand on veut couper, on récupére un objet de
-							// // type nature.
-							// // peut nous donner une ressource quand il est
-							// // coupé
-							// // TODO gestion couper.
-							// final ElementEarth earthNature =
-							// Base.getInstance().recupererElementEarth(elem.x,
-							// elem.y);
-							// ElementEarthService.genererElement(earthNature);
-							// }
+							// on supprime l'action et l'item (si ce n'est pas un type nature.Le type natrue
+							// est supprimé unitairement juste au dessus
 							TileMapService.getInstance().detruireItem(elem);
 
 						}
@@ -124,24 +125,6 @@ public class AEConstruction extends ActionEntite {
 
 	@Override
 	public void initAction(World world, Body body) {
-		// final int xDepart = Math.round(body.getPosition().x);
-		// final int yDepart = Math.round(body.getPosition().y);
-		// Noeud noeudDepart = new Noeud(xDepart, yDepart, 0);
-		// Noeud noeudDestination = new Noeud(elementAconstruires.get(0).x,
-		// elementAconstruires.get(0).y, 0);
-		//
-		// EntiteVivante ev = (EntiteVivante) body.getUserData();
-		// Aetoile aetoile = new Aetoile(world, body);
-		// try {
-		// ev.setListeDeNoeudDeplacement(aetoile.cheminPlusCourt(noeudDestination,
-		// noeudDepart,Parametre.AETOILE_BASE_2));
-		// } catch (AetoileException e) {
-		// if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
-		// e.printStackTrace();
-		// } catch (AetoileDestinationBlockException e) {
-		// if (Parametre.MODE_DEBUG_ERR_DEPLACEMENT)
-		// e.printStackTrace();
-		// }
 		EntiteVivante ev = (EntiteVivante) body.getUserData();
 		if (ev.getListeDeNoeudDeplacement().size() == 0) {
 			final int xDepart = Math.round(body.getPosition().x);
