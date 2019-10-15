@@ -129,22 +129,28 @@ public class EcranJeu extends Ecran {
 		eau_souterraine.y = 48;
 		TileMapService.getInstance().construireItem(eau_souterraine);
 
-		for (int i = 0; i < 200; i++) {
-			ElementEarth elem = null;
-			if (Calcul.random(1, 2) == 1) {
-				elem = Base.getInstance().recupererElementEarthByNom("grand_arbre");
-			} else {
-				elem = Base.getInstance().recupererElementEarthByNom("arbre");
-			}
-			final ElementEarth arbreRandom = new ElementEarth(elem);
-			arbreRandom.x = Calcul.random(0, Parametre.MONDE_X);
-			arbreRandom.y = Calcul.random(0, Parametre.MONDE_Y);
-			if (Base.getInstance().recupererElementEarth(arbreRandom.x, arbreRandom.y) == null) {
-				TileMapService.getInstance().construireItem(arbreRandom);
-			} else {
-				i--;
-			}
-		}
+		ElementEarth ref = Base.getInstance().recupererElementEarthByNom("baie_sauvage_3");
+		final ElementEarth baie_sauvage = new ElementEarth(ref);
+		baie_sauvage.x = 51;
+		baie_sauvage.y = 48;
+		TileMapService.getInstance().construireItem(baie_sauvage);
+		// for (int i = 0; i < 200; i++) {
+		// ElementEarth elem = null;
+		// if (Calcul.random(1, 2) == 1) {
+		// elem = Base.getInstance().recupererElementEarthByNom("grand_arbre");
+		// } else {
+		// elem = Base.getInstance().recupererElementEarthByNom("arbre");
+		// }
+		// final ElementEarth arbreRandom = new ElementEarth(elem);
+		// arbreRandom.x = Calcul.random(0, Parametre.MONDE_X);
+		// arbreRandom.y = Calcul.random(0, Parametre.MONDE_Y);
+		// if (Base.getInstance().recupererElementEarth(arbreRandom.x,
+		// arbreRandom.y) == null) {
+		// TileMapService.getInstance().construireItem(arbreRandom);
+		// } else {
+		// i--;
+		// }
+		// }
 
 	}
 
@@ -172,8 +178,8 @@ public class EcranJeu extends Ecran {
 		MetierService.ajouterMetier(new MetierGeneral(entiteJoueur, 1), entiteJoueur);
 		MetierService.ajouterMetier(new MetierAgriculteur(entiteJoueur, 2), entiteJoueur);
 		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 3), entiteJoueur);
-		
-		Base.getInstance().basePersonnage.creerEntiteAnimal(posx - 20, posy,TypeEntiteVivante.PERSONNAGE);
+
+		Base.getInstance().basePersonnage.creerEntiteAnimal(posx - 20, posy, TypeEntiteVivante.PERSONNAGE);
 
 	}
 
@@ -208,7 +214,6 @@ public class EcranJeu extends Ecran {
 
 		this.hudComposant.render();
 		this.batch.end();
-	
 
 	}
 
@@ -219,7 +224,7 @@ public class EcranJeu extends Ecran {
 		batch.setProjectionMatrix(camera.combined);
 		this.worldService.updateCamera(camera);
 		this.tileMapService.updateCamera(camera);
-		
+
 	}
 
 	@Override

@@ -46,8 +46,10 @@ public class BaseCulture implements Serializable {
 		ElementEarth elementEarthCulture = null;
 		for (int i = 0; i < Base.getInstance().getListEarth(ElementEarth.culture).size(); i++) {
 			final ElementEarth elementEarth = Base.getInstance().getListEarth(ElementEarth.culture).get(i);
-			if (elementEarth.type.equals(ElementEarth.culture_final)) {
-				elementEarthCulture = elementEarth;
+			if (ElementEarth.culture_final.equals(elementEarth.type)) {
+				if (!ElementEarth.sauvage.equals(elementEarth.sousType)) {
+					elementEarthCulture = elementEarth;
+				}
 			}
 		}
 		return elementEarthCulture;
@@ -64,8 +66,10 @@ public class BaseCulture implements Serializable {
 			if (elementParam == elementEarth) {
 				elementEarthCulture = elementEarth;
 			} else if (elementEarthCulture != null) {
-				if (elementEarth.type.equals(ElementEarth.culture_final)) {
-					elementEarthCultureNext = elementEarth;
+				if (ElementEarth.culture_final.equals(elementEarth.type)) {
+					if (!ElementEarth.sauvage.equals(elementEarth.sousType)) {
+						elementEarthCultureNext = elementEarth;
+					}
 				}
 			}
 

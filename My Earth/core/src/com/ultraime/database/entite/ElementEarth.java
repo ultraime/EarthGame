@@ -35,7 +35,8 @@ public class ElementEarth implements Serializable {
 	transient public final static String aqua = "aqua";
 	transient public final static String legume = "legume";
 	transient public final static String materiaux_bois = "materiaux_bois";
-
+	transient public final static String sauvage = "sauvage";
+	
 	// variable de placement
 	transient public final static String unique = "unique";
 	transient public final static String ligne = "ligne";
