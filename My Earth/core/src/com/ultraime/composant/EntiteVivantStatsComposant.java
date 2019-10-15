@@ -85,19 +85,19 @@ public class EntiteVivantStatsComposant extends Composant {
 
 		int tailleBarre = calculerTailleBarre(habiliter.sante[Habiliter.ACTUEL], habiliter.sante[Habiliter.MAX],
 				entiteVivante);
-		spriteColor[stat_vie].setSize(Parametre.x(tailleBarre), 16);
+		spriteColor[stat_vie].setSize(tailleBarre, 16);
 
 		tailleBarre = calculerTailleBarre(habiliter.energie[Habiliter.ACTUEL], habiliter.energie[Habiliter.MAX],
 				entiteVivante);
-		spriteColor[stat_energie].setSize(Parametre.x(tailleBarre), 16);
+		spriteColor[stat_energie].setSize(tailleBarre, 16);
 
 		tailleBarre = calculerTailleBarre(habiliter.satiete[Habiliter.ACTUEL], habiliter.satiete[Habiliter.MAX],
 				entiteVivante);
-		spriteColor[stat_satiete].setSize(Parametre.x(tailleBarre), 16);
+		spriteColor[stat_satiete].setSize(tailleBarre, 16);
 
 		tailleBarre = calculerTailleBarre(habiliter.hydratation[Habiliter.ACTUEL], habiliter.hydratation[Habiliter.MAX],
 				entiteVivante);
-		spriteColor[stat_hydra].setSize(Parametre.x(tailleBarre), 16);
+		spriteColor[stat_hydra].setSize(tailleBarre, 16);
 
 	}
 

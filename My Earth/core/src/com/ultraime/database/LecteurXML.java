@@ -70,7 +70,7 @@ public class LecteurXML extends ApplicationAdapter {
 		final XmlReader xmlReader = new XmlReader();
 		try {
 			Element rootElement = xmlReader.parse(handle);
-			if (rootElement.getName().equals("habilitations")) {
+			if (rootElement.getName().equals("habilitation")) {
 				lireHabilitationXML(rootElement);
 			}
 
@@ -85,10 +85,12 @@ public class LecteurXML extends ApplicationAdapter {
 	private void lireHabilitationXML(Element rootElement) {
 		Array<Element> items = rootElement.getChildrenByName("habiliter");
 		for (Element child : items) {
+			
+			Habiliter habiliter = new Habiliter();
 			String type = child.getChildByName("type").getText();
-			TypeEntiteVivante typeEntiteVivante = TypeEntiteVivante.valueOf(type);
-			Habiliter habiliter = new Habiliter(typeEntiteVivante);
-
+			
+			habiliter.type = TypeEntiteVivante.valueOf(type);
+			
 			Array<Element> elementVie = child.getChildrenByName("sante");
 			alimenterHabilitation(habiliter.sante, elementVie);
 

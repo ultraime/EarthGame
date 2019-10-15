@@ -31,53 +31,39 @@ public class Habiliter implements Serializable {
 	public int satiete[];
 	public int hydratation[];
 
+	public Habiliter() {
+		sante = new int[3];
+		energie = new int[3];
+		satiete = new int[3];
+		hydratation = new int[3];
+	}
+
 	public Habiliter(final TypeEntiteVivante type) {
+		this();
 		this.type = type;
 		initStatAvecHabiliter(Base.getInstance().getReferenceHabiliter(type));
-//		sante = new int[3];
-//		sante[GAIN] = -1;
-//		sante[ACTUEL] = 100;
-//		sante[MAX] = 100;
-//
-//		energie = new int[3];
-//		energie[GAIN] = -1;
-//		energie[ACTUEL] = 960;
-//		energie[MAX] = 960;
-//
-//		satiete = new int[3];
-//		satiete[GAIN] = -1;
-//		satiete[ACTUEL] = 600;
-//		satiete[MAX] = 600;
-//
-//		hydratation = new int[3];
-//		hydratation[GAIN] = -1;
-//		hydratation[ACTUEL] = 300;
-//		hydratation[MAX] = 720;
 	}
 
 	public Habiliter(final Habiliter habiliter) {
+		this();
 		this.type = habiliter.type;
 		initStatAvecHabiliter(habiliter);
 
 	}
 
 	private void initStatAvecHabiliter(final Habiliter habiliter) {
-		sante = new int[3];
 		sante[GAIN] = new Integer(habiliter.sante[GAIN]);
 		sante[ACTUEL] = new Integer(habiliter.sante[ACTUEL]);
 		sante[MAX] = new Integer(habiliter.sante[MAX]);
 
-		energie = new int[3];
 		energie[GAIN] = new Integer(habiliter.energie[GAIN]);
 		energie[ACTUEL] = new Integer(habiliter.energie[ACTUEL]);
 		energie[MAX] = new Integer(habiliter.energie[MAX]);
 
-		satiete = new int[3];
 		satiete[GAIN] = new Integer(habiliter.satiete[GAIN]);
 		satiete[ACTUEL] = new Integer(habiliter.satiete[ACTUEL]);
 		satiete[MAX] = new Integer(habiliter.satiete[MAX]);
 
-		hydratation = new int[3];
 		hydratation[GAIN] = new Integer(habiliter.hydratation[GAIN]);
 		hydratation[ACTUEL] = new Integer(habiliter.hydratation[ACTUEL]);
 		hydratation[MAX] = new Integer(habiliter.hydratation[MAX]);
