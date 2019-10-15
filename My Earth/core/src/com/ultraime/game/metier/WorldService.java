@@ -69,8 +69,7 @@ public class WorldService {
 		tempsAnimation += Gdx.graphics.getDeltaTime();
 		this.batch.begin();
 		gestionBodies();
-		// List<ElementEarth> elementEarths =
-		// Base.getInstance().getElementEarthPlantes();
+
 		List<ElementEarth> elementEarths = Base.getInstance().getListEarth(ElementEarth.culture);
 		for (int i = 0; i < elementEarths.size(); i++) {
 			elementEarths.get(i).render(batch, tempsAnimation);
@@ -102,17 +101,11 @@ public class WorldService {
 
 		for (int i = 0; i < bodies.size(); i++) {
 			final Body body = bodies.get(i);
-			// if (!Parametre.PAUSE) {
-			// if (body.getUserData() instanceof EntiteVivante) {
-			// final EntiteVivante ev = (EntiteVivante) body.getUserData();
-			// ev.doAction(body, world, worldAffichage);
-			// }
-			// }
-			if (body.getUserData() instanceof EntiteJoueur) {
-				final EntiteJoueur entiteJoueur = (EntiteJoueur) body.getUserData();
+			if (body.getUserData() instanceof EntiteVivante) {
+				final EntiteVivante entiteVivante = (EntiteVivante) body.getUserData();
 				// entiteJoueur.doMetier();
-				entiteJoueur.doAction(body, world, worldAffichage);
-				entiteJoueur.render(batch);
+				entiteVivante.doAction(body, world, worldAffichage);
+				entiteVivante.render(batch);
 			}
 
 		}

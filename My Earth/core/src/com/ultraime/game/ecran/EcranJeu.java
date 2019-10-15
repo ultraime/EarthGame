@@ -21,6 +21,7 @@ import com.ultraime.database.SaveService;
 import com.ultraime.database.base.Base;
 import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteJoueur;
+import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
 import com.ultraime.game.metier.Lumiere;
 import com.ultraime.game.metier.MetierService;
 import com.ultraime.game.metier.Temps;
@@ -171,6 +172,8 @@ public class EcranJeu extends Ecran {
 		MetierService.ajouterMetier(new MetierGeneral(entiteJoueur, 1), entiteJoueur);
 		MetierService.ajouterMetier(new MetierAgriculteur(entiteJoueur, 2), entiteJoueur);
 		MetierService.ajouterMetier(new MetierParesse(entiteJoueur, 3), entiteJoueur);
+		
+		Base.getInstance().basePersonnage.creerEntiteAnimal(posx - 20, posy,TypeEntiteVivante.PERSONNAGE);
 
 	}
 

@@ -22,14 +22,14 @@ public class BasePersonnage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<EntiteJoueur> entiteJoueurs;
 	private List<EntiteAnimal> entiteAnimals;
-	
+
 	private transient EntiteManagerThread<EntiteJoueur> threadEntiteJoueurs;
 	private transient EntiteManagerThread<EntiteAnimal> threadEntiteAnimal;
-	
+
 	public BasePersonnage() {
 		entiteJoueurs = new ArrayList<EntiteJoueur>();
 		threadEntiteJoueurs = new EntiteManagerThread<EntiteJoueur>(entiteJoueurs);
-		
+
 		entiteAnimals = new ArrayList<EntiteAnimal>();
 		threadEntiteAnimal = new EntiteManagerThread<EntiteAnimal>(entiteAnimals);
 	}
@@ -45,7 +45,7 @@ public class BasePersonnage implements Serializable {
 	}
 
 	/**
-	 * Créer un entité au joueur à l'emplacement X,Y
+	 * Créer une entité au joueur à l'emplacement X,Y
 	 * 
 	 * @param posx
 	 * @param posy
@@ -55,6 +55,24 @@ public class BasePersonnage implements Serializable {
 		final float radius = 0.4f;
 		final EntiteJoueur entiteVivante = new EntiteJoueur(posx, posy, radius, TypeEntiteVivante.PERSONNAGE);
 		entiteJoueurs.add(entiteVivante);
+
+		creerHitboxPersonnage(WorldService.getInstance().world, WorldService.getInstance().worldAffichage, radius, posx,
+				posy, entiteVivante);
+
+		return entiteVivante;
+	}
+
+	/**
+	 * Créer une entité à l'emplacement X,Y
+	 * 
+	 * @param posx
+	 * @param posy
+	 * @return EntiteJoueur crée
+	 */
+	public EntiteAnimal creerEntiteAnimal(final int posx, final int posy, final TypeEntiteVivante type) {
+		final float radius = 0.4f;
+		final EntiteAnimal entiteVivante = new EntiteAnimal(posx, posy, radius, type);
+		entiteAnimals.add(entiteVivante);
 
 		creerHitboxPersonnage(WorldService.getInstance().world, WorldService.getInstance().worldAffichage, radius, posx,
 				posy, entiteVivante);
@@ -85,6 +103,7 @@ public class BasePersonnage implements Serializable {
 
 	public void startEntiteThread() {
 		this.threadEntiteJoueurs.start();
+		this.threadEntiteAnimal.start();
 	}
 
 	public List<EntiteJoueur> getEntiteJoueurs() {
