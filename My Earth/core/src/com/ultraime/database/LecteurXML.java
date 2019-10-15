@@ -16,6 +16,8 @@ import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.database.entite.ElementEarthImage;
 import com.ultraime.database.entite.ElementGenere;
 import com.ultraime.database.entite.Materiau;
+import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
+import com.ultraime.game.entite.Habiliter;
 import com.ultraime.game.entite.Inventaire;
 import com.ultraime.game.utile.Parametre;
 
@@ -38,7 +40,9 @@ public class LecteurXML extends ApplicationAdapter {
 	 */
 	public void traiterToutLesFichiers() {
 		long startTime = System.currentTimeMillis();
-		recuperationDataFromXML("data/elementEarth/");
+		recuperationDataElementEarthFromXML("data/elementEarth/");
+		recuperationDataHabiliterFromXML("data/habiliter/");
+
 		long endTime = System.currentTimeMillis();
 
 		if (Parametre.MODE_DEBUG) {
@@ -49,13 +53,11 @@ public class LecteurXML extends ApplicationAdapter {
 	/**
 	 * @param chemin
 	 */
-	private void recuperationDataFromXML(final String chemin) {
-		//
+	private void recuperationDataHabiliterFromXML(final String chemin) {
 		FileHandle handle = Gdx.files.internal(chemin);
-//		System.err.println(handle.toString());
 		String[] listefichiers = getFichierDansRepertoire(handle);
 		for (int i = 0; i < listefichiers.length; i++) {
-			traiterFichier(listefichiers[i], chemin);
+			traiterFichierHabiliter(listefichiers[i], chemin);
 		}
 	}
 
@@ -63,7 +65,72 @@ public class LecteurXML extends ApplicationAdapter {
 	 * @param file
 	 * @param chemin
 	 */
-	private void traiterFichier(final String file, final String chemin) {
+	private void traiterFichierHabiliter(final String file, final String chemin) {
+		final FileHandle handle = Gdx.files.internal(chemin + file);
+		final XmlReader xmlReader = new XmlReader();
+		try {
+			Element rootElement = xmlReader.parse(handle);
+			if (rootElement.getName().equals("habilitations")) {
+				lireHabilitationXML(rootElement);
+			}
+
+		} catch (IOException e) {
+			if (Parametre.MODE_DEBUG) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private void lireHabilitationXML(Element rootElement) {
+		Array<Element> items = rootElement.getChildrenByName("habiliter");
+		for (Element child : items) {
+			String type = child.getChildByName("type").getText();
+			TypeEntiteVivante typeEntiteVivante = TypeEntiteVivante.valueOf(type);
+			Habiliter habiliter = new Habiliter(typeEntiteVivante);
+
+			Array<Element> elementVie = child.getChildrenByName("sante");
+			alimenterHabilitation(habiliter.sante, elementVie);
+
+			Array<Element> elementEnergie = child.getChildrenByName("energie");
+			alimenterHabilitation(habiliter.energie, elementEnergie);
+
+			Array<Element> elementSatiete = child.getChildrenByName("satiete");
+			alimenterHabilitation(habiliter.satiete, elementSatiete);
+
+			Array<Element> elementHydration = child.getChildrenByName("hydratation");
+			alimenterHabilitation(habiliter.hydratation, elementHydration);
+
+			Base.getInstance().addReferenceHabiliter(habiliter);
+		}
+
+	}
+
+	private void alimenterHabilitation(final int[] stat, final Array<Element> elementStat) {
+		for (Element elementGenereXML : elementStat) {
+			stat[Habiliter.GAIN] = Integer.parseInt(elementGenereXML.getChildByName("gain").getText());
+			stat[Habiliter.ACTUEL] = Integer.parseInt(elementGenereXML.getChildByName("actuel").getText());
+			stat[Habiliter.MAX] = Integer.parseInt(elementGenereXML.getChildByName("max").getText());
+		}
+
+	}
+
+	/**
+	 * @param chemin
+	 */
+	private void recuperationDataElementEarthFromXML(final String chemin) {
+		FileHandle handle = Gdx.files.internal(chemin);
+		String[] listefichiers = getFichierDansRepertoire(handle);
+		for (int i = 0; i < listefichiers.length; i++) {
+			traiterFichierElementEarth(listefichiers[i], chemin);
+		}
+	}
+
+	/**
+	 * @param file
+	 * @param chemin
+	 */
+	private void traiterFichierElementEarth(final String file, final String chemin) {
 		final FileHandle handle = Gdx.files.internal(chemin + file);
 		final XmlReader xmlReader = new XmlReader();
 		try {

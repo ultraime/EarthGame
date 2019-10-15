@@ -1,0 +1,25 @@
+<habilitation>
+	<habiliter>
+	<type>PERSONNAGE</type>
+		<sante>
+			<gain>-1</gain>
+			<actuel>100</actuel>
+			<max>100</max>
+		</sante>
+		<energie>
+			<gain>-1</gain>
+			<actuel>960</actuel>
+			<max>960</max>
+		</energie>
+		<satiete>
+			<gain>-1</gain>
+			<actuel>600</actuel>
+			<max>600</max>
+		</energie>
+		<hydratation>
+			<gain>-1</gain>
+			<actuel>720</actuel>
+			<max>720</max>
+		</energie>
+	</habiliter>
+</habilitation>

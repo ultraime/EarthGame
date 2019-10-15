@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.database.entite.ElementEarthImage;
 import com.ultraime.game.entite.EntiteStatic;
+import com.ultraime.game.entite.EntiteVivante.TypeEntiteVivante;
+import com.ultraime.game.entite.Habiliter;
 import com.ultraime.game.metier.Temps;
 import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.WorldBodyService;
@@ -48,6 +50,7 @@ public class Base implements java.io.Serializable {
 	transient private Boolean isStartTempsThread = false;
 
 	transient private List<ElementEarth> referenceElementEarth;
+	transient private List<Habiliter> referenceHabiliter;
 
 	private Base() {
 		this.rectangleBodies = new ArrayList<>();
@@ -71,11 +74,36 @@ public class Base implements java.io.Serializable {
 	 * 
 	 * @param elementEarth
 	 */
-	public void addReferenceElementEarth(ElementEarth elementEarth) {
+	public void addReferenceElementEarth(final ElementEarth elementEarth) {
 		if (referenceElementEarth == null) {
 			this.referenceElementEarth = new ArrayList<>();
 		}
 		referenceElementEarth.add(elementEarth);
+	}
+
+	/**
+	 * permet d'ajouter les habiliter dans la liste de référence.
+	 * 
+	 * @param elementEarth
+	 */
+	public void addReferenceHabiliter(final Habiliter habiliter) {
+		if (referenceHabiliter == null) {
+			this.referenceHabiliter = new ArrayList<>();
+		}
+		referenceHabiliter.add(habiliter);
+	}
+
+	public Habiliter getReferenceHabiliter(final TypeEntiteVivante typeEntiteVivante) {
+		Habiliter habiliterRetour = null;
+		for (int i = 0; i < this.referenceHabiliter.size(); i++) {
+			final Habiliter habiliter = this.referenceHabiliter.get(i);
+			if (habiliter.type.equals(typeEntiteVivante)) {
+				habiliterRetour = habiliter;
+				break;
+			}
+		}
+		return habiliterRetour;
+
 	}
 
 	/**

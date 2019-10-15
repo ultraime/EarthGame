@@ -17,7 +17,6 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ultraime.database.base.Base;
 import com.ultraime.database.entite.ElementEarth;
-import com.ultraime.game.entite.EntiteJoueur;
 import com.ultraime.game.entite.EntiteStatic;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.utile.Parametre;
@@ -113,8 +112,7 @@ public class WorldService {
 	}
 
 	/**
-	 * @param OrthographicCamera
-	 *            camera
+	 * @param OrthographicCamera camera
 	 */
 	public void renderDebug(final OrthographicCamera camera) {
 		if (Parametre.MODE_DEBUG) {
@@ -137,8 +135,7 @@ public class WorldService {
 	}
 
 	/**
-	 * @param TiledMapTileLayer
-	 *            layer
+	 * @param TiledMapTileLayer layer
 	 */
 	public void initialiserCollision(final TiledMapTileLayer layer) {
 		for (int x = 0; x < layer.getWidth(); x++) {

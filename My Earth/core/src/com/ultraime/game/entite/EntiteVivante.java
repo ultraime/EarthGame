@@ -86,7 +86,7 @@ public abstract class EntiteVivante extends Entite implements Serializable {
 		this.cercleShape = new Circle(x, y, radius);
 		this.metiers = new ArrayList<>();
 		this.inventaire = new Inventaire(50);
-		this.habiliter = new Habiliter();
+		this.habiliter = new Habiliter(typeEntite);
 		initAnimationEtat();
 
 		this.typeEntiteEnum = typeEntite;
