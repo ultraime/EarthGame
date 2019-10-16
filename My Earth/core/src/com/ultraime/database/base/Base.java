@@ -371,6 +371,12 @@ public class Base implements java.io.Serializable {
 		case ElementEarth.objet_sol:
 			earths = baseObjetSol.getElementEarthsObjetSol();
 			break;
+		case ElementEarth.culture_sauvage:
+			earths = baseCulture.getElementEarthplantesSauvage();
+			break;
+		case ElementEarth.culture_sauvage_final:
+			earths = baseCulture.getElementEarthplantesSauvage();
+			break;
 		default:
 			break;
 		}

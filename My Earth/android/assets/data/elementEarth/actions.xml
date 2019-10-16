@@ -64,5 +64,27 @@
 			<type>culture_final</type>
 		</elementsCible>
 	</elementEarths>
+	
+		<elementEarths>
+		<type>action</type>
+		<placementType>unique</placementType>
+		<nom>prendre</nom>
+		<evolution></evolution>
+		<imageElement>
+			<x>0</x>
+			<y>0</y>
+			<idTuile>55</idTuile>
+			<collision>false</collision>
+		</imageElement>
+		<idTuileNone>56</idTuileNone>
+		<logoImage>logo/prendre.png</logoImage>
+		<layerCible>CONSTRUCTION</layerCible>
+		<elementsCible>
+			<type>culture_sauvage</type>
+		</elementsCible>
+		<elementsCible>
+			<type>culture_sauvage_final</type>
+		</elementsCible>
+	</elementEarths>
 
 </ElementEarth>

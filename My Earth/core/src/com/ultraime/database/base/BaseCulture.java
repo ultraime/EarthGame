@@ -7,6 +7,10 @@ import java.util.List;
 import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.metier.TileMapService;
 
+/**
+ * @author oceane
+ *
+ */
 public class BaseCulture implements Serializable {
 
 	/**
@@ -15,9 +19,10 @@ public class BaseCulture implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<ElementEarth> elementEarthplantes;
-
+	private List<ElementEarth> elementEarthplantesSauvage;
 	public BaseCulture() {
 		this.elementEarthplantes = new ArrayList<>();
+		this.elementEarthplantesSauvage = new  ArrayList<>();
 	}
 
 	/**
@@ -47,9 +52,7 @@ public class BaseCulture implements Serializable {
 		for (int i = 0; i < Base.getInstance().getListEarth(ElementEarth.culture).size(); i++) {
 			final ElementEarth elementEarth = Base.getInstance().getListEarth(ElementEarth.culture).get(i);
 			if (ElementEarth.culture_final.equals(elementEarth.type)) {
-				if (!ElementEarth.sauvage.equals(elementEarth.sousType)) {
 					elementEarthCulture = elementEarth;
-				}
 			}
 		}
 		return elementEarthCulture;
@@ -67,9 +70,7 @@ public class BaseCulture implements Serializable {
 				elementEarthCulture = elementEarth;
 			} else if (elementEarthCulture != null) {
 				if (ElementEarth.culture_final.equals(elementEarth.type)) {
-					if (!ElementEarth.sauvage.equals(elementEarth.sousType)) {
 						elementEarthCultureNext = elementEarth;
-					}
 				}
 			}
 
@@ -84,5 +85,15 @@ public class BaseCulture implements Serializable {
 	public void setElementEarthPlantes(List<ElementEarth> elementEarthplantes) {
 		this.elementEarthplantes = elementEarthplantes;
 	}
+
+	public List<ElementEarth> getElementEarthplantesSauvage() {
+		return elementEarthplantesSauvage;
+	}
+
+	public void setElementEarthplantesSauvage(List<ElementEarth> elementEarthplantesSauvage) {
+		this.elementEarthplantesSauvage = elementEarthplantesSauvage;
+	}
+	
+	
 
 }

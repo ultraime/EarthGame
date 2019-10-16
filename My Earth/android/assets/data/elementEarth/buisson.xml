@@ -61,7 +61,7 @@
 	</elementEarths> -->
 	<!-- PLANTE ANIME -->
 	<elementEarths>
-		<type>culture</type>
+		<type>culture_sauvage</type>
 		<placementType>unique</placementType>
 		<nom>baie_sauvage_1</nom>
 		<evolution>baie_sauvage_2</evolution>
@@ -75,7 +75,7 @@
 		<layerCible>OBJET_0</layerCible>
 	</elementEarths>
 	<elementEarths>
-		<type>culture</type>
+		<type>culture_sauvage</type>
 		<placementType>unique</placementType>
 		<nom>baie_sauvage_2</nom>
 		<evolution>baie_sauvage_3</evolution>
@@ -89,7 +89,7 @@
 		<layerCible>OBJET_0</layerCible>
 	</elementEarths>
 	<elementEarths>
-		<type>culture_final</type>
+		<type>culture_sauvage_final</type>
 		<sousType>sauvage</sousType>
 		<placementType>unique</placementType>
 		<nom>baie_sauvage_3</nom>

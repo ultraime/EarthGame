@@ -30,6 +30,8 @@ public class ElementEarth implements Serializable {
 	transient public final static String nature = "nature";
 	transient public final static String eau = "eau";
 	transient public final static String objet_sol = "objet_sol";
+	transient public final static String culture_sauvage = "culture_sauvage";
+	transient public final static String culture_sauvage_final = "culture_sauvage_final";
 	// sous type
 	transient public final static String literie = "literie";
 	transient public final static String aqua = "aqua";
@@ -62,6 +64,7 @@ public class ElementEarth implements Serializable {
 		private static final long serialVersionUID = 1L;
 		{
 			add(culture);
+			add(culture_sauvage);
 			add(meuble);
 			add(structure);
 			add(action);
