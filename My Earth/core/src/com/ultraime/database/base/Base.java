@@ -427,6 +427,9 @@ public class Base implements java.io.Serializable {
 						break;
 					}
 				}
+				if(element != null) {
+					break;
+				}
 			}
 		}
 		return element;

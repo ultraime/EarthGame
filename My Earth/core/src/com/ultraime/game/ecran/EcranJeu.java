@@ -34,7 +34,6 @@ import com.ultraime.game.metier.travail.MetierConstructeur;
 import com.ultraime.game.metier.travail.MetierForestier;
 import com.ultraime.game.metier.travail.MetierGeneral;
 import com.ultraime.game.metier.travail.MetierParesse;
-import com.ultraime.game.utile.Calcul;
 import com.ultraime.game.utile.Parametre;
 import com.ultraime.music.MusicManager;
 

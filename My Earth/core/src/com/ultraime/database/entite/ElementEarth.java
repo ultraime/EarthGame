@@ -55,6 +55,7 @@ public class ElementEarth implements Serializable {
 	transient public final static String detruire = "detruire";
 	transient public final static String couper = "couper";
 	transient public final static String anti_culture = "anti_culture";
+	transient public final static String prendre = "prendre";
 
 	// variable de calcul
 	transient public final static int max = 1;

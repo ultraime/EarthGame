@@ -34,7 +34,7 @@ public class MetierForestier extends Metier {
 		ElementEarth elementAcouper = null;
 		boolean isDoAction = false;
 		do {
-			elementAcouper = Base.getInstance().baseObjetAConstruire.getElementACouper(elementAcouper);
+			elementAcouper = Base.getInstance().baseObjetAConstruire.getElementARecuperer(elementAcouper,ElementEarth.couper);
 			if (elementAcouper != null) {
 				isDoAction = verifierAccessibilite(true, elementAcouper, this.entiteVivante, true);
 				if (isDoAction) {

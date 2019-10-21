@@ -11,6 +11,7 @@ import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
 import com.ultraime.game.metier.pathfinding.Noeud;
 import com.ultraime.game.metier.travail.action.AEConstruction;
+import com.ultraime.game.metier.travail.action.AEPrendre;
 import com.ultraime.game.metier.travail.action.AERecolte;
 import com.ultraime.game.utile.Parametre;
 
@@ -30,19 +31,41 @@ public class MetierAgriculteur extends Metier {
 	public boolean doMetier() {
 		boolean isAction = isActionEncours();
 		if (!isAction) {
-			// option 1 : on fait la recolte
-			isAction = rechercherRecolte();
-			// option 2 : on apporte les légumes dans un coffre.
+			// option 1 :
+			isAction = rechercheElementARamasser();
+			if (!isAction) {
+				// option 2 : on fait la recolte
+				isAction = rechercherRecolte();
+			}
+			// option 3 : on apporte les légumes dans un coffre.
 			if (!isAction) {
 				isAction = rangerElement(ElementEarth.legume);
 			}
-			// option 3 : on plante
+			// option 4 : on plante
 			if (!isAction) {
 				isAction = rechercherCulture();
 			}
 
 		}
 		return isAction;
+	}
+
+	private boolean rechercheElementARamasser() {
+		boolean isDoAction = false;
+		ElementEarth elementAramasser = null;
+		do {
+			elementAramasser = Base.getInstance().baseObjetAConstruire.getElementARecuperer(elementAramasser,ElementEarth.prendre);
+			if (elementAramasser != null) {
+				isDoAction = verifierAccessibilite(true, elementAramasser, this.entiteVivante, true);
+				if (isDoAction) {
+					AEPrendre actionEntite = new AEPrendre(0);
+					actionEntite.ajouterElementArecolter(elementAramasser);
+					this.entiteVivante.ajouterAction(actionEntite);
+					Base.getInstance().baseObjetAConstruire.retirerElementAconstruireSaufAction(elementAramasser.x, elementAramasser.y);
+				}
+			}
+		} while (elementAramasser != null && !isDoAction);
+		return isDoAction;
 	}
 
 	/**
