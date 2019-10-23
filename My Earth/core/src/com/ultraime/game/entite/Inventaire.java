@@ -76,11 +76,11 @@ public class Inventaire implements Serializable {
 	 * @return placeSuffisante
 	 */
 	public boolean placeSuffisante(final float poidsTotal) {
-		boolean placeSuffisante = false;
+		 placeDisponible = false;
 		if (Calcul.arrondirFloat(capaciteActuel + poidsTotal) <= capaciteMax) {
-			placeSuffisante = true;
+			placeDisponible = true;
 		}
-		return placeSuffisante;
+		return placeDisponible;
 	}
 
 	public float espaceDisponnible() {

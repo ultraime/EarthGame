@@ -32,7 +32,7 @@
 		<layerCible>CONSTRUCTION</layerCible>
 		<materiaux_requis>
 				<nom>objet_sol_bois</nom>
-				<requis>3</requis>
+				<requis>6</requis>
 		</materiaux_requis>
 	</elementEarths>
 	<!-- -->
@@ -69,7 +69,7 @@
 		<poids>5</poids>
 			<elementEarthGenere>
 			<nom>objet_sol_bois</nom>
-			<nbGenere>1</nbGenere>
+			<nbGenere>3</nbGenere>
 		</elementEarthGenere>
 	</elementEarths>
 </ElementEarth>

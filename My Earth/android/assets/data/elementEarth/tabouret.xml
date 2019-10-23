@@ -14,7 +14,7 @@
 		<layerCible>CONSTRUCTION</layerCible>
 		<materiaux_requis>
 				<nom>objet_sol_bois</nom>
-				<requis>1</requis>
+				<requis>2</requis>
 		</materiaux_requis>
 	</elementEarths>
 	<!-- -->

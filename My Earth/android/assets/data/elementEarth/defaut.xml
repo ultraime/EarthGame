@@ -51,6 +51,10 @@
 		</imageElement>
 		<logoImage>logo/porte_bois.png</logoImage>
 		<layerCible>CONSTRUCTION</layerCible>
+		<materiaux_requis>
+				<nom>objet_sol_bois</nom>
+				<requis>2</requis>
+		</materiaux_requis>
 	</elementEarths>
 	<!-- -->
 	<elementEarths>
@@ -66,6 +70,10 @@
 		</imageElement>
 		<poids>15</poids>
 		<layerCible>OBJET_0</layerCible>
+			<elementEarthGenere>
+			<nom>objet_sol_bois</nom>
+			<nbGenere>1</nbGenere>
+		</elementEarthGenere>
 	</elementEarths>
 	
 <!-- PLANTE-->

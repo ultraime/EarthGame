@@ -427,7 +427,7 @@ public class Base implements java.io.Serializable {
 						break;
 					}
 				}
-				if(element != null) {
+				if (element != null) {
 					break;
 				}
 			}
@@ -467,12 +467,11 @@ public class Base implements java.io.Serializable {
 			if (elementEarth.inventaire != null) {
 
 				if (elementBefore == null) {
-					if (elementEarth.inventaire.placeDisponible) {
-						if (elementEarth.inventaire.espaceDisponnible() >= 1f) {
-							elementEarthCoffre = elementEarth;
-							break;
-						}
+					if (elementEarth.inventaire.espaceDisponnible() >= 1f) {
+						elementEarthCoffre = elementEarth;
+						break;
 					}
+
 				} else {
 					if (elementBefore == elementEarth) {
 						elementBefore = null;

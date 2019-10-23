@@ -182,12 +182,16 @@ public class TileMapService {
 	public void detruireItem(final ElementEarth elementAction) {
 		final int posX = elementAction.x;
 		final int posY = elementAction.y;
-		Base.getInstance().baseObjetAConstruire.retirerElementAconstruire(posX, posY);
 		for (int i = 0; i < elementAction.elementEarthImages.size(); i++) {
+			//TODO appeler viderCellMap pour retirer les éléments de construction en "trop" (un par case par exemple)
 			int posXImage = posX + elementAction.elementEarthImages.get(i).x;
 			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
+			// supression de l'élément "constructible"
+			Base.getInstance().baseObjetAConstruire.retirerElementAconstruire(posXImage, posYImage);
+			
 			if (ElementEarth.nature.equals(elementAction.type) || ElementEarth.couper.equals(elementAction.nom)) {
 				Base.getInstance().retirerElementEarth(posXImage, posYImage, elementAction.type);
+				Base.getInstance().retirerElementEarth(posXImage, posYImage, ElementEarth.action);
 			} else {
 				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 			}
