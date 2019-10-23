@@ -9,6 +9,7 @@ import com.ultraime.database.base.Base;
 import com.ultraime.database.entite.ElementEarth;
 import com.ultraime.game.entite.EntiteVivante;
 import com.ultraime.game.metier.ElementEarthService;
+import com.ultraime.game.metier.TileMapService;
 import com.ultraime.game.metier.pathfinding.Aetoile;
 import com.ultraime.game.metier.pathfinding.AetoileDestinationBlockException;
 import com.ultraime.game.metier.pathfinding.AetoileException;
@@ -39,9 +40,7 @@ public class AEPrendre extends ActionEntite {
 			final int posX = actionPrendre.x;
 			final int posY = actionPrendre.y;
 			
-			// on retire l'élément de la carte.
-			Base.getInstance().retirerElementEarth(actionPrendre);
-			
+	
 			//l'élément à prendre
 			final ElementEarth elementAramasser = Base.getInstance().recupererElementEarth(posX, posY);
 			
@@ -49,10 +48,12 @@ public class AEPrendre extends ActionEntite {
 			if (elementAprendre.size() == 0) {
 				isActionEnd = true;
 			}
-
+			// on retire l'élément de la carte.
+			TileMapService.getInstance().detruireItem(actionPrendre);
 			// placement de l'objet sur la carte.
 			ElementEarthService.genererElement(elementAramasser);
-			Base.getInstance().retirerElementEarth(elementAramasser);
+//			Base.getInstance().retirerElementEarth(elementAramasser);
+
 
 		}
 

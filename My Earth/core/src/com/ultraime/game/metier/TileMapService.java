@@ -183,13 +183,11 @@ public class TileMapService {
 		final int posX = elementAction.x;
 		final int posY = elementAction.y;
 		Base.getInstance().baseObjetAConstruire.retirerElementAconstruire(posX, posY);
-
 		for (int i = 0; i < elementAction.elementEarthImages.size(); i++) {
 			int posXImage = posX + elementAction.elementEarthImages.get(i).x;
 			int posYImage = posY + elementAction.elementEarthImages.get(i).y;
-			if (ElementEarth.nature.equals(elementAction.type) ||
-					ElementEarth.couper.equals(elementAction.nom)) {
-				Base.getInstance().retirerElementEarth(posXImage, posYImage,elementAction.type);
+			if (ElementEarth.nature.equals(elementAction.type) || ElementEarth.couper.equals(elementAction.nom)) {
+				Base.getInstance().retirerElementEarth(posXImage, posYImage, elementAction.type);
 			} else {
 				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 			}
@@ -197,15 +195,12 @@ public class TileMapService {
 			if (elementAction.nom.equals(ElementEarth.anti_culture)) {
 				detruireTuileCulture(posXImage, posYImage);
 			}
-
 		}
-
 		// supression de l'élément "constructible"
 		final TiledMapTileLayer tiledLayerConstruction = (TiledMapTileLayer) tiledMap.getLayers().get(CONSTRUCTION);
 		alimenterImageFromMultiTile(elementAction, tiledLayerConstruction, posX, posY, true);
 		// juste pour l'affichage
 		tileMurManager.creerMurEnBois();
-//		creerMurEnBois();
 
 	}
 
