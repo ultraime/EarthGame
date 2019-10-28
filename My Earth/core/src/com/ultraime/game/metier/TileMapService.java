@@ -191,7 +191,7 @@ public class TileMapService {
 			
 			if (ElementEarth.nature.equals(elementAction.type) || ElementEarth.couper.equals(elementAction.nom)) {
 				Base.getInstance().retirerElementEarth(posXImage, posYImage, elementAction.type);
-				Base.getInstance().retirerElementEarth(posXImage, posYImage, ElementEarth.action);
+				viderCellMap(posXImage, posYImage, TileMapService.getInstance().getLayers(CONSTRUCTION));
 			} else {
 				Base.getInstance().retirerElementEarthAllObjet(posXImage, posYImage);
 			}
@@ -294,6 +294,7 @@ public class TileMapService {
 				tiledLayer = TileMapService.getInstance().getLayers(earthImage.layerCible);
 			}
 			tiledLayer.setCell(posX + earthImage.x, posY + earthImage.y, cell);
+			
 		}
 
 	}
